@@ -1,0 +1,8 @@
+# Vim keybindings for bash
+set -o vi
+
+# Prompt
+PS1='[\W]\$ '
+
+# RVM bash completion
+[[ -r /usr/local/rvm/scripts/completion ]] && . /usr/local/rvm/scripts/completion

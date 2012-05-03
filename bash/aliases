@@ -1,0 +1,31 @@
+# Console
+alias ls='ls --color=auto'
+alias ll='ls -laGh'
+alias ..='cd ..'
+
+# GIT 
+alias gst='git status'
+alias gaa='git add .'
+alias gp='git pull'
+
+# Navigation 
+alias cdp='cd ~/Projects'
+alias cd3='cd ~/Projects/3Retail/3retail-server'
+alias cdh='cd ~'
+
+alias fn='find . -name '
+
+# pacman 
+function pss { 
+    pacman -Ss "$1" | less -FXRS
+}
+
+alias psi='pacman -Si ' 
+
+# Bundle 
+alias be='bundle exec'
+alias ber='bundle exec rake'
+
+# Alias management
+alias ar='source $DOT_FILES_DIR/bash/aliases'
+alias ae='$EDITOR $DOT_FILES_DIR/bash/aliases'
