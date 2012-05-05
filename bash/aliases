@@ -3,6 +3,10 @@ alias ls='ls --color=auto'
 alias ll='ls -laGh'
 alias ..='cd ..'
 
+# clipboard
+alias copy="xclip"
+alias paste="xclip -o"
+
 # GIT 
 alias gst='git status'
 alias gaa='git add .'
@@ -14,6 +18,8 @@ alias cd3='cd ~/Projects/3Retail/3retail-server'
 alias cdh='cd ~'
 
 alias fn='find . -name '
+ 
+alias open="xdg-open"
 
 # pacman 
 function pss { 
