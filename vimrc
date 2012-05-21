@@ -175,6 +175,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
+" Indent with tab in visual mode
 vmap <S-Tab> <gv
 vmap <Tab> >gv
 
@@ -220,7 +221,7 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
 " Buffers
-"map <leader>b :FufBuffer<cr>
+map <leader>b :CommandTBuffer<cr>
 
 " Window management
 map <leader>wc :close<cr>
@@ -228,7 +229,7 @@ map <leader>wo :only<cr>
 map <leader>ws :sp<cr>
 map <leader>wv :vsplit<cr>
 
-"map <leader>e  :FufFileWithCurrentBufferDir<cr>
+map <leader>e  :CommandT<cr>
 "map <leader>fp :FufTaggedFile<cr>
 "map <leader>fd :FufDir<cr>
 
