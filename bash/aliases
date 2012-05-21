@@ -11,6 +11,7 @@ alias paste="xclip -o"
 alias gst='git status'
 alias gaa='git add .'
 alias gp='git pull'
+alias gcm='git commit -m '
 
 # Navigation 
 alias cdp='cd ~/Projects'
@@ -20,6 +21,11 @@ alias cdh='cd ~'
 alias fn='find . -name '
  
 alias open="xdg-open"
+
+# Places
+alias projects="cd ~/Projects"
+alias downloads="cd ~/Downloads"
+alias desktop="cd ~/Desktop"
 
 # pacman 
 function pss { 
