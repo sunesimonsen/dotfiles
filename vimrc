@@ -155,11 +155,9 @@ set modelines=0
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the curors - when moving vertical..
-set so=7
+set scrolloff=4
 
 colorscheme vibrantink
-hi Pmenu        guifg=white guibg=brown gui=bold
-hi PmenuSel     guifg=white guibg=#660000 gui=bold
 
 set gfn=DejaVu\ Sans\ Mono\ 12  
 
@@ -177,10 +175,8 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
-
-vmap < <gv
-vmap > >gv
-
+vmap <S-Tab> <gv
+vmap <Tab> >gv
 
 " Bubble single lines
 nmap <C-Up> [e
@@ -205,9 +201,6 @@ map <silent> <leader><cr> :set hlsearch! hlsearch?<CR>
 
 set ignorecase          " case-insensitive search
 set smartcase
-
-" Moving on non exisisting text
-set virtualedit=all
 
 map <TAB> %
 " Dont use smartcase or ignorecase for * and #
@@ -244,3 +237,4 @@ map <leader>wv :vsplit<cr>
 " When pressing <leader>cd switch to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>
 
+let g:EasyMotion_leader_key = 'ø'  
