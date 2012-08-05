@@ -1,0 +1,15 @@
+[user]
+name = Sune Simonsen
+email = sune.simonsen@jayway.com
+[color]
+diff = auto
+status = auto
+branch = auto
+[alias]
+    st = status
+    di = diff
+    co = checkout
+    ci = commit
+    br = branch
+    sta = stash
+    hist = log --pretty='format:%Cblue%h%d%C(yellow) %s %Cgreen%an%Creset, %ar' --graph

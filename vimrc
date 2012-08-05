@@ -131,7 +131,7 @@ map <leader>rc :e ~/.vimrc<cr>
 map <leader>so :so ~/.vimrc<cr>
 
 " When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vim/vimrc
+autocmd! bufwritepost vimrc source ~/bin/dotfiles/vimrc
 
 map æ :
 map Æ @
@@ -150,6 +150,9 @@ cmap ½ $
 " prevents some security exploits
 " http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
 set modelines=0
+
+
+command! W :w
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -213,6 +216,10 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+map <C-s> <C-W>s
+map <C-v> <C-W>v
+map <C-o> <C-W>o
+map <C-c> <C-W>c
 
 " Tab configuration
 map <leader>tn :tabnew<cr>
