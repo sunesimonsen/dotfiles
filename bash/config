@@ -1,5 +1,7 @@
 # Prompt
 PS1='[\W]\$ '
+# glue the bash prompt always go to the first column.
+PS1="\[\033[G\]$PS1"
 
 # RVM bash completion
 [[ -r /usr/local/rvm/scripts/completion ]] && . /usr/local/rvm/scripts/completion
