@@ -228,7 +228,7 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
 " Buffers
-map <leader>b :CommandTBuffer<cr>
+map <leader>b :FufBuffer<cr>
 
 " Window management
 map <leader>wc :close<cr>
@@ -236,9 +236,9 @@ map <leader>wo :only<cr>
 map <leader>ws :sp<cr>
 map <leader>wv :vsplit<cr>
 
-map <leader>e  :CommandT<cr>
+map <leader>e  :FufFile<cr>
 "map <leader>fp :FufTaggedFile<cr>
-"map <leader>fd :FufDir<cr>
+map <leader>d :FufDir<cr>
 
 "map <leader>ru :MRU<cr>
 
