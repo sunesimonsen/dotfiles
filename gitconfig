@@ -1,10 +1,10 @@
 [user]
-name = Sune Simonsen
-email = sune@we-knowhow.dk
+    name = Sune Simonsen
+    email = sune@we-knowhow.dk
 [color]
-diff = auto
-status = auto
-branch = auto
+    diff = auto
+    status = auto
+    branch = auto
 [alias]
     st = status
     di = diff
@@ -13,3 +13,7 @@ branch = auto
     br = branch
     sta = stash
     hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+    current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+[push]
+    # Only push branches that have been set up to track a remote branch.
+    default = current
