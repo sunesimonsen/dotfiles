@@ -12,4 +12,4 @@ branch = auto
     ci = commit
     br = branch
     sta = stash
-    hist = log --pretty='format:%Cblue%h%d%C(yellow) %s %Cgreen%an%Creset, %ar' --graph
+    hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
