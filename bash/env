@@ -1,7 +1,6 @@
 export EDITOR=emacs
 export GIT_EDITOR=vim
 
-
 if [ -d ~/bin ]
 then
     export PATH=$PATH:~/bin
