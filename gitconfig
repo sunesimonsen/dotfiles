@@ -13,7 +13,11 @@
     br = branch
     sta = stash
     hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
-    current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+    changes = log --graph --pretty='%s'
+    cb = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+[pull]
+    # Only pull branches that have been set up to track a remote branch.
+    default = current
 [push]
     # Only push branches that have been set up to track a remote branch.
     default = current
