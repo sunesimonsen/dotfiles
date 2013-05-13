@@ -1,5 +1,6 @@
 " requires
-" apt-get install ack-grep
+" sudo apt-get install ack-grep
+" sudo ln -s /usr/bin/ack-grep /usr/local/bin/ack
 " https://github.com/gmarik/vundle
 set nocompatible               " be iMproved
 filetype off
