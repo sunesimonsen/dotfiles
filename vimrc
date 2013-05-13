@@ -14,7 +14,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'vibrantink'
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
@@ -25,6 +25,13 @@ Bundle 'FuzzyFinder'
 Bundle 'snipMate'
 Bundle 'ack.vim'
 
+set backupdir=~/tmp
+
+" Hide the toolbar
+:set guioptions-=m  "remove menu bar
+:set guioptions-=T  "remove toolbar
+:set guioptions-=r  "remove right-hand scroll bar
+
 set incsearch		" do incremental searching
 
 " Set 4 lines to the curors - when moving vertical..
@@ -32,7 +39,7 @@ set scrolloff=4
 
 colorscheme vibrantink
 
-set gfn=DejaVu\ Sans\ Mono\ 12  
+set gfn=DejaVu\ Sans\ Mono\ 12
 
 let mapleader = ","
 let g:mapleader = ","
