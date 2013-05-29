@@ -20,10 +20,9 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle "pangloss/vim-javascript"
-Bundle 'L9'
-Bundle 'FuzzyFinder'
 Bundle 'snipMate'
 Bundle 'ack.vim'
+Bundle 'ctrlp.vim'
 
 set backupdir=~/tmp
 
@@ -40,6 +39,10 @@ set scrolloff=4
 colorscheme vibrantink
 
 set gfn=DejaVu\ Sans\ Mono\ 12
+
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
 
 let mapleader = ","
 let g:mapleader = ","
@@ -76,40 +79,18 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" FuzzyFinder
-map <leader>b :FufBuffer<CR>
-map <leader>e :FufFile<CR>
-map <leader>d :FufDir<CR>
+" CtrlP
+map <leader>b :CtrlPBuffer<CR>
+map <leader>p :CtrlP<CR>
+map <leader>r :CtrlPMRU<CR>
 
-function! ProjectFuzzyFind()
-    let origcurdir = getcwd()
-    let curdir = origcurdir
-    let prevdir = ""
-
-    while curdir != prevdir
-        if isdirectory(".git")
-            break
-        endif
-        cd ..
-        let prevdir = curdir
-        let curdir = getcwd()
-    endwhile
-
-    if isdirectory(".git")
-        let files = split(system('git ls-files'), '\n')
-        echo files
-        call fuf#givenfile#launch('', 0, '>', files)
-    endif
-    cd `=origcurdir`
-endfunction
-
-map <leader>p :call ProjectFuzzyFind()<CR>
-
-" Wildmenu and Fuzzyfinder like dynamic menus
-highlight Pmenu    guifg=white guibg=#808080
-highlight PmenuSel guifg=black guibg=#ffbc29
-highlight WildMenu guifg=black guibg=#ffbc29
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules,*.pdf
 
 " Fast editing of the .vimrc
 map <leader>rc :e ~/.vimrc<CR>
 map <leader>so :so ~/.vimrc<CR>
+
+set backupdir=~/.vim/backup
+
+set splitbelow
+set splitright
