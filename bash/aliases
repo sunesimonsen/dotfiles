@@ -44,3 +44,9 @@ alias server='python -m SimpleHTTPServer'
 # Alias management
 alias ar='source $DOT_FILES_DIR/bash/aliases'
 alias ae='$EDITOR $DOT_FILES_DIR/bash/aliases'
+
+# One develoment
+alias dev='make development'
+
+# NPM
+alias npmofficial='npm --userconfig ~/.npmrc-official'
