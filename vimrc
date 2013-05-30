@@ -23,6 +23,7 @@ Bundle "pangloss/vim-javascript"
 Bundle 'snipMate'
 Bundle 'ack.vim'
 Bundle 'ctrlp.vim'
+Bundle 'walm/jshint.vim'
 
 set backupdir=~/tmp
 
@@ -94,3 +95,6 @@ set backupdir=~/.vim/backup
 
 set splitbelow
 set splitright
+
+" Javascript
+autocmd BufWritePost *.js JSHint
