@@ -25,8 +25,6 @@ Bundle 'ack.vim'
 Bundle 'ctrlp.vim'
 Bundle 'walm/jshint.vim'
 
-set backupdir=~/tmp
-
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
 :set guioptions-=T  "remove toolbar
@@ -90,8 +88,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules,*.pdf
 " Fast editing of the .vimrc
 map <leader>rc :e ~/.vimrc<CR>
 map <leader>so :so ~/.vimrc<CR>
-
-set backupdir=~/.vim/backup
 
 set splitbelow
 set splitright
