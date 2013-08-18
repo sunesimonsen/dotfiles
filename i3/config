@@ -157,4 +157,3 @@ bar {
 }
 
 focus_follows_mouse no
-exec --no-startup-id nm-applet
