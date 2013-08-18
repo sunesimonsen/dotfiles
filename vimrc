@@ -15,15 +15,17 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'vibrantink'
+Bundle 'vividchalk.vim'
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle "pangloss/vim-javascript"
 Bundle 'snipMate'
 Bundle 'ack.vim'
-Bundle 'ctrlp.vim'
 Bundle 'walm/jshint.vim'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+Bundle 'ScmFrontEnd-former-name--MinSCM'
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -35,7 +37,10 @@ set incsearch		" do incremental searching
 " Set 4 lines to the curors - when moving vertical..
 set scrolloff=4
 
-colorscheme vibrantink
+colorscheme vividchalk
+
+" Colors
+set t_Co=256
 
 set gfn=DejaVu\ Sans\ Mono\ 12
 
@@ -78,12 +83,10 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" CtrlP
-map <leader>b :CtrlPBuffer<CR>
-map <leader>p :CtrlP<CR>
-map <leader>r :CtrlPMRU<CR>
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules,*.pdf
+" FuzzyFinder
+map <leader>e :FufFileWithCurrentBufferDir<CR>
+map <leader>b :FufBuffer<CR>
+map <leader>p :MinSCMFindFile<CR>
 
 " Fast editing of the .vimrc
 map <leader>rc :e ~/.vimrc<CR>
@@ -93,4 +96,4 @@ set splitbelow
 set splitright
 
 " Javascript
-autocmd BufWritePost *.js JSHint
+" autocmd BufWritePost *.js JSHint
