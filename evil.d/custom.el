@@ -1,0 +1,36 @@
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(backup-directory-alist (quote ((".*" . "~/.evil.backups"))))
+ '(case-replace nil)
+ '(dabbrev-case-distinction nil)
+ '(dabbrev-case-replace nil)
+ '(global-auto-revert-mode t)
+ '(hl-paren-colors (quote ("green" "yellow" "magenta" "orange")))
+ '(ido-auto-merge-delay-time 100)
+ '(indent-tabs-mode nil)
+ '(inhibit-startup-screen t)
+ '(menu-bar-mode nil)
+ '(scroll-bar-mode nil)
+ '(scroll-conservatively 1000)
+ '(scroll-margin 0)
+ '(scroll-step 1)
+ '(scss-compile-at-save nil)
+ '(sgml-basic-offset 4)
+ '(show-trailing-whitespace t)
+ '(surround-pairs-alist (quote ((40 "(" . ")") (91 "[" . "]") (123 "{" . "}") (41 "(" . ")") (93 "[" . "]") (125 "{" . "}") (35 "#{" . "}") (98 "(" . ")") (66 "{" . "}") (62 "<" . ">") (116 . surround-read-tag) (60 . surround-read-tag))))
+ '(tab-width 4)
+ '(tool-bar-mode nil)
+ '(truncate-lines t)
+ '(visible-bell t)
+ '(x-select-enable-clipboard t)
+ '(yas-prompt-functions (quote (yas-ido-prompt yas-x-prompt yas-dropdown-prompt yas-completing-prompt yas-ido-prompt yas-no-prompt)))
+ '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/dropdown-prompt yas/completing-prompt yas/no-prompt))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
