@@ -43,7 +43,6 @@
    (:name evil
 	  :after
 	  (progn
-					; TODO (global-surround-mode 't)
 	    (evil-mode 't)
 
 	    (evil-define-motion evil-move-forward-paren (count)
@@ -109,7 +108,7 @@
 	    (define-key evil-inner-text-objects-map "Ø" 'evil-inner-curly)
 
 	    (define-key evil-motion-state-map "gø" 'evil-jump-to-tag)
-	    (define-key evil-motion-state-map "gk" 'ace-jump-mode)
+	    (define-key evil-motion-state-map "gk" 'evil-ace-jump-word-mode)
 	    (define-key evil-motion-state-map "gn" 'flymake-goto-next-error)
 	    (define-key evil-motion-state-map "gp" 'flymake-goto-prev-error)
 
@@ -163,7 +162,7 @@
 	  :after
 	  (progn
 	    ;; SMEX
-	    (setq smex-save-file "~/bin/dotfiles/evil.d/.smex-items")
+	    (setq smex-save-file "~/.emacs.d/.smex-items")
 
 	    (defun lazy-load-smex ()
 	      (interactive)
