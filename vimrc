@@ -84,9 +84,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " FuzzyFinder
-map <leader>e :FufFileWithCurrentBufferDir<CR>
+map <leader>e :FufFile<CR>
 map <leader>b :FufBuffer<CR>
 map <leader>p :MinSCMFindFile<CR>
+map <leader>fb :FufBookmarkDir<CR>
 
 " Fast editing of the .vimrc
 map <leader>rc :e ~/.vimrc<CR>
