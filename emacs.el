@@ -24,6 +24,7 @@
    (:name find-file-in-git-repo)
    (:name markdown-mode)
    (:name ace-jump-mode)
+   (:name less-css-mode)
 
    (:name color-theme
 	  :after

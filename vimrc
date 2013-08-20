@@ -22,10 +22,11 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle "pangloss/vim-javascript"
 Bundle 'snipMate'
 Bundle 'ack.vim'
-Bundle 'walm/jshint.vim'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'ScmFrontEnd-former-name--MinSCM'
+Bundle 'groenewege/vim-less'
+Bundle 'Syntastic'
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -96,5 +97,7 @@ map <leader>so :so ~/.vimrc<CR>
 set splitbelow
 set splitright
 
-" Javascript
-" autocmd BufWritePost *.js JSHint
+let g:syntastic_enable_balloons = 1
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_echo_current_error = 1

@@ -44,7 +44,7 @@ def number_of_matching_window(i3input,targets,current):
         newkey = "(" + str(len(targets[key])) + ") " + key
         options[newkey] = targets[key]
 
-    p1 = Popen([DMENU, '-nb', 'black', '-nf', 'white', '-sb', '#333', '-fn', '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*', '-i'], stdout=PIPE, stdin=PIPE)
+    p1 = Popen([DMENU, '-nb', 'black', '-nf', 'white', '-sb', '#369', '-fn', '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*', '-i'], stdout=PIPE, stdin=PIPE)
     concat = '\n'.join(options.keys())
     i3input = p1.communicate(bytes(concat,'UTF-8'))[0]
     close_stdout(p1)

@@ -25,7 +25,7 @@ bindsym $mod+t exec gnome-terminal
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -nb black -nf white -sb '#333' -fn '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*'
+bindsym $mod+d exec dmenu_run -nb black -nf white -sb '#369' -fn '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*'
 
 # change focus
 bindsym $mod+h focus left
