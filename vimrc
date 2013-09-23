@@ -65,6 +65,7 @@ vmap <S-Tab> <gv
 vmap <Tab> >gv
 
 map <C-Space> ?
+map <C-@> <C-Space>
 map <space> /
 
 map <silent> <leader><CR> :set hlsearch! hlsearch?<CR>
