@@ -143,6 +143,7 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 bindsym $mod+Tab exec python3 ~/.i3/scripts/nextfind.py
+bindsym $mod+n exec node ~/.i3/scripts/newWorkspace.js
 
 for_window [class="^Chrome$" title=" - Chromium$"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none

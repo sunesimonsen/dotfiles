@@ -140,8 +140,8 @@
 	      (interactive "swith: ")
 	      (beginning-of-thing 'symbol)
 	      (let* ((symbol-at-point (thing-at-point 'symbol))
-		     (pattern (format "\\_<%s\\_>" (regexp-quote symbol-at-point))))
-		(query-replace-regexp pattern replacement)))
+                 (pattern (format "\\_<%s\\_>" (regexp-quote symbol-at-point))))
+            (query-replace-regexp pattern replacement)))
 
 	    (define-key evil-normal-state-map "gs" 'query-replace-symbol-at-point)
 

@@ -15,7 +15,7 @@
  '(menu-bar-mode nil)
  '(scroll-bar-mode nil)
  '(scroll-conservatively 1000)
- '(scroll-margin 0)
+ '(scroll-margin 4)
  '(scroll-step 1)
  '(scss-compile-at-save nil)
  '(sgml-basic-offset 4)

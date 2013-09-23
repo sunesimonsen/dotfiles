@@ -40,6 +40,8 @@ alias psi='pacman -Si '
 alias be='bundle exec'
 alias ber='bundle exec rake'
 alias server='python -m SimpleHTTPServer'
+alias pjson='python -m json.tool'
+
 
 # Alias management
 alias ar='source $DOT_FILES_DIR/bash/aliases'

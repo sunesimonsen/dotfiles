@@ -26,7 +26,7 @@ Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'ScmFrontEnd-former-name--MinSCM'
 Bundle 'groenewege/vim-less'
-Bundle 'Syntastic'
+Bundle 'scrooloosesyntastic'
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -101,3 +101,5 @@ let g:syntastic_enable_balloons = 1
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_echo_current_error = 1
+
+au BufRead,BufNewFile *.ko set filetype=html
