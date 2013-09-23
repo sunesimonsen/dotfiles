@@ -27,6 +27,7 @@ Bundle 'FuzzyFinder'
 Bundle 'ScmFrontEnd-former-name--MinSCM'
 Bundle 'groenewege/vim-less'
 Bundle 'scrooloosesyntastic'
+Bundle 'surround.vim'
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -63,8 +64,8 @@ cmap ½ $
 vmap <S-Tab> <gv
 vmap <Tab> >gv
 
+map <C-Space> ?
 map <space> /
-map <c-space> ?
 
 map <silent> <leader><CR> :set hlsearch! hlsearch?<CR>
 
@@ -85,10 +86,13 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " FuzzyFinder
-map <leader>e :FufFile<CR>
+let g:fuf_modesDisable = ['mrufile']
+map <leader>e :FufFileWithFullCwd<CR>
 map <leader>b :FufBuffer<CR>
 map <leader>p :MinSCMFindFile<CR>
+map <leader>cd :FufDirWithFullCwd<CR>
 map <leader>fb :FufBookmarkDir<CR>
+map <leader>æ :FufMruCmd<CR>
 
 " Fast editing of the .vimrc
 map <leader>rc :e ~/.vimrc<CR>
