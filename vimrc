@@ -28,6 +28,9 @@ Bundle 'ScmFrontEnd-former-name--MinSCM'
 Bundle 'groenewege/vim-less'
 Bundle 'scrooloosesyntastic'
 Bundle 'surround.vim'
+Bundle 'nelstrom/vim-qargs'
+Bundle 'visualstar.vim'
+
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
