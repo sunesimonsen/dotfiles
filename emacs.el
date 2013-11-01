@@ -158,7 +158,20 @@
 	    (evil-ex-define-cmd "bo[okmarks]" 'list-bookmarks)
 	    (evil-ex-define-cmd "p[roject]" 'ido-project-root-find-file)
 	    (evil-ex-define-cmd "b[uffer]" 'ido-switch-buffer)
-	    (evil-ex-define-cmd "e[dit]" 'ido-find-file)))
+	    (evil-ex-define-cmd "e[dit]" 'ido-find-file)
+
+        (evil-add-hjkl-bindings magit-branch-manager-mode-map 'emacs
+          "K" 'magit-discard-item
+          "L" 'magit-key-mode-popup-logging)
+
+        (evil-add-hjkl-bindings magit-status-mode-map 'emacs
+          "K" 'magit-discard-item
+          "L" 'magit-key-mode-popup-logging
+          "H" 'magit-toggle-diff-refine-hunk)
+
+        (evil-add-hjkl-bindings magit-log-mode-map 'emacs
+          "L" 'magit-key-mode-popup-logging)
+        ))
 
    (:name smex
 	  :after
