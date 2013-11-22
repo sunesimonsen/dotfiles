@@ -9,22 +9,30 @@ filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set hidden
 
+set backup
+silent execute '!mkdir -p "'.$HOME.'/.vim/tmp"'
+silent execute '!rm -f '.$HOME.'/.vim/tmp/*~'
+set backupdir=$HOME/.vim/tmp/
+set directory=$HOME/.vim/tmp/
+
+set nocompatible               " Be iMproved
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'vividchalk.vim'
 Bundle 'gmarik/vundle'
+Bundle 'vividchalk.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle "pangloss/vim-javascript"
+Bundle 'vim-javascript-syntax'
 Bundle 'snipMate'
 Bundle 'ack.vim'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'ScmFrontEnd-former-name--MinSCM'
+Bundle 'unite.vim'
+" Remember to run make -f make_unix.mak
+Bundle 'Shougo/vimproc'
 Bundle 'groenewege/vim-less'
 Bundle 'scrooloosesyntastic'
 Bundle 'surround.vim'
@@ -74,7 +82,6 @@ map <space> /
 map <silent> <leader><CR> :set hlsearch! hlsearch?<CR>
 
 set ignorecase          " case-insensitive search
-set smartcase
 
 " Dont use smartcase or ignorecase for * and #
 nnoremap * /\<<C-R>=expand('<cword>')<CR>\><CR>
@@ -89,17 +96,34 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" FuzzyFinder
-let g:fuf_modesDisable = ['mrufile']
-map <leader>e :FufFileWithFullCwd<CR>
-map <leader>b :FufBuffer<CR>
-map <leader>p :MinSCMFindFile<CR>
-map <leader>cd :FufDirWithFullCwd<CR>
-map <leader>fb :FufBookmarkDir<CR>
-map <leader>æ :FufMruCmd<CR>
+
+" Unite
+nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
+nnoremap <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert command<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank -start-insert history/yank<cr>
+nnoremap <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
+
+call unite#custom_source('file_rec/async', 'ignore_pattern', 'node_modules/\|lib-cov/')
+
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_rec_async_command = 'ack -f --nofilter'
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+" Menu maps
+let g:unite_source_menu_menus = {}
+"nnoremap <silent>mg :Unite -silent -start-insert menu:git<CR>
 
 " Fast editing of the .vimrc
-map <leader>rc :e ~/.vimrc<CR>
 map <leader>so :so ~/.vimrc<CR>
 
 set splitbelow
