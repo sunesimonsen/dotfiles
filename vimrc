@@ -28,7 +28,6 @@ Bundle 'vividchalk.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-javascript-syntax'
-Bundle 'snipMate'
 Bundle 'ack.vim'
 Bundle 'unite.vim'
 " Remember to run make -f make_unix.mak
@@ -39,6 +38,19 @@ Bundle 'surround.vim'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'visualstar.vim'
 
+if has('python')
+    Bundle 'UltiSnips'
+
+    let g:UltiSnipsSnippetDirectories=['snippets']
+
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+    autocmd BufNewFile,BufRead *.snippets set filetype=snippets
+    autocmd BufNewFile,BufRead *.js :UltiSnipsAddFiletypes javascript
+    autocmd BufNewFile,BufRead *.spec.js :UltiSnipsAddFiletypes mocha
+endif
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -123,6 +135,10 @@ endfunction
 let g:unite_source_menu_menus = {}
 "nnoremap <silent>mg :Unite -silent -start-insert menu:git<CR>
 
+"fugitive
+autocmd BufReadPost fugitive://* set bufhidden=delete
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
 " Fast editing of the .vimrc
 map <leader>so :so ~/.vimrc<CR>
 
@@ -135,3 +151,8 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_echo_current_error = 1
 
 au BufRead,BufNewFile *.ko set filetype=html
+
+" For snippet_complete marker.
+if has('conceal')
+    set conceallevel=2 concealcursor=i
+endif
