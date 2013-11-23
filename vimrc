@@ -50,6 +50,7 @@ if has('python')
     autocmd BufNewFile,BufRead *.snippets set filetype=snippets
     autocmd BufNewFile,BufRead *.js :UltiSnipsAddFiletypes javascript
     autocmd BufNewFile,BufRead *.spec.js :UltiSnipsAddFiletypes mocha
+    autocmd BufNewFile,BufRead *.ko :UltiSnipsAddFiletypes knockout
 endif
 
 " Hide the toolbar
@@ -127,8 +128,9 @@ let g:unite_source_rec_async_command = 'ack -f --nofilter'
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> <C-j> <Plug>(unite_select_next_line)
+  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+  map <buffer> <esc> <Plug>(unite_exit)
 endfunction
 
 " Menu maps
@@ -150,9 +152,4 @@ let g:syntastic_enable_highlighting = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_echo_current_error = 1
 
-au BufRead,BufNewFile *.ko set filetype=html
-
-" For snippet_complete marker.
-if has('conceal')
-    set conceallevel=2 concealcursor=i
-endif
+autocmd BufRead,BufNewFile *.ko set filetype=html
