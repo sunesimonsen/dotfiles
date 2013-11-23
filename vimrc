@@ -116,7 +116,7 @@ nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=files -start-insert file<c
 nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
 nnoremap <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert command<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank -start-insert history/yank<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
 
 call unite#custom_source('file_rec/async', 'ignore_pattern', 'node_modules/\|lib-cov/')
