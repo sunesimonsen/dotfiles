@@ -3,8 +3,7 @@
 # key: binding
 # group: Knockout
 # --
-/*global define, ko*/
-define([], function () {
+define(['knockout'], function (ko) {
     ko.bindingHandlers.${1:name} = {
         init: function (element, valueAccessor) {
             var value = valueAccessor();
