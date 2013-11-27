@@ -110,6 +110,7 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+nnoremap <Leader>ar :.,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 
 " Unite
 nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert repo_files<cr>
