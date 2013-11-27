@@ -27,7 +27,7 @@ Bundle 'gmarik/vundle'
 Bundle 'vividchalk.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'vim-javascript-syntax'
+Bundle 'jelera/vim-javascript-syntax'
 Bundle 'ack.vim'
 Bundle 'unite.vim'
 " Remember to run make -f make_unix.mak
@@ -37,6 +37,7 @@ Bundle 'scrooloosesyntastic'
 Bundle 'surround.vim'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'visualstar.vim'
+Bundle 'sunesimonsen/vim-unite-repo-files'
 
 if has('python')
     Bundle 'UltiSnips'
@@ -111,7 +112,7 @@ map <C-l> <C-W>l
 
 
 " Unite
-nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert repo_files<cr>
 nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
 nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
@@ -119,7 +120,16 @@ nnoremap <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert com
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
 
-call unite#custom_source('file_rec/async', 'ignore_pattern', 'node_modules/\|lib-cov/')
+call unite#custom_source('repo_files', 'ignore_pattern', 'node_modules/\|lib-cov/\|translation-jobs/\|debian/\|calendar-frontend/\|3rdparty/\|calendar/')
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+let g:unite_source_repo_files_rule = {
+    \   'git' : {
+    \   'located' : '.git',
+    \   'command' : 'git',
+    \   'exec' : '%c ls-files --cached --others --exclude-standard',
+    \ } }
 
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_rec_async_command = 'ack -f --nofilter'
