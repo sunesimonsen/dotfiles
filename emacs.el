@@ -169,6 +169,11 @@
           "L" 'magit-key-mode-popup-logging
           "H" 'magit-toggle-diff-refine-hunk)
 
+        (evil-add-hjkl-bindings bookmark-bmenu-mode-map 'emacs
+          "K" 'bookmark-bmenu-delete
+          "L" 'bookmark-bmenu-load
+          )
+
         (evil-add-hjkl-bindings magit-log-mode-map 'emacs
           "L" 'magit-key-mode-popup-logging)
         ))
