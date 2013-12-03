@@ -10,6 +10,8 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set hidden
+" disable line wrapping
+set textwidth=0
 
 set backup
 silent execute '!mkdir -p "'.$HOME.'/.vim/tmp"'
@@ -38,6 +40,7 @@ Bundle 'surround.vim'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'visualstar.vim'
 Bundle 'sunesimonsen/vim-unite-repo-files'
+Bundle 'YankRing.vim'
 
 if has('python')
     Bundle 'UltiSnips'
@@ -111,6 +114,8 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 nnoremap <Leader>ar :.,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+vmap <Leader>as <C-v>_o$A
+vmap <Leader>ap <C-v>_o$I
 
 " Unite
 nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert repo_files<cr>
@@ -164,3 +169,14 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_echo_current_error = 1
 
 autocmd BufRead,BufNewFile *.ko set filetype=html
+
+" Next and previous
+nnoremap øc :cnext<cr>
+nnoremap Øc :clast<cr>
+nnoremap åc :cprev<cr>
+nnoremap Åc :cfirst<cr>
+
+nnoremap øl :lnext<cr>
+nnoremap Øl :llast<cr>
+nnoremap ål :lprev<cr>
+nnoremap Ål :lfirst<cr>
