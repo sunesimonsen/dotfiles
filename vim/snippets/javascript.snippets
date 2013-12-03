@@ -84,4 +84,14 @@ snippet timeout "setTimeout function"
 setTimeout(function () {$0}${2:}, ${1:10});
 endsnippet
 
+snippet .forEach "array.forEach" w
+.forEach(function (${1:item}${2:, ${3:index}}) {
+    $0
+});
+endsnippet
+
+snippet that "var that = this;" w
+var that = this;
+endsnippet
+
 # vim:ft=snippets:
