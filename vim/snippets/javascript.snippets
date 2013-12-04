@@ -84,14 +84,44 @@ snippet timeout "setTimeout function"
 setTimeout(function () {$0}${2:}, ${1:10});
 endsnippet
 
-snippet .forEach "array.forEach" w
-.forEach(function (${1:item}${2:, ${3:index}}) {
-    $0
-});
-endsnippet
-
 snippet that "var that = this;" w
 var that = this;
+endsnippet
+
+snippet forEach "array.forEach" w
+forEach(function (${1:item}) {
+    $0
+})
+endsnippet
+
+snippet filter "array.filter" w
+filter(function (${1:item}) {
+    $0
+})
+endsnippet
+
+snippet map "array.map" w
+map(function (${1:item}) {
+    $0
+})
+endsnippet
+
+snippet every "array.every" w
+every(function (${1:item}) {
+    $0
+})
+endsnippet
+
+snippet some "array.some" w
+some(function (${1:item}) {
+    $0
+})
+endsnippet
+
+snippet reduce "array.reduce" w
+reduce(function (${1:result}, ${2:item}${3:, ${4:index}}) {
+    $0
+}${5:, ${6:initialValue}})
 endsnippet
 
 # vim:ft=snippets:
