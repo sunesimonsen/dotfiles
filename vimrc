@@ -126,9 +126,11 @@ nnoremap <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert com
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
 
-call unite#custom_source('repo_files', 'ignore_pattern', 'translation-jobs/\|calendar-frontend/\|3rdparty/\|calendar/\|debian/\|\.jpg$\|\.png')
+call unite#custom_source('buffer,repo_files,file', 'ignore_pattern', 'translation-jobs/\|calendar-frontend/\|3rdparty/\|calendar/\|debian/\|\.jpg$\|\.png')
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+call unite#custom_source('buffer,file,file_mru,file_rec,repo_files', 'sorters', 'sorter_rank')
 
 let g:unite_source_repo_files_rule = {
     \   'git' : {
