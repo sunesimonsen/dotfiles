@@ -29,7 +29,7 @@ Bundle 'gmarik/vundle'
 Bundle 'vividchalk.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
 Bundle 'ack.vim'
 Bundle 'unite.vim'
 " Remember to run make -f make_unix.mak
