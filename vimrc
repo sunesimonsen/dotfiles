@@ -114,17 +114,18 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 nnoremap <Leader>ar :.,$s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap <Leader>aw :%s/\s\+$//e<cr>
 vmap <Leader>as <C-v>_o$A
 vmap <Leader>ap <C-v>_o$I
 
 " Unite
-nnoremap <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert repo_files<cr>
-nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
-nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-nnoremap <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert command<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
+nnoremap <silent> <leader>p :<C-u>Unite -no-split -buffer-name=files -start-insert repo_files<cr>
+nnoremap <silent> <leader>e :<C-u>Unite -no-split -buffer-name=files -start-insert file<cr>
+nnoremap <silent> <leader>r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <silent> <leader>b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
+nnoremap <silent> <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-insert command<cr>
+nnoremap <silent> <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
 
 call unite#custom_source('repo_files', 'ignore_pattern', 'translation-jobs/\|calendar-frontend/\|3rdparty/\|calendar/\|debian/\|\.jpg$\|\.png')
 call unite#custom_source('buffer,file,file_mru,file_rec,repo_files', 'sorters', 'sorter_rank')
