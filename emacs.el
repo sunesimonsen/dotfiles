@@ -1,5 +1,13 @@
 (require 'thingatpt)
 
+;;; Setup the path
+(let ((path (shell-command-to-string ". ~/.bashrc; echo -n $PATH")))
+  (setenv "PATH" path)
+  (setq exec-path
+        (append
+         (split-string-and-unquote path ":")
+         exec-path)))
+
 ;;; Customize
 (setq custom-file "~/bin/dotfiles/evil.d/custom.el")
 (load custom-file)
