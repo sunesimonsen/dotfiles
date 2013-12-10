@@ -16,6 +16,34 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
+
+;;; IDo mode
+(ido-mode 't)
+(setq ido-enable-flex-matching 't)
+(define-key ido-file-dir-completion-map (kbd "C-c C-s")
+      (lambda()
+        (interactive)
+        (ido-initiate-auto-merge (current-buffer))))
+
+(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
+
+; Font
+(set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+
+; stop forcing me to spell out "yes"
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(define-key key-translation-map (kbd "½") (kbd "$"))
+
+(require 'uniquify)
+(set-variable 'uniquify-buffer-name-style 'forward)
+
+;;; auto-mode-alist
+(add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
       (url-retrieve-synchronously
@@ -185,13 +213,23 @@
         (evil-add-hjkl-bindings magit-log-mode-map 'emacs
           "L" 'magit-key-mode-popup-logging)
 
-        (define-key ido-file-dir-completion-map (kbd "<C-return>") 'ido-select-text)
-        (define-key ido-file-dir-completion-map (kbd "C-j") 'ido-next-match)
-        (define-key ido-file-dir-completion-map (kbd "C-k") 'ido-prev-match)
-        (define-key ido-file-dir-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
-        (define-key ido-file-completion-map (kbd "<C-return>") 'ido-select-text)
-        (define-key ido-file-completion-map (kbd "C-j") 'ido-next-match)
-        (define-key ido-file-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
+        ;(define-key ido-buffer-completion-map (kbd "<C-return>") 'ido-select-text)
+        ;(define-key ido-buffer-completion-map (kbd "C-j") 'ido-next-match)
+        ;(define-key ido-buffer-completion-map (kbd "C-k") 'ido-prev-match)
+        ;(define-key ido-buffer-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
+
+        ;(define-key ido-common-completion-map (kbd "C-j") 'ido-next-match)
+        ;(define-key ido-common-completion-map (kbd "C-k") 'ido-prev-match)
+
+        ;(define-key ido-file-dir-completion-map (kbd "<C-return>") 'ido-select-text)
+        ;(define-key ido-file-dir-completion-map (kbd "C-j") 'ido-next-match)
+        ;(define-key ido-file-dir-completion-map (kbd "C-k") 'ido-prev-match)
+        ;(define-key ido-file-dir-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
+
+        ;(define-key ido-file-completion-map (kbd "<C-return>") 'ido-select-text)
+        ;(define-key ido-file-completion-map (kbd "C-j") 'ido-next-match)
+        ;(define-key ido-file-completion-map (kbd "C-k") 'ido-prev-match)
+        ;(define-key ido-file-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
 
         ))
 
@@ -231,29 +269,9 @@
 (add-to-list 'el-get-recipe-path "~/bin/dotfiles/evil.d/recipes")
 (el-get 'sync my:el-get-packages)
 
-;;; IDo mode
-(ido-mode 't)
-(setq ido-enable-flex-matching 't)
-(define-key ido-file-dir-completion-map (kbd "C-c C-s")
-      (lambda()
-        (interactive)
-        (ido-initiate-auto-merge (current-buffer))))
-
-(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
-(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
-(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
-
-; Font
-(set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-
-; stop forcing me to spell out "yes"
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(define-key key-translation-map (kbd "½") (kbd "$"))
-
-(require 'uniquify)
-(set-variable 'uniquify-buffer-name-style 'forward)
-
-;;; auto-mode-alist
-(add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-hook 'ido-setup-hook '(lambda ()
+        (define-key ido-completion-map (kbd "<C-return>") 'ido-select-text)
+        (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
+        (define-key ido-completion-map (kbd "C-k") 'ido-prev-match)
+        (define-key ido-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
+        ))
