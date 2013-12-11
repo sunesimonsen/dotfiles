@@ -29,7 +29,7 @@ Bundle 'gmarik/vundle'
 Bundle 'vividchalk.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'pangloss/vim-javascript'
+Bundle 'Simple-Javascript-Indenter'
 Bundle 'ack.vim'
 Bundle 'unite.vim'
 " Remember to run make -f make_unix.mak
@@ -41,6 +41,7 @@ Bundle 'nelstrom/vim-qargs'
 Bundle 'visualstar.vim'
 Bundle 'sunesimonsen/vim-unite-repo-files'
 Bundle 'YankRing.vim'
+
 
 if has('python')
     Bundle 'UltiSnips'
@@ -56,6 +57,9 @@ if has('python')
     autocmd BufNewFile,BufRead *.spec.js :UltiSnipsAddFiletypes mocha
     autocmd BufNewFile,BufRead *.ko :UltiSnipsAddFiletypes knockout
 endif
+
+" JavaScript indentation
+let g:SimpleJsIndenter_BriefMode = 1
 
 " Hide the toolbar
 :set guioptions-=m  "remove menu bar
@@ -127,7 +131,7 @@ nnoremap <silent> <leader>c :<C-u>Unite -no-split -buffer-name=commands -start-i
 nnoremap <silent> <leader>y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap <silent> <leader>fb :<C-u>Unite -no-split -buffer-name=bookmarks -start-insert bookmark<cr>
 
-call unite#custom_source('repo_files', 'ignore_pattern', 'translation-jobs/\|calendar-frontend/\|3rdparty/\|calendar/\|debian/\|\.jpg$\|\.png')
+call unite#custom_source('repo_files', 'ignore_pattern', 'translation-jobs/\|calendar-frontend/\|common-frontend/\|3rdparty/ext/\|3rdparty/ext-core/\|calendar/\|debian/\|\.jpg$\|\.png')
 call unite#custom_source('buffer,file,file_mru,file_rec,repo_files', 'sorters', 'sorter_rank')
 
 let g:unite_source_repo_files_rule = {
