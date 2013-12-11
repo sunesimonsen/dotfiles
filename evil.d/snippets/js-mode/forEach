@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: forEach
-# key: forEach
+# key: foreach
 # --
 forEach(function (${1:item}) {
     $0
