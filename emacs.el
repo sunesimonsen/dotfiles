@@ -210,6 +210,8 @@
           "L" 'bookmark-bmenu-load
           )
 
+        (evil-add-hjkl-bindings occur-mode-map 'emacs)
+
         (evil-add-hjkl-bindings magit-log-mode-map 'emacs
           "L" 'magit-key-mode-popup-logging)
 
