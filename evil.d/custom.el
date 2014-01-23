@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote ((".*" . "~/.evil.backups"))))
+ '(blink-cursor-mode nil)
  '(case-replace nil)
  '(dabbrev-case-distinction nil)
  '(dabbrev-case-replace nil)
@@ -13,6 +14,7 @@
  '(ido-auto-merge-delay-time 100)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(initial-scratch-message "")
  '(menu-bar-mode nil)
  '(scroll-bar-mode nil)
  '(scroll-conservatively 1000)
