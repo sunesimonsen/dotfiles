@@ -22,7 +22,6 @@
  '(scroll-step 1)
  '(scss-compile-at-save nil)
  '(sgml-basic-offset 4)
- '(show-trailing-whitespace t)
  '(surround-pairs-alist (quote ((40 "(" . ")") (91 "[" . "]") (123 "{" . "}") (41 "(" . ")") (93 "[" . "]") (125 "{" . "}") (35 "#{" . "}") (98 "(" . ")") (66 "{" . "}") (62 "<" . ">") (116 . surround-read-tag) (60 . surround-read-tag))))
  '(tab-width 4)
  '(tool-bar-mode nil)

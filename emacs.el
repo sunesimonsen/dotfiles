@@ -214,25 +214,6 @@
 
         (evil-add-hjkl-bindings magit-log-mode-map 'emacs
           "L" 'magit-key-mode-popup-logging)
-
-        ;(define-key ido-buffer-completion-map (kbd "<C-return>") 'ido-select-text)
-        ;(define-key ido-buffer-completion-map (kbd "C-j") 'ido-next-match)
-        ;(define-key ido-buffer-completion-map (kbd "C-k") 'ido-prev-match)
-        ;(define-key ido-buffer-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
-
-        ;(define-key ido-common-completion-map (kbd "C-j") 'ido-next-match)
-        ;(define-key ido-common-completion-map (kbd "C-k") 'ido-prev-match)
-
-        ;(define-key ido-file-dir-completion-map (kbd "<C-return>") 'ido-select-text)
-        ;(define-key ido-file-dir-completion-map (kbd "C-j") 'ido-next-match)
-        ;(define-key ido-file-dir-completion-map (kbd "C-k") 'ido-prev-match)
-        ;(define-key ido-file-dir-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
-
-        ;(define-key ido-file-completion-map (kbd "<C-return>") 'ido-select-text)
-        ;(define-key ido-file-completion-map (kbd "C-j") 'ido-next-match)
-        ;(define-key ido-file-completion-map (kbd "C-k") 'ido-prev-match)
-        ;(define-key ido-file-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
-
         ))
 
    (:name smex
