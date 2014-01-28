@@ -61,6 +61,7 @@
    (:name markdown-mode)
    (:name ace-jump-mode)
    (:name evil-nerd-commenter)
+   (:name evil-little-word)
 ;   (:name less-css-mode)
 
    (:name color-theme
