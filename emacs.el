@@ -62,6 +62,7 @@
    (:name ace-jump-mode)
    (:name evil-nerd-commenter)
    (:name evil-little-word)
+   (:name ido-goto-symbol)
 ;   (:name less-css-mode)
 
    (:name color-theme
@@ -163,6 +164,7 @@
 	    (define-prefix-command 'evil-leader-map)
 	    (define-key evil-leader-map "," 'evil-repeat-find-char)
 	    (define-key evil-leader-map "p" 'find-file-in-git-repo)
+	    (define-key evil-leader-map "o" 'ido-goto-symbol)
 	    (define-key evil-leader-map "e" 'ido-find-file)
 	    (define-key evil-leader-map "b" 'ido-switch-buffer)
 	    (define-key evil-leader-map "w" 'evil-write)
@@ -259,3 +261,18 @@
         (define-key ido-completion-map (kbd "C-k") 'ido-prev-match)
         (define-key ido-completion-map (kbd "<C-delete>") 'ido-delete-file-at-head)
         ))
+
+;;; IMenu
+(defun my-js-imenu-make-index ()
+  (save-excursion
+    (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
+                               (nil "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
+
+(defun my-js-mode-hook ()
+  (setq imenu-create-index-function 'my-js-imenu-make-index))
+
+(add-hook 'js-mode-hook 'my-js-mode-hook)
+
+;;; TodoTxt
+(setq todotxt-default-file (expand-file-name "~/Dropbox/todo/todo.txt"))
+(add-to-list 'auto-mode-alist '("/todo.txt$" . todotxt-mode))
