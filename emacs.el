@@ -63,6 +63,7 @@
    (:name evil-nerd-commenter)
    (:name evil-little-word)
    (:name ido-goto-symbol)
+   (:name todotxt-mode)
 ;   (:name less-css-mode)
 
    (:name color-theme

@@ -2,5 +2,5 @@
        :website "https://github.com/avillafiorita/todotxt-mode"
        :description "Major mode for handling the todotxt format"
        :type github
-       :pkgname "avillafiorita/todotxt-mode"
+       :pkgname "sunesimonsen/todotxt-mode"
        :features todotxt-mode)
