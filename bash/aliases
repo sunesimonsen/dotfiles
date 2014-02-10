@@ -2,6 +2,7 @@
 alias ls='ls --color=auto'
 alias ll='ls -laGh'
 alias ..='cd ..'
+alias hr='$DOT_FILES_DIR/hr'
 
 # clipboard
 alias copy="xclip"
@@ -23,11 +24,6 @@ alias cdh='cd ~'
 alias fn='find . -name '
  
 alias open="xdg-open"
-
-# Places
-alias projects="cd ~/Projects"
-alias downloads="cd ~/Downloads"
-alias desktop="cd ~/Desktop"
 
 # pacman 
 function pss { 
