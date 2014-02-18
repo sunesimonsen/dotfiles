@@ -57,7 +57,6 @@
    (:name evil-surround)
    (:name evil-numbers)
    (:name flymake-cursor)
-   (:name find-file-in-git-repo)
    (:name markdown-mode)
    (:name ace-jump-mode)
    (:name evil-nerd-commenter)
@@ -65,6 +64,18 @@
    (:name ido-goto-symbol)
    (:name todotxt-mode)
 ;   (:name less-css-mode)
+
+   (:name find-file-in-git-repo
+          :after
+          (progn
+            (defun goto-alternate-file ()
+              (interactive)
+              (let ((file-name (file-name-nondirectory (buffer-file-name))))
+
+                (find-file-in-git-repo
+                 (if (string-match "\\.spec\\.js$" file-name)
+                     (replace-match ".js" nil nil file-name)
+                   (replace-regexp-in-string ".js$" ".spec.js" file-name)))))))
 
    (:name color-theme
 	  :after
@@ -169,6 +180,7 @@
 	    (define-key evil-leader-map "e" 'ido-find-file)
 	    (define-key evil-leader-map "b" 'ido-switch-buffer)
 	    (define-key evil-leader-map "w" 'evil-write)
+	    (define-key evil-leader-map "a" 'goto-alternate-file)
 	    (define-key evil-motion-state-map "," 'evil-leader-map)
 
 	    (define-key evil-motion-state-map ";" 'evil-repeat-find-char-reverse)
