@@ -2,6 +2,6 @@
 # name: prototype 
 # key: proto
 # --
-${1:`(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`}.prototype.${2:member} = function () {
+${1:`(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`}.prototype.${2:member} = function ($3) {
     $0
 };

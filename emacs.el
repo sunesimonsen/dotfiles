@@ -166,7 +166,6 @@
 
 	    (define-key evil-motion-state-map "\C-ø" 'evil-jump-to-tag)
 
-	    (define-key evil-insert-state-map (kbd "<tab>") 'yas/expand)
 	    (define-key evil-visual-state-map (kbd "<tab>") ">gv")
 	    (define-key evil-visual-state-map (kbd "<backtab>") "<gv")
 
@@ -184,7 +183,7 @@
 	    (define-key evil-motion-state-map "," 'evil-leader-map)
 
 	    (define-key evil-motion-state-map ";" 'evil-repeat-find-char-reverse)
-
+        
 	    (define-key evil-normal-state-map "g," 'goto-last-change)
 	    (define-key evil-normal-state-map "g;" 'goto-last-change-reverse)
 
@@ -289,3 +288,5 @@
 ;;; TodoTxt
 (setq todotxt-default-file (expand-file-name "~/Dropbox/todo/todo.txt"))
 (add-to-list 'auto-mode-alist '("/todo.txt$" . todotxt-mode))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
