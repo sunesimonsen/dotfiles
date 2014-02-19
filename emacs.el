@@ -68,14 +68,25 @@
    (:name find-file-in-git-repo
           :after
           (progn
-            (defun goto-alternate-file ()
+            (defun goto-alternate-git-file ()
               (interactive)
-              (let ((file-name (file-name-nondirectory (buffer-file-name))))
+              (let ((file-name (file-name-nondirectory (buffer-file-name)))
+                    (list '(("\\.spec\\.js" ".js")
+                            ("\\.h" ".c")))
+                    (found nil))
 
-                (find-file-in-git-repo
-                 (if (string-match "\\.spec\\.js$" file-name)
-                     (replace-match ".js" nil nil file-name)
-                   (replace-regexp-in-string ".js$" ".spec.js" file-name)))))))
+
+                (while (and list (not found))
+                  (let* ((config (pop list))
+                         (regexp (nth 0 config))
+                         (replacement (nth 1 config)))
+                    (when (string-match regexp file-name)
+                      (setq found (replace-match replacement nil nil file-name)))))
+
+                (when (not found)
+                  (setq found (file-name-sans-extension file-name)))
+
+                (find-file-in-git-repo found)))))
 
    (:name color-theme
 	  :after
@@ -179,11 +190,11 @@
 	    (define-key evil-leader-map "e" 'ido-find-file)
 	    (define-key evil-leader-map "b" 'ido-switch-buffer)
 	    (define-key evil-leader-map "w" 'evil-write)
-	    (define-key evil-leader-map "a" 'goto-alternate-file)
+	    (define-key evil-leader-map "a" 'goto-alternate-git-file)
 	    (define-key evil-motion-state-map "," 'evil-leader-map)
 
 	    (define-key evil-motion-state-map ";" 'evil-repeat-find-char-reverse)
-        
+
 	    (define-key evil-normal-state-map "g," 'goto-last-change)
 	    (define-key evil-normal-state-map "g;" 'goto-last-change-reverse)
 
