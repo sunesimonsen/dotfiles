@@ -63,30 +63,9 @@
    (:name evil-little-word)
    (:name ido-goto-symbol)
    (:name todotxt-mode)
+   (:name find-file-in-git-repo)
 ;   (:name less-css-mode)
 
-   (:name find-file-in-git-repo
-          :after
-          (progn
-            (defun goto-alternate-git-file ()
-              (interactive)
-              (let ((file-name (file-name-nondirectory (buffer-file-name)))
-                    (list '(("\\.spec\\.js" ".js")
-                            ("\\.h" ".c")))
-                    (found nil))
-
-
-                (while (and list (not found))
-                  (let* ((config (pop list))
-                         (regexp (nth 0 config))
-                         (replacement (nth 1 config)))
-                    (when (string-match regexp file-name)
-                      (setq found (replace-match replacement nil nil file-name)))))
-
-                (when (not found)
-                  (setq found (file-name-sans-extension file-name)))
-
-                (find-file-in-git-repo found)))))
 
    (:name color-theme
 	  :after
