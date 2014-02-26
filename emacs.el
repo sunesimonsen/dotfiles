@@ -43,6 +43,7 @@
 ;;; auto-mode-alist
 (add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.cjson$" . js-mode))
 
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
