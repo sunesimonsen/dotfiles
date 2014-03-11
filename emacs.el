@@ -17,6 +17,14 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 
+;;; Winner-mode
+(defun winner-toggle-expand ()
+  "Toggle expanding a window using winner-mode"
+  (interactive)
+  (if (< 1 (length (cddar winner-currents)))
+      (delete-other-windows)
+    (winner-undo)))
+
 ;;; IDo mode
 (ido-mode 't)
 (setq ido-enable-flex-matching 't)
@@ -142,7 +150,7 @@
 	    (define-key evil-motion-state-map (kbd "M-c") 'delete-window)
 	    (define-key evil-motion-state-map (kbd "M-v") 'split-window-horizontally)
 	    (define-key evil-motion-state-map (kbd "M-s") 'split-window-vertically)
-	    (define-key evil-motion-state-map (kbd "M-r") 'winner-undo)
+	    (define-key evil-motion-state-map (kbd "M-r") 'winner-toggle-expand)
 	    (define-key evil-motion-state-map (kbd "M--") 'evil-window-decrease-height)
 	    (define-key evil-motion-state-map (kbd "M-+") 'evil-window-increase-height)
 
