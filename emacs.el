@@ -142,8 +142,10 @@
 	    (define-key evil-motion-state-map (kbd "M-c") 'delete-window)
 	    (define-key evil-motion-state-map (kbd "M-v") 'split-window-horizontally)
 	    (define-key evil-motion-state-map (kbd "M-s") 'split-window-vertically)
+	    (define-key evil-motion-state-map (kbd "M-r") 'winner-undo)
 	    (define-key evil-motion-state-map (kbd "M--") 'evil-window-decrease-height)
 	    (define-key evil-motion-state-map (kbd "M-+") 'evil-window-increase-height)
+
 
 	    (define-key evil-inner-text-objects-map "å" 'evil-inner-bracket)
 	    (define-key evil-inner-text-objects-map "ø" 'evil-inner-bracket)

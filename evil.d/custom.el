@@ -28,6 +28,7 @@
  '(tool-bar-mode nil)
  '(truncate-lines t)
  '(visible-bell t)
+ '(winner-mode t)
  '(x-select-enable-clipboard t)
  '(yas-prompt-functions (quote (yas-ido-prompt yas-x-prompt yas-dropdown-prompt yas-completing-prompt yas-ido-prompt yas-no-prompt)))
  '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/dropdown-prompt yas/completing-prompt yas/no-prompt))))
