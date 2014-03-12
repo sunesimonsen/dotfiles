@@ -16,15 +16,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-
-;;; Winner-mode
-(defun winner-toggle-expand ()
-  "Toggle expanding a window using winner-mode"
-  (interactive)
-  (if (< 1 (length (cddar winner-currents)))
-      (delete-other-windows)
-    (winner-undo)))
-
 ;;; IDo mode
 (ido-mode 't)
 (setq ido-enable-flex-matching 't)
@@ -75,6 +66,22 @@
    (:name find-file-in-git-repo)
 ;   (:name less-css-mode)
 
+   (:name layout-restore
+          :after
+          (progn
+            (require 'layout-restore)
+
+            (defun layout-toggle-expand ()
+              "Toggle expanding a window using layout-restore"
+              (interactive)
+              (if (= 1 (length (window-list)))
+                  (layout-restore)
+                (delete-other-windows)))
+
+            (defadvice delete-other-windows (before delete-other-windows-before activate)
+              (when (< 1 (length (window-list)))
+                (setq layout-configuration-alist nil)
+                (layout-save-current)))))
 
    (:name color-theme
 	  :after
@@ -150,7 +157,7 @@
 	    (define-key evil-motion-state-map (kbd "M-c") 'delete-window)
 	    (define-key evil-motion-state-map (kbd "M-v") 'split-window-horizontally)
 	    (define-key evil-motion-state-map (kbd "M-s") 'split-window-vertically)
-	    (define-key evil-motion-state-map (kbd "M-r") 'winner-toggle-expand)
+	    (define-key evil-motion-state-map (kbd "M-f") 'layout-toggle-expand)
 	    (define-key evil-motion-state-map (kbd "M--") 'evil-window-decrease-height)
 	    (define-key evil-motion-state-map (kbd "M-+") 'evil-window-increase-height)
 
