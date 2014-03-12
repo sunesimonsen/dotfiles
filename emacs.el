@@ -71,6 +71,9 @@
           (progn
             (require 'layout-restore)
 
+            (setq layout-restore-after-switchbuffer nil)
+            (setq layout-restore-after-killbuffer nil)
+
             (defun layout-toggle-expand ()
               "Toggle expanding a window using layout-restore"
               (interactive)
