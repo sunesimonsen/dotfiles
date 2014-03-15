@@ -65,6 +65,7 @@
    (:name ido-bookmark-jump)
    (:name todotxt-mode)
    (:name find-file-in-git-repo)
+   (:name evil-walk-on-the-edge)
    (:name magit)
 ;   (:name less-css-mode)
 
@@ -87,28 +88,6 @@
 	  :after
 	  (progn
 	    (evil-mode 't)
-
-	    (evil-define-motion evil-move-forward-paren (count)
-	      "Move forward to next (, [, {, }, ] or )"
-	      :jump t
-	      :type inclusive
-	      (interactive "<c>")
-	      (setq count (or count 1))
-	      (forward-char)
-	      (re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer count)
-	      (while (in-string-p)
-		(re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer))
-	      (backward-char))
-
-	    (evil-define-motion evil-move-backward-paren (count)
-	      "Move backward to previous (, [, {, }, ] or )"
-	      :jump t
-	      :type inclusive
-	      (interactive "<c>")
-	      (setq count (or count 1))
-	      (re-search-backward "\\s(\\|\\s)" nil 'beginning-of-buffer count)
-	      (while (in-string-p)
-		(re-search-backward "\\s(\\|\\s)")))
 
 	    (define-key evil-motion-state-map "æ" 'evil-ex)
 	    (define-key evil-normal-state-map "Æ" 'evil-execute-macro)
@@ -172,6 +151,7 @@
 	    (define-key evil-leader-map "b" 'ido-switch-buffer)
 	    (define-key evil-leader-map "w" 'evil-write)
 	    (define-key evil-leader-map "a" 'goto-alternate-git-file)
+	    (define-key evil-leader-map "g" 'ido-bookmark-jump)
 	    (define-key evil-motion-state-map "," 'evil-leader-map)
 
 	    (define-key evil-motion-state-map ";" 'evil-repeat-find-char-reverse)
