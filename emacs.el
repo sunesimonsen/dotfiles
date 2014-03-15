@@ -12,9 +12,16 @@
 (setq custom-file "~/bin/dotfiles/evil.d/custom.el")
 (load custom-file)
 
-(setq el-get-user-package-directory "~/.emacs.d/el-get-init-files/")
-
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(setq el-get-user-package-directory "~/.emacs.d/el-get-init-files/")
 
 ;;; IDo mode
 (ido-mode 't)
@@ -44,13 +51,6 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.cjson$" . js-mode))
 
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
 (setq
  el-get-sources
  '((:name el-get)
@@ -62,29 +62,11 @@
    (:name evil-nerd-commenter)
    (:name evil-little-word)
    (:name ido-goto-symbol)
+   (:name ido-bookmark-jump)
    (:name todotxt-mode)
    (:name find-file-in-git-repo)
+   (:name magit)
 ;   (:name less-css-mode)
-
-   (:name layout-restore
-          :after
-          (progn
-            (require 'layout-restore)
-
-            (setq layout-restore-after-switchbuffer nil)
-            (setq layout-restore-after-killbuffer nil)
-
-            (defun layout-toggle-expand ()
-              "Toggle expanding a window using layout-restore"
-              (interactive)
-              (if (= 1 (length (window-list)))
-                  (layout-restore)
-                (delete-other-windows)))
-
-            (defadvice delete-other-windows (before delete-other-windows-before activate)
-              (when (< 1 (length (window-list)))
-                (setq layout-configuration-alist nil)
-                (layout-save-current)))))
 
    (:name color-theme
 	  :after
@@ -160,7 +142,6 @@
 	    (define-key evil-motion-state-map (kbd "M-c") 'delete-window)
 	    (define-key evil-motion-state-map (kbd "M-v") 'split-window-horizontally)
 	    (define-key evil-motion-state-map (kbd "M-s") 'split-window-vertically)
-	    (define-key evil-motion-state-map (kbd "M-f") 'layout-toggle-expand)
 	    (define-key evil-motion-state-map (kbd "M--") 'evil-window-decrease-height)
 	    (define-key evil-motion-state-map (kbd "M-+") 'evil-window-increase-height)
 
@@ -217,7 +198,7 @@
 	    (define-key minibuffer-local-isearch-map [escape]
 	      'keyboard-escape-quit)
 
-	    (evil-ex-define-cmd "bo[okmarks]" 'list-bookmarks)
+	    (evil-ex-define-cmd "bo[okmarks]" 'ido-bookmark-jump)
 	    (evil-ex-define-cmd "p[roject]" 'ido-project-root-find-file)
 	    (evil-ex-define-cmd "b[uffer]" 'ido-switch-buffer)
 	    (evil-ex-define-cmd "e[dit]" 'ido-find-file)
@@ -262,9 +243,9 @@
    (:name yasnippet
       :after
       (progn
-        (setq yas/snippet-dirs
+        (setq yas-snippet-dirs
               '("~/bin/dotfiles/evil.d/snippets"))
-        (yas/global-mode 't)))
+        (yas-global-mode 't)))
 
    (:name flymake-node-jshint
           :after
