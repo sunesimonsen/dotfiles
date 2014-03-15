@@ -170,10 +170,10 @@
 	    (define-key evil-inner-text-objects-map "Å" 'evil-inner-curly)
 	    (define-key evil-inner-text-objects-map "Ø" 'evil-inner-curly)
 
-	    (define-key evil-motion-state-map "gø" 'evil-jump-to-tag)
+	    (define-key evil-motion-state-map "gt" 'evil-jump-to-tag)
 	    (define-key evil-motion-state-map "gk" 'evil-ace-jump-word-mode)
-	    (define-key evil-motion-state-map "gn" 'flymake-goto-next-error)
-	    (define-key evil-motion-state-map "gp" 'flymake-goto-prev-error)
+	    (define-key evil-motion-state-map "gå" 'flymake-goto-prev-error)
+	    (define-key evil-motion-state-map "gø" 'flymake-goto-next-error)
 
 	    (define-key evil-motion-state-map "\C-ø" 'evil-jump-to-tag)
 
