@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: each
-# key: each
-# group: jQuery
-# --
-each(function (index, element) {
-               $0   
-})${1:;}

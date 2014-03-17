@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: methodCall
-# key: c
-# --
-${1:method}($2)$0

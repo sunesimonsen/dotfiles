@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: reduce
-# key: reduce
-# --
-reduce(function (${1:previousValue}, ${2:currentValue}) {
-    $0
-}${3:, ${4:initialValue}})

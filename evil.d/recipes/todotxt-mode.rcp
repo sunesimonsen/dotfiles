@@ -1,6 +1,0 @@
-(:name todotxt-mode
-       :website "https://github.com/avillafiorita/todotxt-mode"
-       :description "Major mode for handling the todotxt format"
-       :type github
-       :pkgname "avillafiorita/todotxt-mode"
-       :features todotxt-mode)

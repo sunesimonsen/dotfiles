@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: dbl
-# key: dbl
-# --
-console.log('\n\n\n\n\n\n\n\n');
-console.log('------------ debug start -------------');
-console.log($0);
-console.log('------------- debug end --------------');
-console.log('\n\n\n\n\n\n\n\n');
