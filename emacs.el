@@ -87,6 +87,7 @@
    (:name evil
 	  :after
 	  (progn
+        (setq evil-search-module 'evil-search)
 	    (evil-mode 't)
 
 	    (define-key evil-motion-state-map "æ" 'evil-ex)
