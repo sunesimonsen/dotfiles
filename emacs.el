@@ -67,7 +67,7 @@
    (:name find-file-in-git-repo)
    (:name evil-walk-on-the-edge)
    (:name magit)
-;   (:name less-css-mode)
+   (:name less-css-mode)
 
    (:name color-theme
 	  :after
