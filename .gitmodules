@@ -4,3 +4,7 @@
 [submodule "i3/scripts"]
 	path = i3/scripts
 	url = https://github.com/yiuin/i3-wm-scripts.git
+[submodule "evil-config"]
+	path = evil-config
+	url = git@github.com:sunesimonsen/evil-config.git
+	branch = master
