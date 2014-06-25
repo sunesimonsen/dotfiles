@@ -16,6 +16,7 @@ alias gp='git pull'
 alias gpr='git pull --rebase'
 alias gc='git commit'
 alias gcm='git commit -m'
+alias gpush='make lint && make client-test && git push'
 
 # Navigation 
 alias cdp='cd ~/Projects'
