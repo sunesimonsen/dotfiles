@@ -8,7 +8,7 @@ alias hr='$DOT_FILES_DIR/hr'
 alias copy="xclip"
 alias paste="xclip -o"
 
-# GIT 
+# GIT
 alias g='git'
 alias gst='git status'
 alias gaa='git add .'
@@ -18,22 +18,22 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gpush='make lint && make client-test && git push'
 
-# Navigation 
+# Navigation
 alias cdp='cd ~/Projects'
 alias cdh='cd ~'
 
 alias fn='find . -name '
- 
+
 alias open="xdg-open"
 
-# pacman 
-function pss { 
+# pacman
+function pss {
     pacman -Ss "$1" | less -FXRS
 }
 
-alias psi='pacman -Si ' 
+alias psi='pacman -Si '
 
-# Bundle 
+# Bundle
 alias be='bundle exec'
 alias ber='bundle exec rake'
 alias server='python -m SimpleHTTPServer'
@@ -49,3 +49,8 @@ alias dev='make development'
 
 # NPM
 alias npmofficial='npm --userconfig ~/.npmrc-official'
+
+# One git
+function onegit() {
+    git clone git.one.com:/git/${1}.git $2
+}
