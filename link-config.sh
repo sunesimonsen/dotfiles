@@ -29,4 +29,7 @@ linkConfig dunst .config/dunst
 linkConfig bin/hr .local/bin/hr
 linkConfig bin/runtests .local/bin/runtests
 
+chmod +x $DOTFILES/bin/*
+chmod +x $DOTFILES/z/z.sh
+
 popd > /dev/null

@@ -2,7 +2,6 @@
 alias ls='ls --color=auto'
 alias ll='ls -laGh'
 alias ..='cd ..'
-alias hr='$DOT_FILES_DIR/hr'
 
 # clipboard
 alias copy="xclip"
