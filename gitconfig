@@ -21,7 +21,3 @@
 [push]
     # Only push branches that have been set up to track a remote branch.
     default = current
-[merge]
-    tool = mymeld
-[mergetool "mymeld"]
-    cmd = $HOME/bin/dotfiles/gitmerge $BASE $LOCAL $REMOTE $MERGED
