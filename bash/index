@@ -1,0 +1,5 @@
+export DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+. $DOTFILES/bash/env
+. $DOTFILES/bash/config
+. $DOTFILES/bash/aliases

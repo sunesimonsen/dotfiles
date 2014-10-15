@@ -40,8 +40,8 @@ alias pjson='python -m json.tool'
 
 
 # Alias management
-alias ar='source $DOT_FILES_DIR/bash/aliases'
-alias ae='$EDITOR $DOT_FILES_DIR/bash/aliases'
+alias ar='source $DOTFILES/bash/aliases'
+alias ae='$EDITOR $DOTFILES/bash/aliases'
 
 # One develoment
 alias dev='make development'
