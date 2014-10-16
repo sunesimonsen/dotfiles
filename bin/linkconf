@@ -1,9 +1,10 @@
 #!/bin/bash
 DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-echo ". \"$DOTFILES/bash/index\"" > bashrc.generated
-
 pushd ~ > /dev/null
+
+echo ". \"$DOTFILES/bash/index\"" > $DOTFILES/bashrc.generated
+chmod +x $DOTFILES/bin/*
 
 function linkConfig {
     if [ ! -f "$2" ] || [ -L "$2" ]; then
@@ -29,9 +30,5 @@ linkConfig i3 .i3
 linkConfig Xmodmap .Xmodmap
 linkConfig Xresources .Xresources
 linkConfig dunst .config/dunst
-linkConfig bin/hr .local/bin/hr
-linkConfig bin/runtests .local/bin/runtests
-
-chmod +x $DOTFILES/bin/*
 
 popd > /dev/null

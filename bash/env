@@ -8,7 +8,7 @@ then
 fi
 
 export M2_HOME=/opt/maven
-export PATH=./node_modules/.bin:~/.local/bin:$PATH:$M2_HOME/bin
+export PATH=$DOTFILES/bin:./node_modules/.bin:~/.local/bin:$PATH:$M2_HOME/bin
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
