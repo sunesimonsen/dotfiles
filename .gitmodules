@@ -1,9 +1,11 @@
 [submodule "z"]
 	path = z
 	url = https://github.com/rupa/z.git
+	branch = master
 [submodule "i3/scripts"]
 	path = i3/scripts
 	url = https://github.com/yiuin/i3-wm-scripts.git
+	branch = master
 [submodule "evil-config"]
 	path = evil-config
 	url = git@github.com:sunesimonsen/evil-config.git
