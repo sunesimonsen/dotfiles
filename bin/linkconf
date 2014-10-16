@@ -1,5 +1,8 @@
 #!/bin/bash
 DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+echo ". \"$DOTFILES/bash/index\"" > bashrc.generated
+
 pushd ~ > /dev/null
 
 function linkConfig {
@@ -17,8 +20,7 @@ function linkConfig {
     fi
 }
 
-echo ". \"$DOTFILES/bash/index\"" > .bashrc
-
+linkConfig bashrc.generated .bashrc
 linkConfig evil-config/emacs.el .emacs
 linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
