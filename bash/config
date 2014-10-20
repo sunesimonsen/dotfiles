@@ -6,6 +6,20 @@ PS1="\[\033[G\]$PS1"
 # z
 . $DOTFILES/z/z.sh
 
+# p project navigation
+function p()
+{
+    cd ~/Projects/$1
+}
+
+function _projects_complete_()
+{
+    local word=${COMP_WORDS[COMP_CWORD]}
+    local projectdirs=$(find ~/Projects/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr '\n' ' ')
+    COMPREPLY=($(compgen -W "$projectdirs" -- "${word}"))
+}
+complete -F _projects_complete_ p
+
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # RVM bash completion
