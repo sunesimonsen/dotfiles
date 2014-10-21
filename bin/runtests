@@ -6,7 +6,6 @@ then
     currentDir="$(pwd)"
     QUERY=$(node -e "console.log(decodeURIComponent($description))")
     cd $rootDir
-    echo "define test $currentDir $rootDir '$QUERY'"
     ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R dot http-pub/test/index.html?grep=$QUERY
     cd $currentDir
 else
