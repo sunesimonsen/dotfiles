@@ -1,5 +1,5 @@
-export EDITOR=evil
-export GIT_EDITOR=evil
+export EDITOR='emacsclient -t'
+export GIT_EDITOR='emacsclient -t'
 export BROWSER=chromium-browser
 
 if [ -d ~/bin ]
