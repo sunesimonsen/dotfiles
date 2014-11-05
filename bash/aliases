@@ -17,6 +17,9 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gpush='make lint && make client-test && git push'
 
+# Editor
+alias evil='emacsclient -t'
+
 # Navigation
 alias cdp='cd ~/Projects'
 alias cdh='cd ~'
