@@ -176,3 +176,6 @@ bar {
 }
 
 focus_follows_mouse no
+
+exec --no-startup-id feh --bg-scale ~/.i3/wallpapers/Fabric.jpg
+exec --no-startup-id ck-launch-session nm-applet
