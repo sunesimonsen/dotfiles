@@ -31,6 +31,6 @@ linkConfig Xmodmap .Xmodmap
 linkConfig Xresources .Xresources
 linkConfig dunst .config/dunst
 linkConfig gtkrc-2.0 .gtkrc-2.0
-linkConfig gtkrc-3.0/settings.ini .config/gtkrc-3.0/settings.ini
+linkConfig gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
 
 popd > /dev/null
