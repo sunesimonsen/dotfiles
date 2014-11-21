@@ -25,6 +25,8 @@ linkConfig bashrc.generated .bashrc
 linkConfig evil-config/emacs.el .emacs
 linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
+linkConfig vifm/vifmrc .vifm/vifmrc
+linkConfig vifm/colors .vifm/colors
 linkConfig gitconfig .gitconfig
 linkConfig i3 .i3
 linkConfig Xmodmap .Xmodmap
