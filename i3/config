@@ -18,14 +18,17 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
-bindsym $mod+t exec gnome-terminal
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+t exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run -nb black -nf white -sb '#369' -fn '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*'
+
+#Vifm
+bindsym $mod+e exec i3-sensible-terminal -e vifm
 
 # change focus
 bindsym $mod+h focus left
