@@ -126,3 +126,7 @@ set vifminfo=bookmarks,chistory,shistory,phistory
 :map <space> /
 :map æ :
 set ignorecase
+
+mark h ~ ../
+mark p ~/Projects/ ../
+mark d ~/Downloads/ ../

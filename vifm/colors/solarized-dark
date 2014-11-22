@@ -20,7 +20,7 @@
 " none
 
 
-highlight Win             cterm=none ctermfg=default    ctermbg=none
+highlight Win             cterm=none ctermfg=default    ctermbg=black
 
 highlight TopLine         cterm=none ctermfg=blue       ctermbg=233
 highlight TopLineSel      cterm=none ctermfg=blue       ctermbg=233

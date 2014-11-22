@@ -125,7 +125,7 @@ bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+E exit
 # lock screen
-bindsym Control+Mod1+l exec i3lock
+bindsym Control+Mod1+l exec i3lock -i ~/.i3/wallpapers/Fabric.png
 
 # Print screen
 bindsym Print exec ~/.i3/scripts/printscreen.sh root
@@ -185,5 +185,5 @@ bar {
 
 focus_follows_mouse no
 
-exec --no-startup-id feh --bg-scale ~/.i3/wallpapers/Fabric.jpg
+exec --no-startup-id feh --bg-scale ~/.i3/wallpapers/Fabric.png
 exec --no-startup-id ck-launch-session nm-applet
