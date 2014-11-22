@@ -10,6 +10,3 @@
 	path = evil-config
 	url = git@github.com:sunesimonsen/evil-config.git
 	branch = master
-[submodule "vifm/colors"]
-	path = vifm/colors
-	url = https://github.com/jubalh/vifm-colors
