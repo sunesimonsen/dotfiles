@@ -1,15 +1,17 @@
 #!/bin/bash
 
 SCREEN_DIR=~/Pictures/screenshots/
-#SCREEN_PROMPT=1
+SCREEN_PROMPT=1
 
-window='root'
+window=''
 
 case $1 in
   root)
     window='root';;
   active)
     window=`xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | cut -d' ' -f5`;;
+  area)
+    window='';;
 esac
 
 [ ! -z "$SCREEN_PROMPT" ] && \
@@ -26,8 +28,11 @@ fi
 
 filename="$name-`date +%Y-%m-%d_%H-%M-%S`.png"
 
-import -border -window $window "$SCREEN_DIR/$filename"
-
+if [ -z "$window" ];then
+    import "$SCREEN_DIR/$filename"
+else
+    import -border -window $window "$SCREEN_DIR/$filename"
+fi
 
 ln -sf "$filename" $SCREEN_DIR/last
 

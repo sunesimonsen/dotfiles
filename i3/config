@@ -126,7 +126,8 @@ bindsym Control+Mod1+l exec gnome-screensaver-command -l
 
 # Print screen
 bindsym Print exec ~/.i3/scripts/printscreen.sh root
-bindsym $mod+Print exec ~/.i3/scripts/printscreen.sh active
+bindsym Mod1+Print exec ~/.i3/scripts/printscreen.sh active
+bindsym $mod+Print exec ~/.i3/scripts/printscreen.sh area
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
