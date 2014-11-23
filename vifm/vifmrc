@@ -130,3 +130,6 @@ set ignorecase
 mark h ~ ../
 mark p ~/Projects/ ../
 mark d ~/Downloads/ ../
+
+command unpack aunpack %f:p
+command extract aunpack --extract-to=%D %f:p
