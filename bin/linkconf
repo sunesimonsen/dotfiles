@@ -29,7 +29,6 @@ linkConfig vifm/vifmrc .vifm/vifmrc
 linkConfig vifm/colors .vifm/colors
 linkConfig gitconfig .gitconfig
 linkConfig i3 .i3
-linkConfig Xmodmap .Xmodmap
 linkConfig Xresources .Xresources
 linkConfig dunst .config/dunst
 linkConfig gtkrc-2.0 .gtkrc-2.0
