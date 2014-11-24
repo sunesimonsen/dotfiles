@@ -5,23 +5,8 @@
 set nocompatible               " be iMproved
 filetype off
 
-filetype plugin indent on
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set hidden
-" disable line wrapping
-set textwidth=0
-
-set backup
-silent execute '!mkdir -p "'.$HOME.'/.vim/tmp"'
-silent execute '!rm -f '.$HOME.'/.vim/tmp/*~'
-set backupdir=$HOME/.vim/tmp/
-set directory=$HOME/.vim/tmp/
-
-set nocompatible               " Be iMproved
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
@@ -35,12 +20,27 @@ Bundle 'unite.vim'
 " Remember to run make -f make_unix.mak
 Bundle 'Shougo/vimproc'
 Bundle 'groenewege/vim-less'
-Bundle 'scrooloosesyntastic'
 Bundle 'surround.vim'
 Bundle 'nelstrom/vim-qargs'
 Bundle 'visualstar.vim'
 Bundle 'sunesimonsen/vim-unite-repo-files'
 Bundle 'YankRing.vim'
+
+call vundle#end()
+
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set hidden
+" disable line wrapping
+set textwidth=0
+
+set backup
+silent execute '!mkdir -p "'.$HOME.'/.vim/tmp"'
+silent execute '!rm -f '.$HOME.'/.vim/tmp/*~'
+set backupdir=$HOME/.vim/tmp/
+set directory=$HOME/.vim/tmp/
 
 
 if has('python')
@@ -166,11 +166,6 @@ map <leader>so :so ~/.vimrc<CR>
 
 set splitbelow
 set splitright
-
-let g:syntastic_enable_balloons = 1
-let g:syntastic_enable_highlighting = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_echo_current_error = 1
 
 autocmd BufRead,BufNewFile *.ko set filetype=html
 
