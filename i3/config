@@ -125,7 +125,7 @@ bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+E exit
 # lock screen
-bindsym Control+Mod1+l exec i3lock
+bindsym Control+Mod1+l exec i3lock -c 021021
 
 # Print screen
 bindsym Print exec ~/.i3/scripts/printscreen.sh root
