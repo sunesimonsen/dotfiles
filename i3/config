@@ -28,7 +28,8 @@ bindsym $mod+Shift+Q kill
 bindsym $mod+d exec dmenu_run -nb black -nf white -sb '#369' -fn '-*-fixed-medium-*-*-*-15-120-100-100-*-*-iso8859-*'
 
 # Keepass dmenu
-bindsym $mod+b exec keepass-dmenu --database ~/Dropbox/passwords.kdbx --cache-password 300
+bindsym $mod+b exec keepass-dmenu --database ~/Dropbox/passwords.kdbx --cache-password 300 --label password
+bindsym $mod+Shift+B exec keepass-dmenu --database ~/Dropbox/passwords.kdbx --cache-password 300
 
 #Vifm
 bindsym $mod+e exec gnome-terminal -x bash -c '. ~/.bashrc && vifm'
