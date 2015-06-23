@@ -9,7 +9,7 @@ do
     TIMECLOCK='['
     if [ -e /tmp/emacs$USERID/server ]
     then
-        STATUS=`emacsclient --eval "(timeclock-status-string)" | sed 's/"//g'`
+        STATUS=`emacsclient --eval "(progn (timeclock-reread-log) (timeclock-status-string))" | sed 's/"//g'`
         COLOR="#00FF00"
         if [[ $STATUS == *"OUT"* ]]
         then
