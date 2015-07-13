@@ -15,7 +15,10 @@ else
 fi
 
 export M2_HOME=/opt/maven
-export PATH=$DOTFILES/bin:./node_modules/.bin:~/.local/bin:$PATH:$M2_HOME/bin
+export PATH=$PATH:$DOTFILES/bin:./node_modules/.bin:~/.local/bin:$M2_HOME/bin
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
