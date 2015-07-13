@@ -233,7 +233,10 @@ layers configuration."
   ;;                "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\))?$"
   ;;                1 2 3))
 
-  ;; (add-hook 'javascript-mode-hook (lambda () (flycheck-mode 't)))
+  (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
+  ;; not supported yet but there is a issue for it
+  ;; https://github.com/bbatsov/projectile/issues/454
+  (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
