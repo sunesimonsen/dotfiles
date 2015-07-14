@@ -24,6 +24,7 @@ function linkConfig {
 linkConfig bashrc.generated .bashrc
 #linkConfig evil-config/emacs.el .emacs
 linkConfig spacemacs .spacemacs
+linkConfig snippets .emacs.d/snippets
 linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
 linkConfig vifm/vifmrc .vifm/vifmrc

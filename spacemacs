@@ -40,6 +40,7 @@
      json-mode
      todotxt-mode
      less-css-mode
+     yasnippet
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
@@ -230,11 +231,15 @@ layers configuration."
   ;;              '(javascript-stack-trace
   ;;                "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\))?$"
   ;;                1 2 3))
+  (require 'projectile)
 
   (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
   ;; not supported yet but there is a issue for it
   ;; https://github.com/bbatsov/projectile/issues/454
   (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
+
+  (require 'yasnippet)
+  (yas-global-mode t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

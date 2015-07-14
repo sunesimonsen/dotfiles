@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: defineTest
+# key: defineTest
+# group: test
+# --
+/*global defineTest, describe, it, beforeEach*/
+defineTest([
+    'unexpected',
+    'sinon',
+    '$1'
+], function (expect, sinon, $2) {
+   $0
+});
