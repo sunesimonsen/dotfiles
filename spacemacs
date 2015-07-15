@@ -177,6 +177,8 @@ layers configuration."
   (define-key evil-motion-state-map (kbd "æ") 'evil-search-forward)
   (define-key evil-motion-state-map (kbd "C-æ") 'evil-search-backward)
 
+  (add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
+  (add-to-list 'auto-mode-alist '("\\.ejs$" . html-mode))
   (add-to-list 'auto-mode-alist '("\\.cjson$" . json-mode))
 
   (setq todotxt-default-file (expand-file-name "~/Dropbox/todo/todo.txt"))
