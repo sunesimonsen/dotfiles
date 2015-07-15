@@ -240,6 +240,8 @@ layers configuration."
 
   (require 'yasnippet)
   (yas-global-mode t)
+  (spacemacs|diminish yas-minor-mode " ⓨ" " y")
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
