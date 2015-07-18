@@ -7,7 +7,10 @@
   (setq-default
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path
+   '(
+
+     )
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -47,6 +50,7 @@
    '(
      evil-search-highlight-persist
      evil-escape
+     smartparens
      )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -243,7 +247,6 @@ layers configuration."
   (require 'yasnippet)
   (yas-global-mode t)
   (spacemacs|diminish yas-minor-mode " ⓨ" " y")
-
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
