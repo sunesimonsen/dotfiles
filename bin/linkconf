@@ -25,6 +25,7 @@ linkConfig bashrc.generated .bashrc
 #linkConfig evil-config/emacs.el .emacs
 linkConfig spacemacs/spacemacs .spacemacs
 linkConfig spacemacs/snippets .emacs.d/snippets
+linkConfig 'spacemacs/private/!lang' '.emacs.d/private/!lang'
 linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
 linkConfig vifm/vifmrc .vifm/vifmrc
