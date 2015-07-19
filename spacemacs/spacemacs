@@ -217,34 +217,6 @@ layers configuration."
   (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
   (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
 
-  (defun my-js-imenu-make-index ()
-    (save-excursion
-      (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
-                                 (nil "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
-
-  (add-hook 'javascript-mode-hook
-            (lambda ()
-              (setq imenu-create-index-function 'my-js-imenu-make-index)))
-
-  ;; Compilation mode file links for JavaScript stack traces
-  ;; (add-to-list 'compilation-error-regexp-alist 'phantomjs-stack-trace)
-  ;; (add-to-list 'compilation-error-regexp-alist-alist
-  ;;              '(phantomjs-stack-trace
-  ;;                "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\))?$"
-  ;;                1 2))
-
-  ;; (add-to-list 'compilation-error-regexp-alist 'javascript-stack-trace)
-  ;; (add-to-list 'compilation-error-regexp-alist-alist
-  ;;              '(javascript-stack-trace
-  ;;                "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\))?$"
-  ;;                1 2 3))
-  (require 'projectile)
-
-  (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
-  ;; not supported yet but there is a issue for it
-  ;; https://github.com/bbatsov/projectile/issues/454
-  (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
-
   (require 'yasnippet)
   (yas-global-mode t)
   (spacemacs|diminish yas-minor-mode " ⓨ" " y")

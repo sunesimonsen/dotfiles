@@ -19,6 +19,13 @@
     :defer t
     :init
     (progn
+      (require 'projectile)
+
+      (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
+      ;; not supported yet but there is a issue for it
+      ;; https://github.com/bbatsov/projectile/issues/454
+      (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
+
       (defun my-js-imenu-make-index ()
         (save-excursion
           (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
