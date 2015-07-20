@@ -9,23 +9,16 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js))
+(setq js-packages '(js compile nodejs-repl projectile))
 
 (defun js/post-init-flycheck ()
-  (add-hook 'js-mode-hook    'flycheck-mode))
+  (add-hook 'js-mode-hook 'flycheck-mode))
 
 (defun js/init-js ()
-  (use-package js-mode
+  (use-package js
     :defer t
     :init
     (progn
-      (require 'projectile)
-
-      (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
-      ;; not supported yet but there is a issue for it
-      ;; https://github.com/bbatsov/projectile/issues/454
-      (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
-
       (defun my-js-imenu-make-index ()
         (save-excursion
           (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
@@ -35,9 +28,44 @@
                 (lambda ()
                   (setq imenu-create-index-function 'my-js-imenu-make-index)))
 
+
+      (defun nodejs-repl-send-region ()
+        (interactive)
+        (when (use-region-p)
+          (let ((selection (buffer-substring-no-properties  (region-beginning) (region-end))))
+            (with-current-buffer (get-buffer "*nodejs*")
+              (end-of-buffer)
+              (insert selection)
+              (comint-send-input)
+              (end-of-buffer)))))
+
+      (evil-leader/set-key-for-mode 'js-mode "msr" 'nodejs-repl-send-region)
       )
+    )
+  )
+
+(defun js/init-nodejs-repl ()
+  (use-package nodejs-repl))
+
+(defun js/init-projectile ()
+  (use-package projectile
+    :defer t
     :config
     (progn
+      (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
+      ;; not supported yet but there is a issue for it
+      ;; https://github.com/bbatsov/projectile/issues/454
+      (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
+      )
+    )
+  )
+
+(defun js/init-compile ()
+  (use-package js
+    :defer t
+    :config
+    (progn
+      (require 'compile)
       ;; Compilation mode file links for JavaScript stack traces
       (add-to-list 'compilation-error-regexp-alist 'phantomjs-stack-trace)
       (add-to-list 'compilation-error-regexp-alist-alist
@@ -49,6 +77,7 @@
       (add-to-list 'compilation-error-regexp-alist-alist
                    '(javascript-stack-trace
                      "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\))?$"
-                     1 2 3))
+                     ))
       )
-    :mode ("\\.js\\'" . js-mode)))
+    )
+  )

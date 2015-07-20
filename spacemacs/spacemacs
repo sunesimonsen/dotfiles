@@ -217,9 +217,15 @@ layers configuration."
   (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
   (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
 
-  (require 'yasnippet)
-  (yas-global-mode t)
-  (spacemacs|diminish yas-minor-mode " ⓨ" " y")
+  (use-package yasnippet
+    :config
+    (progn
+      (let ((private-yas-dir (concat
+                        configuration-layer-private-directory
+                        "snippets/")))
+        (setq yas-snippet-dirs (list private-yas-dir)))
+      (yas-global-mode t)
+      (spacemacs|diminish yas-minor-mode " ⓨ" " y")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -247,7 +253,6 @@ layers configuration."
    (quote
     ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" default)))
  '(fci-rule-color "#073642" t)
- '(global-flycheck-mode t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
