@@ -33,6 +33,7 @@
      version-control
      ;; themes-megapack
      js
+     yasnippet
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -44,7 +45,6 @@
      json-mode
      todotxt-mode
      less-css-mode
-     yasnippet
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
@@ -216,16 +216,6 @@ layers configuration."
 
   (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
   (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
-
-  (use-package yasnippet
-    :config
-    (progn
-      (let ((private-yas-dir (concat
-                        configuration-layer-private-directory
-                        "snippets/")))
-        (setq yas-snippet-dirs (list private-yas-dir)))
-      (yas-global-mode t)
-      (spacemacs|diminish yas-minor-mode " ⓨ" " y")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
