@@ -19,9 +19,7 @@
   (use-package yasnippet
     :config
     (progn
-      (let ((private-yas-dir (concat
-                              configuration-layer-private-directory
-                              "snippets/")))
+      (let ((private-yas-dir (concat (getenv "DOTFILES") "/spacemacs/snippets/")))
         (setq yas-snippet-dirs (list private-yas-dir)))
       (yas-global-mode t)
       (spacemacs|diminish yas-minor-mode " ⓨ" " y"))
