@@ -21,12 +21,9 @@ function linkConfig {
     fi
 }
 
-rm -rf .emacs.d/private
-
 linkConfig bashrc.generated .bashrc
 #linkConfig evil-config/emacs.el .emacs
 linkConfig spacemacs/spacemacs .spacemacs
-linkConfig spacemacs/private .emacs.d/private
 linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
 linkConfig vifm/vifmrc .vifm/vifmrc
