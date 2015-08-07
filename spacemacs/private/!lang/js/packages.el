@@ -61,11 +61,10 @@
   )
 
 (defun js/init-compile ()
-  (use-package js
+  (use-package compile
     :defer t
     :config
     (progn
-      (require 'compile)
       ;; Compilation mode file links for JavaScript stack traces
       (add-to-list 'compilation-error-regexp-alist 'phantomjs-stack-trace)
       (add-to-list 'compilation-error-regexp-alist-alist
@@ -77,7 +76,7 @@
       (add-to-list 'compilation-error-regexp-alist-alist
                    '(javascript-stack-trace
                      "at \\(?:.+ \\)?(?\\(.+\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\))?$"
-                     ))
+                     1 2 3))
       )
     )
   )
