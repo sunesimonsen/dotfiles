@@ -55,7 +55,8 @@
       (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
       ;; not supported yet but there is a issue for it
       ;; https://github.com/bbatsov/projectile/issues/454
-      (add-to-list 'projectile-other-file-alist '("spec\.js" "js"))
+      (add-to-list 'projectile-other-file-alist '("spec.js" "js"))
+      (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file)
       )
     )
   )
