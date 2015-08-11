@@ -15,7 +15,6 @@
 (setq runtests-packages '(runtests compile))
 
 (defun runtests/init-runtests ()
-  (message "init runtests")
   (use-package runtests
     :defer t
     :commands (runtests)
