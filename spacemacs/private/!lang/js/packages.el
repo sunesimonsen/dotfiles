@@ -28,6 +28,10 @@
                 (lambda ()
                   (setq imenu-create-index-function 'my-js-imenu-make-index)))
 
+      (define-derived-mode jsx-mode web-mode "jsx")
+      (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+      (add-hook 'jsx-mode-hook (lambda ()
+                                 (emmet-mode 0)))
 
       (defun nodejs-repl-send-region ()
         (interactive)

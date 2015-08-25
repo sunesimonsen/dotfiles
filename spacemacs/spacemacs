@@ -30,6 +30,7 @@
      syntax-checking
      version-control
      ;; themes-megapack
+     html
      js
      yasnippet
      evil-walk-on-the-edge
@@ -41,18 +42,17 @@
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages
    '(
-     editorconfig
      json-mode
      todotxt-mode
      less-css-mode
      material-theme
+     editorconfig
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
    '(
      evil-search-highlight-persist
      evil-escape
-     smartparens
      )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -192,6 +192,12 @@ layers configuration."
   (setq todotxt-default-archive-file (expand-file-name "~/Dropbox/todo/done.txt"))
   (add-to-list 'auto-mode-alist '("/todo.txt$" . todotxt-mode))
   (add-to-list 'auto-mode-alist '("/done.txt$" . todotxt-mode))
+
+  ;; grep
+  (eval-after-load 'grep
+    '(progn
+       (add-to-list 'grep-find-ignored-directories "node_modules")))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
