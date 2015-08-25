@@ -47,6 +47,7 @@
      less-css-mode
      material-theme
      editorconfig
+     monokai-theme
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
@@ -84,8 +85,8 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(material
-                         monokai
+   dotspacemacs-themes '(monokai
+                         material
                          solarized-light
                          solarized-dark
                          spacemacs-light
@@ -256,6 +257,7 @@ layers configuration."
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
+ '(timeclock-file "/home/sss/Dropbox/timelog")
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

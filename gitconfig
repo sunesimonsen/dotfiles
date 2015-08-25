@@ -16,6 +16,7 @@
     hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
     changes = log --pretty='%s'
     cb = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+    stc = diff --name-only --diff-filter=U
 [pull]
     # Only pull branches that have been set up to track a remote branch.
     default = current
