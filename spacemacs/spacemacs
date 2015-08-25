@@ -48,6 +48,7 @@
      material-theme
      editorconfig
      monokai-theme
+     speed-type
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
@@ -200,6 +201,11 @@ layers configuration."
        (add-to-list 'grep-find-ignored-directories "node_modules")))
 
   )
+
+;; start emacs server if it is not already started
+(load "server")
+(unless (server-running-p)
+  (server-start))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
