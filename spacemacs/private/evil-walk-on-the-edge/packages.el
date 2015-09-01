@@ -43,6 +43,8 @@
 
       (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
       (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
+      (define-key evil-motion-state-map (kbd "C-;") 'evil-move-backward-paren)
+      (define-key evil-motion-state-map (kbd "C-'") 'evil-move-forward-paren)
       )
     )
   )
