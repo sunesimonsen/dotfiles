@@ -9,7 +9,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js compile nodejs-repl projectile))
+(setq js-packages '(js compile nodejs-repl projectile flycheck))
 
 (defun js/post-init-flycheck ()
   (add-hook 'js-mode-hook 'flycheck-mode))

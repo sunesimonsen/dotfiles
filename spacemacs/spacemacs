@@ -116,7 +116,7 @@ before layers configuration."
    ;; Emacs commands (M-x).
    ;; By default the command key is `:' so ex-commands are executed like in Vim
    ;; with `:' and Emacs commands are executed with `<leader> :'.
-   dotspacemacs-command-key "Æ"
+   dotspacemacs-command-key ":"
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -199,13 +199,7 @@ layers configuration."
   (eval-after-load 'grep
     '(progn
        (add-to-list 'grep-find-ignored-directories "node_modules")))
-
   )
-
-;; start emacs server if it is not already started
-(load "server")
-(unless (server-running-p)
-  (server-start))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
