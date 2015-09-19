@@ -32,6 +32,7 @@
      ;; themes-megapack
      html
      js
+     nodejs-repl
      yasnippet
      evil-walk-on-the-edge
      runtests

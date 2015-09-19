@@ -9,7 +9,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js compile nodejs-repl projectile flycheck))
+(setq js-packages '(js compile projectile flycheck))
 
 (defun js/post-init-flycheck ()
   (add-hook 'js-mode-hook 'flycheck-mode))
@@ -32,24 +32,9 @@
       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
       (add-hook 'jsx-mode-hook (lambda ()
                                  (emmet-mode 0)))
-
-      (defun nodejs-repl-send-region ()
-        (interactive)
-        (when (use-region-p)
-          (let ((selection (buffer-substring-no-properties  (region-beginning) (region-end))))
-            (with-current-buffer (get-buffer "*nodejs*")
-              (end-of-buffer)
-              (insert selection)
-              (comint-send-input)
-              (end-of-buffer)))))
-
-      (evil-leader/set-key-for-mode 'js-mode "msr" 'nodejs-repl-send-region)
       )
     )
   )
-
-(defun js/init-nodejs-repl ()
-  (use-package nodejs-repl))
 
 (defun js/init-projectile ()
   (use-package projectile
