@@ -200,6 +200,10 @@ layers configuration."
   (eval-after-load 'grep
     '(progn
        (add-to-list 'grep-find-ignored-directories "node_modules")))
+
+  (setq browse-url-browser-function 'browse-url-generic
+        engine/browser-function 'browse-url-generic
+        browse-url-generic-program "google-chrome")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
