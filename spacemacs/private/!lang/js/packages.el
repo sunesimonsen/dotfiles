@@ -9,7 +9,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js compile projectile flycheck))
+(setq js-packages '(js projectile compile flycheck web-mode))
 
 (defun js/post-init-flycheck ()
   (add-hook 'js-mode-hook 'flycheck-mode))
@@ -28,26 +28,29 @@
                 (lambda ()
                   (setq imenu-create-index-function 'my-js-imenu-make-index)))
 
-      (define-derived-mode jsx-mode web-mode "jsx")
-      (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-      (add-hook 'jsx-mode-hook (lambda ()
-                                 (emmet-mode 0)))
       )
     )
   )
 
-(defun js/init-projectile ()
-  (use-package projectile
-    :defer t
-    :config
-    (progn
-      (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
-      ;; not supported yet but there is a issue for it
-      ;; https://github.com/bbatsov/projectile/issues/454
-      (add-to-list 'projectile-other-file-alist '("spec.js" "js"))
-      (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file)
-      )
-    )
+(defun js/post-init-projectile ()
+  (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file)
+  )
+
+(defun js/post-init-projectile ()
+  (with-eval-after-load 'projectile
+    (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
+    (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
+;; (defun js/pre-init-projectile ()
+;;   (spacemacs|use-package-add-hook projectile
+;;     :post-config
+;;     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
+;;     (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
+
+(defun js/post-init-web-mode ()
+  (define-derived-mode jsx-mode web-mode "jsx")
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+  (add-hook 'jsx-mode-hook (lambda ()
+                             (emmet-mode 0)))
   )
 
 (defun js/init-compile ()

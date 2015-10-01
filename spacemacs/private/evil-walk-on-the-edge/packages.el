@@ -14,37 +14,31 @@
 ;; which require an initialization must be listed explicitly in the list.
 (setq evil-walk-on-the-edge-packages '(evil))
 
-(defun evil-walk-on-the-edge/init-evil ()
-  (use-package evil
-    :defer t
-    :config
-    (progn
-      (evil-define-motion evil-move-forward-paren (count)
-        "Move forward to next (, [, {, }, ] or )"
-        :jump t
-        :type inclusive
-        (interactive "<c>")
-        (setq count (or count 1))
-        (forward-char)
-        (re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer count)
-        (while (and (in-string-p) (< (point) (point-max)))
-          (re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer))
-        (backward-char))
+(defun evil-walk-on-the-edge/post-init-evil ()
+  (evil-define-motion evil-move-forward-paren (count)
+    "Move forward to next (, [, {, }, ] or )"
+    :jump t
+    :type inclusive
+    (interactive "<c>")
+    (setq count (or count 1))
+    (forward-char)
+    (re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer count)
+    (while (and (in-string-p) (< (point) (point-max)))
+      (re-search-forward "\\s(\\|\\s)" nil 'end-of-buffer))
+    (backward-char))
 
-      (evil-define-motion evil-move-backward-paren (count)
-        "Move backward to previous (, [, {, }, ] or )"
-        :jump t
-        :type inclusive
-        (interactive "<c>")
-        (setq count (or count 1))
-        (re-search-backward "\\s(\\|\\s)" nil 'beginning-of-buffer count)
-        (while (and (in-string-p) (> (point) (point-min)))
-          (re-search-backward "\\s(\\|\\s)")))
+  (evil-define-motion evil-move-backward-paren (count)
+    "Move backward to previous (, [, {, }, ] or )"
+    :jump t
+    :type inclusive
+    (interactive "<c>")
+    (setq count (or count 1))
+    (re-search-backward "\\s(\\|\\s)" nil 'beginning-of-buffer count)
+    (while (and (in-string-p) (> (point) (point-min)))
+      (re-search-backward "\\s(\\|\\s)")))
 
-      (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
-      (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
-      (define-key evil-motion-state-map (kbd "C-;") 'evil-move-backward-paren)
-      (define-key evil-motion-state-map (kbd "C-'") 'evil-move-forward-paren)
-      )
-    )
+  (define-key evil-motion-state-map "å" 'evil-move-backward-paren)
+  (define-key evil-motion-state-map "ø" 'evil-move-forward-paren)
+  (define-key evil-motion-state-map (kbd "C-;") 'evil-move-backward-paren)
+  (define-key evil-motion-state-map (kbd "C-'") 'evil-move-forward-paren)
   )

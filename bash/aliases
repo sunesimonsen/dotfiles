@@ -1,5 +1,4 @@
 # Console
-alias ls='ls --color=auto'
 alias ll='ls -laGh'
 alias ..='cd ..'
 
