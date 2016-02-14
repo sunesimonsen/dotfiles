@@ -9,7 +9,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js projectile compile flycheck web-mode))
+(setq js-packages '(js projectile compile flycheck))
 
 (defun js/post-init-flycheck ()
   (add-hook 'js-mode-hook 'flycheck-mode)
@@ -44,11 +44,6 @@
   (with-eval-after-load 'projectile
     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
     (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
-
-(defun js/post-init-web-mode ()
-  (define-derived-mode jsx-mode js-mode "jsx")
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-  )
 
 (defun js/init-compile ()
   (use-package compile
