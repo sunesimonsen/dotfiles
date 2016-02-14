@@ -17,6 +17,8 @@
     changes = log --pretty='%s'
     cb = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     stc = diff --name-only --diff-filter=U
+    cbr = !git branch --merged | grep -v "master" | xargs -n 1 git branch -d
+    fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git rebase -i --autosquash $COMMIT~1' -"
 [pull]
     # Only pull branches that have been set up to track a remote branch.
     default = current
