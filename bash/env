@@ -27,6 +27,16 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export HISTIGNORE="^rm:--force"
-if [ -f /etc/bash_completion ]; then
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+
+DOCKER_IMAGES_DEBUG=true
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+source /usr/local/share/chruby/chruby.sh
