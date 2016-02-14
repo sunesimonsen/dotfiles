@@ -12,7 +12,10 @@
 (setq js-packages '(js projectile compile flycheck web-mode))
 
 (defun js/post-init-flycheck ()
-  (add-hook 'js-mode-hook 'flycheck-mode))
+  (add-hook 'js-mode-hook 'flycheck-mode)
+  (require 'flycheck)
+  (flycheck-add-mode 'javascript-standard 'jsx-mode)
+  (add-hook 'jsx-mode-hook 'flycheck-mode))
 
 (defun js/init-js ()
   (use-package js
@@ -24,11 +27,12 @@
           (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
                                      (nil "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
 
-      (add-hook 'js-mode-hook
-                (lambda ()
-                  (setq imenu-create-index-function 'my-js-imenu-make-index)))
-
-      )
+      (add-hook
+       'js-mode-hook
+       (lambda ()
+         (setq imenu-create-index-function 'my-js-imenu-make-index)
+         (setq electric-indent-inhibit t))
+         ))
     )
   )
 
@@ -40,17 +44,10 @@
   (with-eval-after-load 'projectile
     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
     (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
-;; (defun js/pre-init-projectile ()
-;;   (spacemacs|use-package-add-hook projectile
-;;     :post-config
-;;     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
-;;     (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
 
 (defun js/post-init-web-mode ()
-  (define-derived-mode jsx-mode web-mode "jsx")
+  (define-derived-mode jsx-mode js-mode "jsx")
   (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-  (add-hook 'jsx-mode-hook (lambda ()
-                             (emmet-mode 0)))
   )
 
 (defun js/init-compile ()
