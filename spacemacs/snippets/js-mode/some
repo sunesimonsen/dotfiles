@@ -2,6 +2,6 @@
 # name: some
 # key: some
 # --
-some(function (${item}) {
+some((${item}) => {
     $0
 })

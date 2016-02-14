@@ -2,6 +2,6 @@
 # name: beforeEach
 # key: beforeEach
 # --
-beforeEach(function () {
+beforeEach(() => {
     $0
-});
+})

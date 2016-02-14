@@ -3,6 +3,6 @@
 # key: it
 # group: Jasmine
 # --
-it('$1', function () {
+it('$1', () => {
    $0
-});
+})

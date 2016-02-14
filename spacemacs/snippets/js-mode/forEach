@@ -2,6 +2,6 @@
 # name: forEach
 # key: forEach
 # --
-forEach(function (${1:item}) {
+forEach((${1:item}) => {
     $0
 })

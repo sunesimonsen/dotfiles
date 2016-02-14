@@ -2,6 +2,6 @@
 # name: map
 # key: map
 # --
-map(function (${1:item}) {
+map((${1:item}) => {
     $0
 })

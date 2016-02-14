@@ -3,6 +3,6 @@
 # key: describe
 # group: Jasmine
 # --
-describe('$1', function () {
+describe('$1', () => {
     $0
-});
+})

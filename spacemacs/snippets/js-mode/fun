@@ -2,6 +2,6 @@
 # name: fun
 # key: fun
 # --
-function ${1:name}($2) {
+const ${1:name} = ($2) => {
          $0
 }
