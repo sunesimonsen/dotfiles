@@ -18,7 +18,7 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
      git
@@ -27,16 +27,20 @@
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     syntax-checking
      version-control
      ;; themes-megapack
      html
      osx
-     ;; js
+     js
+     ;; react
+     syntax-checking
+     spell-checking
      nodejs-repl
      yasnippet
      evil-walk-on-the-edge
      runtests
+     yaml
+     css-comb
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -209,6 +213,20 @@ layers configuration."
         browse-url-generic-program "google-chrome")
 
   (setq magit-repository-directories '("~/Projects/"))
+
+  (add-to-list 'spacemacs-indent-sensitive-modes 'js-mode)
+  (editorconfig-mode 1)
+
+  (global-company-mode 't)
+
+  ;; don't highlight lines in terminal mode
+  (let ((comint-hooks '(eshell-mode-hook
+                        term-mode-hook
+                        messages-buffer-mode-hook
+                        comint-mode-hook)))
+    (spacemacs/add-to-hooks (defun bb/no-hl-line-mode ()
+                              (setq-local global-hl-line-mode nil))
+                            comint-hooks))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -236,6 +254,9 @@ layers configuration."
    (quote
     ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" default)))
  '(fci-rule-color "#073642" t)
+ '(flycheck-css-csslint-executable "csslintnext")
+ '(flycheck-eslintrc ".eslintrc")
+ '(flycheck-javascript-standard-executable nil)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
@@ -253,17 +274,26 @@ layers configuration."
      ("#8B2C02" . 70)
      ("#93115C" . 85)
      ("#073642" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
  '(magit-diff-use-overlays nil)
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(ring-bell-function (quote ignore) t)
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+           (quote write-contents-functions)
+           (lambda nil
+             (css-comb
+              (point-min)
+              (point-max))
+             nil))
+     (eval add-hook
+           (quote before-save-hook)
+           (lambda nil
+             (css-comb
+              (point-min)
+              (point-max)))))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
@@ -299,4 +329,6 @@ layers configuration."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 120 :width normal))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
  '(term ((t (:inherit default :foreground "#839496")))))
