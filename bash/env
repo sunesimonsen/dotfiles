@@ -26,6 +26,8 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
+export PATH="$PATH:/Applications/sc-4.3.13-osx/bin"
+
 export HISTIGNORE="^rm:--force"
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
