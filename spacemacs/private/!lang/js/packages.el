@@ -14,14 +14,24 @@
 (defun js/post-init-flycheck ()
   (add-hook 'js-mode-hook 'flycheck-mode)
   (require 'flycheck)
-  (flycheck-add-mode 'javascript-standard 'jsx-mode)
-  (add-hook 'jsx-mode-hook 'flycheck-mode))
+  (flycheck-add-mode 'javascript-standard 'jsx-mode))
+
+(defun js/setup-local-standard ()
+  "If standard found in node_modules directory - use that for flycheck.
+Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
+  (interactive)
+  (let ((local-standard (expand-file-name (concat (projectile-project-root) "node_modules/.bin/standard"))))
+    (make-local-variable 'flycheck-javascript-standard-executable)
+    (setq flycheck-javascript-standard-executable
+          (and (file-exists-p local-standard) local-standard))))
 
 (defun js/init-js ()
   (use-package js
     :defer t
     :init
     (progn
+      (add-to-list 'auto-mode-alist '("\\.js\\'" . js-jsx-mode))
+
       (defun my-js-imenu-make-index ()
         (save-excursion
           (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
@@ -31,19 +41,18 @@
        'js-mode-hook
        (lambda ()
          (setq imenu-create-index-function 'my-js-imenu-make-index)
-         (setq electric-indent-inhibit t))
-         ))
+         (setq electric-indent-inhibit t)
+         (js/setup-local-standard)))
+      )
     )
-  )
-
-(defun js/post-init-projectile ()
-  (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file)
   )
 
 (defun js/post-init-projectile ()
   (with-eval-after-load 'projectile
     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
-    (add-to-list 'projectile-other-file-alist '("spec.js" "js"))))
+    (add-to-list 'projectile-other-file-alist '("spec.js" "js")))
+
+  (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file))
 
 (defun js/init-compile ()
   (use-package compile

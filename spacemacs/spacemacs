@@ -1,6 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
+(fset 'xterm-color-unfontify-region 'font-lock-default-unfontify-region)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
@@ -13,6 +14,7 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     ruby
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -22,18 +24,20 @@
      ;; better-defaults
      emacs-lisp
      git
+     github
      markdown
-     ;; org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+     org
+     (shell
+      :variables
+      shell-default-position 'full
+      shell-default-shell 'eshell)
      version-control
-     ;; themes-megapack
      html
      osx
      js
-     ;; react
-     syntax-checking
+     (syntax-checking
+      :variables
+      syntax-checking-enable-tooltips nil)
      spell-checking
      nodejs-repl
      yasnippet
@@ -41,6 +45,7 @@
      runtests
      yaml
      css-comb
+     vinegar
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -55,12 +60,12 @@
      editorconfig
      monokai-theme
      speed-type
+     visual-fill-column
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
    '(
      evil-search-highlight-persist
-     evil-escape
      smartparens
      emmet-mode
      )
@@ -171,7 +176,7 @@ before layers configuration."
    dotspacemacs-smartparens-strict-mode nil
    ;; Select a scope to highlight delimiters. Possible value is `all',
    ;; `current' or `nil'. Default is `all'
-   dotspacemacs-highlight-delimiters 'all
+   dotspacemacs-highlight-delimiters 'current
    ;; If non nil advises quit functions to keep server open when quitting.
    dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
@@ -194,23 +199,36 @@ layers configuration."
   (define-key evil-motion-state-map (kbd "æ") 'evil-search-forward)
   (define-key evil-motion-state-map (kbd "C-æ") 'evil-search-backward)
 
+  (define-key evil-insert-state-map (kbd "M-a") '(lambda () (interactive) (insert "å")))
+  (define-key evil-insert-state-map (kbd "M-A") '(lambda () (interactive) (insert "Å")))
+  (define-key evil-insert-state-map (kbd "M-'") '(lambda () (interactive) (insert "æ")))
+  (define-key evil-insert-state-map (kbd "M-\"") '(lambda () (interactive) (insert "Æ")))
+  (define-key evil-insert-state-map (kbd "M-o") '(lambda () (interactive) (insert "ø")))
+  (define-key evil-insert-state-map (kbd "M-O") '(lambda () (interactive) (insert "Ø")))
+
   (add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
   (add-to-list 'auto-mode-alist '("\\.ejs$" . html-mode))
   (add-to-list 'auto-mode-alist '("\\.cjson$" . json-mode))
+
+  (eval-after-load 'eshell
+    '(progn
+       (add-to-list 'eshell-visual-commands "jest")))
 
   (setq todotxt-default-file (expand-file-name "~/Dropbox/todo/todo.txt"))
   (setq todotxt-default-archive-file (expand-file-name "~/Dropbox/todo/done.txt"))
   (add-to-list 'auto-mode-alist '("/todo.txt$" . todotxt-mode))
   (add-to-list 'auto-mode-alist '("/done.txt$" . todotxt-mode))
 
+  ;; (add-to-list 'projectile-globally-ignored-directories ".yarn_packages")
+
   ;; grep
   (eval-after-load 'grep
     '(progn
        (add-to-list 'grep-find-ignored-directories "node_modules")))
 
-  (setq browse-url-browser-function 'browse-url-generic
-        engine/browser-function 'browse-url-generic
-        browse-url-generic-program "google-chrome")
+  ;; (setq browse-url-browser-function 'browse-url-generic
+  ;;       engine/browser-function 'browse-url-generic
+  ;;       browse-url-generic-program "open -a Chrome")
 
   (setq magit-repository-directories '("~/Projects/"))
 
@@ -245,6 +263,7 @@ layers configuration."
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
+ '(browse-url-browser-function (quote browse-url-default-macosx-browser))
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#839496")
@@ -253,10 +272,9 @@ layers configuration."
  '(custom-safe-themes
    (quote
     ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" default)))
- '(fci-rule-color "#073642" t)
+ '(fci-rule-color "#073642")
  '(flycheck-css-csslint-executable "csslintnext")
  '(flycheck-eslintrc ".eslintrc")
- '(flycheck-javascript-standard-executable nil)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
@@ -275,13 +293,27 @@ layers configuration."
      ("#93115C" . 85)
      ("#073642" . 100))))
  '(magit-diff-use-overlays nil)
+ '(org-directory "~/Dropbox/org")
+ '(package-selected-packages
+   (quote
+    (shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
- '(ring-bell-function (quote ignore) t)
+ '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store")))
+ '(ring-bell-function (quote ignore))
  '(safe-local-variable-values
    (quote
-    ((eval add-hook
+    ((eval setq runtests-command
+           (expand-file-name "bin/runtests"
+                             (projectile-project-root)))
+     (jsx-mode
+      (flycheck-disabled-checkers javascript-jshint javascript-eslint javascript-gjslint javascript-jscs))
+     (eval setq runtests-command
+           (concat
+            (projectile-project-root)
+            "/bin/runtests"))
+     (eval add-hook
            (quote write-contents-functions)
            (lambda nil
              (css-comb

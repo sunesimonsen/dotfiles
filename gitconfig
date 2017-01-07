@@ -27,3 +27,5 @@
     default = current
 [core]
     excludesfile = /Users/sunesimonsen/.gitignore
+[github]
+	user = sunesimonsen

@@ -8,7 +8,7 @@ then
     FILE=$(node -e "console.log(decodeURIComponent('$1'))")
     ./node_modules/mocha-phantomjs/bin/mocha-phantomjs --bail -R dot http-pub/test/index.html?file=$FILE | sed s#file://##
 else
-    BLUEBIRD_DEBUG=yes $rootDir/node_modules/mocha/bin/mocha -b --full-trace -R dot --colors $*
+    BLUEBIRD_DEBUG=yes $rootDir/node_modules/mocha/bin/mocha -b -R dot --colors $*
 fi
 
 exitStatus=${PIPESTATUS[0]}
