@@ -46,6 +46,8 @@
      yaml
      css-comb
      vinegar
+     search-engine
+     google-bookmarks
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -157,7 +159,7 @@ before layers configuration."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup 't
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
@@ -212,7 +214,11 @@ layers configuration."
 
   (eval-after-load 'eshell
     '(progn
-       (add-to-list 'eshell-visual-commands "jest")))
+       (add-to-list 'eshell-visual-commands "jest")
+       (add-to-list 'eshell-visual-commands "yarn")))
+
+  (define-key evil-motion-state-map "f" 'evil-avy-goto-word-or-subword-1)
+  (define-key evil-motion-state-map "F" 'evil-avy-goto-char)
 
   (setq todotxt-default-file (expand-file-name "~/Dropbox/todo/todo.txt"))
   (setq todotxt-default-archive-file (expand-file-name "~/Dropbox/todo/done.txt"))
@@ -296,7 +302,7 @@ layers configuration."
  '(org-directory "~/Dropbox/org")
  '(package-selected-packages
    (quote
-    (shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
+    (google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
@@ -304,28 +310,17 @@ layers configuration."
  '(ring-bell-function (quote ignore))
  '(safe-local-variable-values
    (quote
-    ((eval setq runtests-command
-           (expand-file-name "bin/runtests"
-                             (projectile-project-root)))
-     (jsx-mode
-      (flycheck-disabled-checkers javascript-jshint javascript-eslint javascript-gjslint javascript-jscs))
-     (eval setq runtests-command
-           (concat
-            (projectile-project-root)
-            "/bin/runtests"))
-     (eval add-hook
+    ((eval add-hook
            (quote write-contents-functions)
            (lambda nil
              (css-comb
               (point-min)
               (point-max))
              nil))
-     (eval add-hook
-           (quote before-save-hook)
-           (lambda nil
-             (css-comb
-              (point-min)
-              (point-max)))))))
+     (eval setq runtests-command
+           (expand-file-name "bin/runtests"
+                             (projectile-project-root)))
+     (runtests-command . "runtests-jest"))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")

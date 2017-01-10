@@ -31,6 +31,7 @@
 
       (evil-leader/set-key-for-mode 'js-mode "msr" 'nodejs-repl-send-region)
       (evil-leader/set-key-for-mode 'js2-mode "msr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "msr" 'nodejs-repl-send-region)
       )
     )
   )
