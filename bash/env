@@ -1,5 +1,5 @@
-export EDITOR='emacsclient -t'
-export GIT_EDITOR='emacsclient -t'
+export EDITOR='evil'
+export GIT_EDITOR='evil'
 export ALTERNATE_EDITOR=""
 export BROWSER=google-chrome
 

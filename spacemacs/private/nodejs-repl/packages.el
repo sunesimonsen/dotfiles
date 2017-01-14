@@ -29,9 +29,9 @@
               (comint-send-input)
               (end-of-buffer)))))
 
-      (evil-leader/set-key-for-mode 'js-mode "msr" 'nodejs-repl-send-region)
-      (evil-leader/set-key-for-mode 'js2-mode "msr" 'nodejs-repl-send-region)
-      (evil-leader/set-key-for-mode 'js-jsx-mode "msr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js-mode "sr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js2-mode "sr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "sr" 'nodejs-repl-send-region)
       )
     )
   )

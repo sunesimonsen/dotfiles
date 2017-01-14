@@ -1,0 +1,10 @@
+#!/bin/bash
+rootDir="$(git rev-parse --show-toplevel)"
+currentDir="$(pwd)"
+cd $rootDir
+
+BLUEBIRD_DEBUG=yes $rootDir/node_modules/.bin/jest -b --colors $* | sed -n '/●/,$p'
+
+exitStatus=${PIPESTATUS[0]}
+cd $currentDir
+exit $exitStatus
