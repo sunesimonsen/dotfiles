@@ -8,9 +8,9 @@
 (setq js-packages '(js projectile compile flycheck))
 
 (defun js/post-init-flycheck ()
-  (add-hook 'js-mode-hook 'flycheck-mode)
+  (add-hook 'js-jsx-mode-hook 'flycheck-mode)
   (require 'flycheck)
-  (flycheck-add-mode 'javascript-standard 'jsx-mode))
+  (flycheck-add-mode 'javascript-standard 'js-jsx-mode))
 
 (defun js/setup-local-standard ()
   "If standard found in node_modules directory - use that for flycheck.
@@ -34,7 +34,7 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
                                      (nil "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
 
       (add-hook
-       'js-mode-hook
+       'js-jsx-mode-hook
        (lambda ()
          (setq imenu-create-index-function 'my-js-imenu-make-index)
          (setq electric-indent-inhibit t)
@@ -48,7 +48,7 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
     (add-to-list 'projectile-other-file-alist '("spec.js" "js")))
 
-  (evil-leader/set-key-for-mode 'js-mode "mga" 'projectile-find-other-file))
+  (evil-leader/set-key-for-mode 'js-jsx-mode "mga" 'projectile-find-other-file))
 
 (defun js/init-compile ()
   (use-package compile

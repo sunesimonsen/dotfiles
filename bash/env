@@ -15,7 +15,7 @@ fi
 export TERM='xterm-256color'
 
 export M2_HOME=/opt/maven
-export PATH=$PATH:./bin:./node_modules/.bin:$DOTFILES/bin:~/.local/bin:$M2_HOME/bin
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH:./bin:./node_modules/.bin:$DOTFILES/bin:~/.local/bin:$M2_HOME/bin
 export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
