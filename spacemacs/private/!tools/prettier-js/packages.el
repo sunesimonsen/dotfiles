@@ -13,13 +13,14 @@
 Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
   (interactive)
 
-  (let* ((project-dir
+  (let* ((prettier-bin "node_modules/.bin/prettier")
+         (project-dir
           (locate-dominating-file
            buffer-file-name
-           (lambda (parent) (file-exists-p (expand-file-name (concat parent "node_modules/.bin/prettier"))))))
+           (lambda (parent) (file-exists-p (expand-file-name (concat parent prettier-bin))))))
          (local-prettier
           (and project-dir
-               (expand-file-name (concat project-dir "node_modules/.bin/prettier")))))
+               (expand-file-name (concat project-dir prettier-bin)))))
 
     (when local-prettier
       (make-local-variable 'prettier-command)
