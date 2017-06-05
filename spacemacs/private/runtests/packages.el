@@ -1,4 +1,4 @@
-(setq runtests-packages '(runtests compile))
+(setq runtests-packages '(runtests))
 
 (defun runtests/init-runtests ()
   (use-package runtests

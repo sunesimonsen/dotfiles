@@ -21,6 +21,15 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
     (setq flycheck-javascript-standard-executable
           (and (file-exists-p local-standard) local-standard))))
 
+(defun js/setup-local-eslint ()
+  "If eslint found in node_modules directory - use that for flycheck.
+Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
+  (interactive)
+  (let ((local-eslint (expand-file-name (concat (projectile-project-root) "node_modules/.bin/eslint"))))
+    (make-local-variable 'flycheck-javascript-eslint-executable)
+    (setq flycheck-javascript-eslint-executable
+          (and (file-exists-p local-eslint) local-eslint))))
+
 (defun js/init-js ()
   (use-package js
     :defer t
@@ -38,7 +47,8 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
        (lambda ()
          (setq imenu-create-index-function 'my-js-imenu-make-index)
          (setq electric-indent-inhibit t)
-         (js/setup-local-standard)))
+         (js/setup-local-standard)
+         (js/setup-local-eslint)))
       )
     )
   )
