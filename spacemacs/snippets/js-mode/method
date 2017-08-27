@@ -2,6 +2,6 @@
 # name: method
 # key: met
 # --
-${1:name}: function ($2) {
+${1:name}($2) {
           $0
 }

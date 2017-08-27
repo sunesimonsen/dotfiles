@@ -7,6 +7,17 @@
 ;;; License: GPLv3
 (setq js-packages '(js projectile compile flycheck))
 
+(defun js/locate-node-bin (name)
+  (interactive "s")
+  (let* ((bin (concat "node_modules/.bin/" name))
+         (project-dir
+          (locate-dominating-file
+           buffer-file-name
+           (lambda (parent) (file-exists-p (expand-file-name (concat parent bin)))))))
+
+    (and project-dir
+         (expand-file-name (concat project-dir bin)))))
+
 (defun js/post-init-flycheck ()
   (add-hook 'js-jsx-mode-hook 'flycheck-mode)
   (require 'flycheck)
@@ -16,19 +27,21 @@
   "If standard found in node_modules directory - use that for flycheck.
 Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
   (interactive)
-  (let ((local-standard (expand-file-name (concat (projectile-project-root) "node_modules/.bin/standard"))))
-    (make-local-variable 'flycheck-javascript-standard-executable)
-    (setq flycheck-javascript-standard-executable
-          (and (file-exists-p local-standard) local-standard))))
+
+  (let ((local-standard (js/locate-node-bin "standard")))
+    (when local-standard
+      (make-local-variable 'flycheck-javascript-standard-executable)
+      (setq flycheck-javascript-standard-executable local-standard))))
 
 (defun js/setup-local-eslint ()
   "If eslint found in node_modules directory - use that for flycheck.
 Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
   (interactive)
-  (let ((local-eslint (expand-file-name (concat (projectile-project-root) "node_modules/.bin/eslint"))))
-    (make-local-variable 'flycheck-javascript-eslint-executable)
-    (setq flycheck-javascript-eslint-executable
-          (and (file-exists-p local-eslint) local-eslint))))
+
+  (let ((local-eslint (js/locate-node-bin "eslint")))
+    (when local-eslint
+      (make-local-variable 'flycheck-javascript-eslint-executable)
+      (setq flycheck-javascript-eslint-executable local-eslint))))
 
 (defun js/init-js ()
   (use-package js
