@@ -6,7 +6,7 @@
 ;;
 ;;; License: GPLv3
 (setq prettier-js-packages
-      '((prettier-js :location local)))
+      '(prettier-js))
 
 (defun prettier-js/setup-local-prettier ()
   "If prettier found in node_modules directory - use that.
@@ -25,13 +25,17 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
     (when local-prettier
       (make-local-variable 'prettier-command)
 
-      (setq prettier-command local-prettier))))
+      (setq prettier-js-command local-prettier)
+      (spacemacs|diminish prettier-js-mode " Ⓟ" " P")
+
+      (prettier-js-mode))))
 
 (defun prettier-js/init-prettier-js ()
   (require 'prettier-js)
 
-  (add-hook
-   'js-jsx-mode-hook
-   (lambda ()
-     (prettier-js/setup-local-prettier)))
-  )
+  (mapc (lambda (hook)
+          (add-hook
+           hook
+           (lambda ()
+             (prettier-js/setup-local-prettier))))
+        '(js-jsx-mode-hook js-mode-hook js2-mode-hook)))
