@@ -23,7 +23,7 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
                (expand-file-name (concat project-dir prettier-bin)))))
 
     (when local-prettier
-      (make-local-variable 'prettier-command)
+      (make-local-variable 'prettier-js-command)
 
       (setq prettier-js-command local-prettier)
       (spacemacs|diminish prettier-js-mode " Ⓟ" " P")
