@@ -21,7 +21,9 @@ alias cdh='cd ~'
 
 alias fn='find . -name '
 
-
+function bundle-analyse {
+  webpack --display-modules | grep -e '\s*\[\d\+\]' | grep kB | awk '{print $3$4"  "$2}' | sort -n -r | head -25
+}
 
 if [ ! -f /usr/bin/open ]
 then
