@@ -13,11 +13,10 @@
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(typescript
      graphviz
      clojure
      sql
-     ocaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -49,7 +48,8 @@
      spell-checking
      nodejs-repl
      evil-walk-on-the-edge
-     editorconfig
+
+     ;; editorconfig
      ;; runtests
      yaml
      css-comb
@@ -76,12 +76,14 @@
      visual-fill-column
      bufshow
      figlet
+     edit-indirect
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages
    '(
      evil-search-highlight-persist
      emmet-mode
+     smartparens
      )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
@@ -171,7 +173,7 @@ before layers configuration."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup 't
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'.
@@ -219,6 +221,8 @@ layers configuration."
   (define-key evil-insert-state-map (kbd "M-\"") '(lambda () (interactive) (insert "Æ")))
   (define-key evil-insert-state-map (kbd "M-o") '(lambda () (interactive) (insert "ø")))
   (define-key evil-insert-state-map (kbd "M-O") '(lambda () (interactive) (insert "Ø")))
+
+  (define-key evil-normal-state-map "s" 'evil-avy-goto-word-or-subword-1)
 
   (add-to-list 'auto-mode-alist '("\\.ko$" . html-mode))
   (add-to-list 'auto-mode-alist '("\\.ejs$" . html-mode))
@@ -294,9 +298,10 @@ layers configuration."
     ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" default)))
  '(dumb-jump-selector (quote helm) t)
  '(evil-ex-substitute-case (quote sensitive))
- '(fci-rule-color "#073642" t)
+ '(fci-rule-color "#073642")
  '(flycheck-css-csslint-executable "csslintnext")
  '(flycheck-eslintrc ".eslintrc")
+ '(helm-ag-use-agignore t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
@@ -314,12 +319,14 @@ layers configuration."
      ("#8B2C02" . 70)
      ("#93115C" . 85)
      ("#073642" . 100))))
+ '(js-indent-level 2)
  '(magit-diff-use-overlays nil)
  '(org-directory "~/Dropbox/org")
  '(package-selected-packages
    (quote
-    (prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
+    (hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
  '(paradox-github-token t)
+ '(polymode-mode-name-override-alist (quote ((elisp . emacs-lisp) (js . js-jsx))))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store")))
@@ -327,6 +334,7 @@ layers configuration."
  '(safe-local-variable-values
    (quote
     ((prettier-js-mode . t)
+     (prettier-js-command)
      (prettier-args . "--single-qoute")
      (prettier-args "--single-qoute")
      (prettier-args)
@@ -384,3 +392,129 @@ layers configuration."
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
  '(term ((t (:inherit default :foreground "#839496")))))
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ahs-case-fold-search nil)
+ '(ahs-default-range (quote ahs-range-whole-buffer))
+ '(ahs-idle-interval 0.25)
+ '(ahs-idle-timer 0 t)
+ '(ahs-inhibit-face-list nil)
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
+ '(browse-url-browser-function (quote browse-url-default-macosx-browser))
+ '(case-replace nil)
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-safe-themes
+   (quote
+    ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3f630e9f343200ce27cfeb44f01c9046a4b2687a4751ba2b30e503da307cd27b" default)))
+ '(dumb-jump-selector (quote helm) t)
+ '(evil-ex-substitute-case (quote sensitive))
+ '(fci-rule-color "#073642")
+ '(flycheck-css-csslint-executable "csslintnext")
+ '(flycheck-eslintrc ".eslintrc")
+ '(helm-ag-use-agignore t)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(highlight-tail-colors
+   (quote
+    (("#073642" . 0)
+     ("#546E00" . 20)
+     ("#00736F" . 30)
+     ("#00629D" . 50)
+     ("#7B6000" . 60)
+     ("#8B2C02" . 70)
+     ("#93115C" . 85)
+     ("#073642" . 100))))
+ '(js-indent-level 2)
+ '(magit-diff-use-overlays nil)
+ '(org-directory "~/Dropbox/org")
+ '(package-selected-packages
+   (quote
+    (add-node-modules-path hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
+ '(paradox-github-token t)
+ '(polymode-mode-name-override-alist (quote ((elisp . emacs-lisp) (js . js-jsx))))
+ '(pos-tip-background-color "#073642")
+ '(pos-tip-foreground-color "#93a1a1")
+ '(projectile-globally-ignored-files (quote ("TAGS" ".DS_Store")))
+ '(ring-bell-function (quote ignore))
+ '(safe-local-variable-values
+   (quote
+    ((prettier-js-mode . t)
+     (prettier-js-command)
+     (prettier-args . "--single-qoute")
+     (prettier-args "--single-qoute")
+     (prettier-args)
+     (eval add-hook
+           (quote before-save-hook)
+           (quote prettier)
+           nil
+           (quote make-it-local))
+     (eval add-hook
+           (quote write-contents-functions)
+           (lambda nil
+             (css-comb
+              (point-min)
+              (point-max))
+             nil))
+     (eval setq runtests-command
+           (expand-file-name "bin/runtests"
+                             (projectile-project-root)))
+     (runtests-command . "runtests-jest"))))
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
+ '(timeclock-file "~/Dropbox/timelog")
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#c85d17")
+     (60 . "#be730b")
+     (80 . "#b58900")
+     (100 . "#a58e00")
+     (120 . "#9d9100")
+     (140 . "#959300")
+     (160 . "#8d9600")
+     (180 . "#859900")
+     (200 . "#669b32")
+     (220 . "#579d4c")
+     (240 . "#489e65")
+     (260 . "#399f7e")
+     (280 . "#2aa198")
+     (300 . "#2898af")
+     (320 . "#2793ba")
+     (340 . "#268fc6")
+     (360 . "#268bd2"))))
+ '(vc-annotate-very-old-color nil)
+ '(weechat-color-list
+   (quote
+    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 120 :width normal))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(term ((t (:inherit default :foreground "#839496")))))
+)
