@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+class Pusher
+  attr_reader :user, :local_branch
+
+  def initialize
+    @user = %x(git config github.user || whoami).strip
+    if invalid?(user)
+      raise "Your user name #{@user.inspect} contains invalid characters."
+    end
+
+    @local_branch = %x(git rev-parse --abbrev-ref HEAD).strip
+    if invalid?(local_branch)
+      raise "The local_branch name #{local_branch.inspect} " \
+            "contains invalid characters."
+    end
+  end
+
+  def call
+    system("git push -u origin #{local_branch}:#{remote_branch}")
+  end
+
+  private
+
+  def invalid?(string)
+    !string.match?(/\A\w[\w.-]{0,127}\z/)
+  end
+
+  def remote_branch
+    "#{user}_#{local_branch}"
+  end
+end
+
+Pusher.new.call
