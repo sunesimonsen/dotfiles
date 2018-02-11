@@ -71,9 +71,9 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
     (add-to-list 'projectile-other-file-alist '("js" "spec.js"))
     (add-to-list 'projectile-other-file-alist '("spec.js" "js")))
 
-  (evil-leader/set-key-for-mode 'js-jsx-mode "mga" 'projectile-find-other-file))
+  (evil-leader/set-key-for-mode 'js-jsx-mode "ga" 'projectile-find-other-file))
 
-(defun js/init-compile ()
+(defun js/post-init-compile ()
   (use-package compile
     :defer t
     :config
