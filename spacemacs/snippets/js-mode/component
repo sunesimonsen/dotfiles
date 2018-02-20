@@ -3,8 +3,9 @@
 # key: component
 # expand-env: ((yas-indent-line 'fixed))
 # --
-import React, { Component, PropTypes } from 'react'
-import { View } from 'self-service-components'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { View } from '@zendesk/self-service-components';
 
 export default class ${1:name} extends Component {
   static propTypes = {

@@ -3,4 +3,4 @@
 # key: expect
 # group: Jasmine
 # --
-expect($0)
+expect($1, '$2', $0)

@@ -30,8 +30,16 @@
               (end-of-buffer)))))
 
       (evil-leader/set-key-for-mode 'js-mode "sr" 'nodejs-repl-send-region)
-      (evil-leader/set-key-for-mode 'js2-mode "sr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js-mode "sl" 'nodejs-repl-send-line)
+      (evil-leader/set-key-for-mode 'js-mode "sb" 'nodejs-repl-send-buffer)
+      (evil-leader/set-key-for-mode 'js-mode "se" 'nodejs-repl-send-last-expression)
+      (evil-leader/set-key-for-mode 'js-mode "ss" 'nodejs-repl-switch-to-repl)
+
       (evil-leader/set-key-for-mode 'js-jsx-mode "sr" 'nodejs-repl-send-region)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "sl" 'nodejs-repl-send-line)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "sb" 'nodejs-repl-send-buffer)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "se" 'nodejs-repl-send-last-expression)
+      (evil-leader/set-key-for-mode 'js-jsx-mode "ss" 'nodejs-repl-switch-to-repl)
       )
     )
   )
