@@ -13,7 +13,7 @@
          (project-dir
           (locate-dominating-file
            buffer-file-name
-           (lambda (parent) (file-exists-p (expand-file-name (concat parent bin)))))))
+           bin)))
 
     (and project-dir
          (expand-file-name (concat project-dir bin)))))

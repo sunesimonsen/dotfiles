@@ -17,7 +17,7 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
          (project-dir
           (locate-dominating-file
            buffer-file-name
-           (lambda (parent) (file-exists-p (expand-file-name (concat parent prettier-bin))))))
+           prettier-bin))
          (local-prettier
           (and project-dir
                (expand-file-name (concat project-dir prettier-bin)))))
