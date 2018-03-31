@@ -576,6 +576,9 @@ before packages are loaded."
 
   (eval-after-load 'mu4e
     '(progn
+       (setq mu4e-user-agent-string
+             (format "mu4e %s; spacemacs %s" mu4e-mu-version spacemacs-version))
+
        (setq mu4e-marks (assq-delete-all 'trash mu4e-marks))
        (add-to-list 'mu4e-marks
                     '(trash
