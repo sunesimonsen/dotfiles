@@ -38,7 +38,8 @@ elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-DOCKER_IMAGES_DEBUG=true
+export DOCKER_IMAGES_DEBUG=true
+export DEDICATED_DOCKER_DISK=true
 
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
