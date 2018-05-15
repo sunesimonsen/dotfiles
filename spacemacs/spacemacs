@@ -81,21 +81,20 @@ This function should only modify configuration layer settings."
      terminal-here
      restclient
      bufshow
+     runtests
      (mu4e
       :variables
       mu4e-spacemacs-layout-name "@Mu4e"
       mu4e-spacemacs-layout-binding "m"
       mu4e-installation-path "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"
-      mu4e-trash-folder "/INBOX.Trash"
-      mu4e-refile-folder "/INBOX.Archive"
-      mu4e-drafts-folder "/INBOX.Drafts"
-      mu4e-sent-folder "/INBOX.Sent"
-      ;; mu4e-html2text-command "w3m -T text/html"
-      mu4e-get-mail-command "offlineimap"
+      mu4e-get-mail-command "offlineimap -o"
       mu4e-view-show-addresses t
       mu4e-index-lazy-check t
       mu4e-enable-mode-line t
       mu4e-enable-notifications t
+      mu4e-context-policy 'pick-first
+      mu4e-alert-interesting-mail-query "flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+      mu4e-compose-format-flowed t
       mu4e-update-interval 300
       mu4e-compose-dont-reply-to-self t
       mu4e-headers-include-related nil
@@ -562,12 +561,8 @@ before packages are loaded."
 
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
-        smtpmail-starttls-credentials
-        '(("send.one.com" 587 nil nil))
         smtpmail-auth-credentials
         (expand-file-name "~/.authinfo.gpg")
-        smtpmail-default-smtp-server "send.one.com"
-        smtpmail-smtp-server "send.one.com"
         smtpmail-smtp-service 587
         smtpmail-debug-info t)
 
@@ -576,6 +571,82 @@ before packages are loaded."
     '(progn
        (setq mu4e-user-agent-string
              (format "mu4e %s; spacemacs %s" mu4e-mu-version spacemacs-version))
+
+       (setq mu4e-contexts
+             `( ,(make-mu4e-context
+                  :name "Personal"
+                  :match-func (lambda (msg) (when msg
+                                              (string-prefix-p "/Personal" (mu4e-message-field msg :maildir))))
+                  :vars '(
+                          (user-mail-address . "sune@we-knowhow.dk")
+                          (mu4e-trash-folder . "/Personal/INBOX.Trash")
+                          (mu4e-refile-folder . "/Personal/INBOX.Archive")
+                          (mu4e-sent-folder . "/Personal/INBOX.Sent")
+                          (mu4e-drafts-folder . "/Personal/INBOX.Drafts")
+
+                          (mu4e-maildir-shortcuts . (("/Personal/INBOX" . ?i)
+                                                     ("/Personal/INBOX.Archived" . ?a)
+                                                     ("/Personal/INBOX.Todo" . ?t)
+                                                     ("/Personal/INBOX.Trash" . ?d)
+                                                     ("/Personal/INBOX.Tickets" . ?b)))
+
+                          (mu4e-bookmarks . (("maildir:\"/Personal/INBOX\"" "Inbox" ?i)
+                                             ("maildir:\"/Personal/INBOX.Todo\"" "Todo" ?t)
+                                             ("maildir:\"/Personal/INBOX.Archive\"" "Archive" ?a)
+                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+                                              "Unread messages" ?u)
+                                             ("date:today..now" "Today's messages" ?d)
+                                             ("date:7d..now" "Last 7 days" ?w)
+                                             ("mime:image/*" "Messages with images" ?p)))
+
+                          (smtpmail-starttls-credentials . (("send.one.com" 587 nil nil)))
+                          (smtpmail-default-smtp-server . "send.one.com")
+                          (smtpmail-smtp-server . "send.one.com")
+                          ))
+                ,(make-mu4e-context
+                  :name "Work"
+                  :match-func (lambda (msg) (when msg
+                                              (string-prefix-p "/Work" (mu4e-message-field msg :maildir))))
+                  :vars '(
+                          (user-mail-address . "ssimonsen@zendesk.com")
+                          (mu4e-trash-folder . "/Work/[Gmail].Trash")
+                          (mu4e-refile-folder . "/Work/[Gmail].All Mail")
+                          (mu4e-sent-folder . "/Work/[Gmail].Sent Mail")
+                          (mu4e-drafts-folder . "/Work/[Gmail].Drafts")
+
+                          (mu4e-maildir-shortcuts . (("/Work/[Gmail].All Mail" . ?a)
+                                                     ("/Work/[Gmail].Trash" . ?d)))
+
+                          (mu4e-bookmarks . (("tag:\\\\Inbox" "Inbox" ?i)
+                                             ("maildir:\"/Work/[Gmail].All Mail\"" "All mail" ?a)
+                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+                                              "Unread messages" ?u)
+                                             ("date:today..now" "Today's messages" ?d)
+                                             ("date:7d..now" "Last 7 days" ?w)
+                                             ("mime:image/*" "Messages with images" ?p)))
+
+                          (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                          (smtpmail-default-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          ))
+                ))
+
+       ;; This sets `mu4e-user-mail-address-list' to the concatenation of all
+       ;; `user-mail-address' values for all contexts. If you have other mail
+       ;; addresses as well, you'll need to add those manually.
+       (setq mu4e-user-mail-address-list
+             (delq nil
+                   (mapcar (lambda (context)
+                             (when (mu4e-context-vars context)
+                               (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+                           mu4e-contexts)))
+
+       (add-hook 'mu4e-mark-execute-pre-hook
+                 (lambda (mark msg)
+                   (cond ((equal mark 'refile) (mu4e-action-retag-message msg "-\\Inbox"))
+                         ((equal mark 'trash) (mu4e-action-retag-message msg "-\\Inbox,-\\Starred"))
+                         ((equal mark 'flag) (mu4e-action-retag-message msg "\\Starred"))
+                         ((equal mark 'unflag) (mu4e-action-retag-message msg "-\\Starred")))))
 
        (setq mu4e-marks (assq-delete-all 'trash mu4e-marks))
        (add-to-list 'mu4e-marks
@@ -586,6 +657,12 @@ before packages are loaded."
                       :action (lambda (docid msg target) 
                                 (mu4e~proc-move docid
                                                 (mu4e~mark-check-target target) "-N"))))
+
+
+       (require 'mu4e-contrib)
+       (setq mu4e-html2text-command 'mu4e-shr2text)
+       (setq shr-color-visible-luminance-min 80)
+       (setq shr-color-visible-distance-min 5)
 
        ;; Refile will set mail to All Mail (basically archiving them). I want this to
        ;; auto-mark them as read, so I redefine refile to add the +S tag.
@@ -600,6 +677,9 @@ before packages are loaded."
 
   (with-eval-after-load 'mu4e-alert
     (mu4e-alert-set-default-style 'notifier))
+
+  (with-eval-after-load 'ispell
+    (setq ispell-program-name "/usr/local/bin/aspell"))
 
   ;; don't highlight lines in terminal mode
   (let ((comint-hooks '(eshell-mode-hook
@@ -789,34 +869,10 @@ This function is called at the very end of Spacemacs initialization."
      ("#073642" . 100))))
  '(js-indent-level 2)
  '(magit-diff-use-overlays nil)
- '(mu4e-alert-interesting-mail-query "flag:unread AND maildir:\"/INBOX\" AND NOT flag:trashed")
- '(mu4e-bookmarks
-   (quote
-    (("maildir:\"/INBOX\"" "Inbox" 105)
-     ("maildir:\"/INBOX.Todo\"" "Todo" 116)
-     ("flag:unread AND NOT flag:trashed" "Unread messages" 117)
-     ("date:today..now" "Today's messages" 100)
-     ("date:7d..now" "Last 7 days" 119)
-     ("maildir:\"/INBOX.Archive\"" "Archive" 97)
-     ("mime:image/*" "Messages with images" 112))))
- '(mu4e-compose-format-flowed t)
- '(mu4e-compose-in-new-frame nil)
- '(mu4e-headers-auto-update nil)
- '(mu4e-headers-date-format "%d-%m-%Y")
- '(mu4e-headers-fields
-   (quote
-    ((:human-date . 12)
-     (:flags . 6)
-     (:from . 22)
-     (:subject))))
- '(mu4e-use-fancy-chars nil)
- '(mu4e-view-html-plaintext-ratio-heuristic 1000)
- '(org-agenda-files (quote ("~/Dropbox/org/")))
- '(org-default-notes-file "/Users/ssimonsen/Dropbox/org/notes.org")
- '(org-directory "~/Dropbox/org")
+ '(org-directory "~/Dropbox/org" t)
  '(package-selected-packages
    (quote
-    (elfeed-web elfeed-org elfeed-goodies ace-jump-mode elfeed noflet ensime sbt-mode scala-mode csv-mode ghub let-alist org-mime hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
+    (flycheck-jest noflet ensime sbt-mode scala-mode csv-mode ghub let-alist org-mime hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
  '(paradox-github-token t)
  '(polymode-mode-name-override-alist (quote ((elisp . emacs-lisp) (js . js-jsx))))
  '(pos-tip-background-color "#073642")
@@ -850,7 +906,6 @@ This function is called at the very end of Spacemacs initialization."
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
  '(timeclock-file "~/Dropbox/timelog")
- '(user-mail-address "sune@we-knowhow.dk")
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
