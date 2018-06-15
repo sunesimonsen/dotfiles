@@ -93,12 +93,13 @@ This function should only modify configuration layer settings."
       mu4e-enable-mode-line t
       mu4e-enable-notifications t
       mu4e-context-policy 'pick-first
-      mu4e-alert-interesting-mail-query "flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+      ;; mu4e-update-interval 900
+      mu4e-alert-interesting-mail-query "flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
       mu4e-compose-format-flowed t
-      mu4e-update-interval 300
       mu4e-compose-dont-reply-to-self t
       mu4e-headers-include-related nil
-      ))
+      )
+     )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -584,16 +585,10 @@ before packages are loaded."
                           (mu4e-sent-folder . "/Personal/INBOX.Sent")
                           (mu4e-drafts-folder . "/Personal/INBOX.Drafts")
 
-                          (mu4e-maildir-shortcuts . (("/Personal/INBOX" . ?i)
-                                                     ("/Personal/INBOX.Archived" . ?a)
-                                                     ("/Personal/INBOX.Todo" . ?t)
-                                                     ("/Personal/INBOX.Trash" . ?d)
-                                                     ("/Personal/INBOX.Tickets" . ?b)))
-
-                          (mu4e-bookmarks . (("maildir:\"/Personal/INBOX\"" "Inbox" ?i)
-                                             ("maildir:\"/Personal/INBOX.Todo\"" "Todo" ?t)
-                                             ("maildir:\"/Personal/INBOX.Archive\"" "Archive" ?a)
-                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+                          (mu4e-bookmarks . (("maildir:/Personal/INBOX" "Inbox" ?i)
+                                             ("maildir:/Personal/INBOX.Todo" "Todo" ?t)
+                                             ("maildir:/Personal/INBOX.Archive" "Archive" ?a)
+                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                                               "Unread messages" ?u)
                                              ("date:today..now" "Today's messages" ?d)
                                              ("date:7d..now" "Last 7 days" ?w)
@@ -610,16 +605,13 @@ before packages are loaded."
                   :vars '(
                           (user-mail-address . "ssimonsen@zendesk.com")
                           (mu4e-trash-folder . "/Work/[Gmail].Trash")
-                          (mu4e-refile-folder . "/Work/[Gmail].All Mail")
+                          (mu4e-refile-folder . "/Work/Archived")
                           (mu4e-sent-folder . "/Work/[Gmail].Sent Mail")
                           (mu4e-drafts-folder . "/Work/[Gmail].Drafts")
 
-                          (mu4e-maildir-shortcuts . (("/Work/[Gmail].All Mail" . ?a)
-                                                     ("/Work/[Gmail].Trash" . ?d)))
-
-                          (mu4e-bookmarks . (("tag:\\\\Inbox" "Inbox" ?i)
-                                             ("maildir:\"/Work/[Gmail].All Mail\"" "All mail" ?a)
-                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR tag:\\\\Inbox)"
+                          (mu4e-bookmarks . (("maildir:/Work/INBOX" "Inbox" ?i)
+                                             ("maildir:/Work/Archived" "Archive" ?a)
+                                             ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                                               "Unread messages" ?u)
                                              ("date:today..now" "Today's messages" ?d)
                                              ("date:7d..now" "Last 7 days" ?w)
@@ -689,6 +681,9 @@ before packages are loaded."
     (spacemacs/add-to-hooks (defun bb/no-hl-line-mode ()
                               (setq-local global-hl-line-mode nil))
                             comint-hooks))
+
+  (add-to-list 'tramp-default-user-alist
+               '("ssh" "ssh\\.we-knowhow\\.dk" "we-knowhow.dk"))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -824,11 +819,11 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ahs-case-fold-search nil t)
- '(ahs-default-range (quote ahs-range-whole-buffer) t)
- '(ahs-idle-interval 0.25 t)
+ '(ahs-case-fold-search nil)
+ '(ahs-default-range (quote ahs-range-whole-buffer))
+ '(ahs-idle-interval 0.25)
  '(ahs-idle-timer 0 t)
- '(ahs-inhibit-face-list nil t)
+ '(ahs-inhibit-face-list nil)
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
@@ -869,10 +864,12 @@ This function is called at the very end of Spacemacs initialization."
      ("#073642" . 100))))
  '(js-indent-level 2)
  '(magit-diff-use-overlays nil)
- '(org-directory "~/Dropbox/org" t)
+ '(org-agenda-files (quote ("~/Dropbox/org/notes.org")))
+ '(org-default-notes-file "/Users/ssimonsen/Dropbox/org/notes.org")
+ '(org-directory "/Users/ssimonsen/Dropbox/org")
  '(package-selected-packages
    (quote
-    (flycheck-jest noflet ensime sbt-mode scala-mode csv-mode ghub let-alist org-mime hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
+    (yasnippet-snippets string-inflection sayid ruby-hash-syntax pyvenv pip-requirements overseer org-brain nameless mu4e-alert live-py-mode importmagic helm-mu evil-org counsel-projectile counsel swiper ivy company-anaconda browse-at-remote anaconda-mode window-purpose pythonic noflet ensime sbt-mode scala-mode csv-mode ghub let-alist org-mime hackernews tide typescript-mode edit-indirect org-category-capture polymode prettier-js restclient-helm ob-restclient ob-http company-restclient restclient know-your-http-well graphviz-dot-mode github-issues terminal-here winum fuzzy web-beautify livid-mode skewer-mode simple-httpd js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode sql-indent vmd-mode xkcd utop tuareg caml ocp-indent merlin editorconfig figlet bufshow google helm-chrome engine-mode helm-google shell-switcher multi-eshell minitest hide-comnt evil-snipe evil-escape yaml-mode xterm-color ws-butler window-numbering which-key web-mode volatile-highlights visual-fill-column vi-tilde-fringe uuidgen use-package todotxt-mode toc-org tagedit speed-type spacemacs-theme spaceline powerline smeargle slim-mode shell-pop scss-mode sass-mode rvm runtests ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv rake rainbow-delimiters pug-mode popwin persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text mmm-mode material-theme markdown-toc markdown-mode magit-gitflow magit-gh-pulls macrostep lorem-ipsum linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat info+ indent-guide ido-vertical-mode hydra hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haml-mode google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gist gh marshal logito pcache ht gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck pkg-info epl flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump f s diminish diff-hl css-comb company-web web-completion-data company-statistics company column-enforce-mode clean-aindent-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build monokai-theme)))
  '(paradox-github-token t)
  '(polymode-mode-name-override-alist (quote ((elisp . emacs-lisp) (js . js-jsx))))
  '(pos-tip-background-color "#073642")
