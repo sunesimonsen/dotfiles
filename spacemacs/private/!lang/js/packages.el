@@ -52,8 +52,11 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
 
       (defun my-js-imenu-make-index ()
         (save-excursion
-          (imenu--generic-function '((nil "function\\s-+\\([^ ]+\\)(" 1)
-                                     (nil "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
+          (imenu--generic-function '(("Condition" "^\\s-+ifs-*([^)]+)\\s-*{" 0)
+                                     ("Function" "const\\s-+\\([^ ]+\\)\\s-*=.+=>" 1)
+                                     ("Function" "^\\s-+\\([^ ]+\\)\\s-*([^)]+)\\s-*{" 1)
+                                     ("Function" "function\\s-+\\([^ ]+\\)(" 1)
+                                     ("Function" "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 1)))))
 
       (add-hook
        'js-jsx-mode-hook

@@ -18,11 +18,16 @@ mochaRootDir=$(locate-dominating-dir $filePath node_modules/.bin/mocha)
 
 if [ -n "$jestRootDir" ]
 then
-    $(cd $jestRootDir && BLUEBIRD_DEBUG=yes $jestRootDir/node_modules/.bin/jest -b --colors $*)
+    pushd $jestRootDir > /dev/null
+    BLUEBIRD_DEBUG=yes $jestRootDir/node_modules/.bin/jest -b --colors $*
+    exitStatus=${PIPESTATUS[0]}
 elif [ -n "$mochaRootDir" ]
 then
-    $(cd $mochaRootDir && BLUEBIRD_DEBUG=yes $mochaRootDir/node_modules/.bin/mocha -b -R dot --colors $*)
+    pushd $mochaRootDir > /dev/null
+    BLUEBIRD_DEBUG=yes $mochaRootDir/node_modules/.bin/mocha -b -R dot --colors $*
+    exitStatus=${PIPESTATUS[0]}
 fi
 
-exitStatus=${PIPESTATUS[0]}
+popd > /dev/null
+
 exit $exitStatus

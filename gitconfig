@@ -6,7 +6,7 @@
     status = auto
     branch = auto
 [alias]
-    st = status --short
+    st = status
     di = diff
     co = checkout
     ci = commit
@@ -30,3 +30,9 @@
 	excludesfile = ~/.gitignore
 [github]
 	user = sunesimonsen
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false

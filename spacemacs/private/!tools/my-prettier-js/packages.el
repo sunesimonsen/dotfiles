@@ -5,10 +5,10 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq prettier-js-packages
+(setq my-prettier-js-packages
       '(prettier-js))
 
-(defun prettier-js/setup-local-prettier ()
+(defun my-prettier-js/setup-local-prettier ()
   "If prettier found in node_modules directory - use that.
 Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
   (interactive)
@@ -30,12 +30,12 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
 
       (prettier-js-mode))))
 
-(defun prettier-js/init-prettier-js ()
+(defun my-prettier-js/post-init-prettier-js ()
   (require 'prettier-js)
 
   (mapc (lambda (hook)
           (add-hook
            hook
            (lambda ()
-             (prettier-js/setup-local-prettier))))
+             (my-prettier-js/setup-local-prettier))))
         '(js-jsx-mode-hook js-mode-hook js2-mode-hook)))
