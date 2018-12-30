@@ -63,6 +63,7 @@ This function should only modify configuration layer settings."
       org-enable-github-support t)
      (shell
       :variables
+      eshell-buffer-maximum-lines 5000
       shell-default-position 'full
       shell-default-shell 'eshell)
      version-control
