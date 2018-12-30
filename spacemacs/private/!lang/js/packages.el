@@ -5,7 +5,7 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
-(setq js-packages '(js projectile compile flycheck))
+(setq js-packages '(js projectile compile flycheck company))
 
 (defun js/locate-node-bin (name)
   (interactive "s")
@@ -68,6 +68,12 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
       )
     )
   )
+
+(defun js/post-init-company ()
+  (add-hook
+   'js-jsx-mode-hook
+   (lambda ()
+     (company-mode t))))
 
 (defun js/post-init-projectile ()
   (with-eval-after-load 'projectile
