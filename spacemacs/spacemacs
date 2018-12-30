@@ -697,8 +697,79 @@ before packages are loaded."
                               (setq-local global-hl-line-mode nil))
                             comint-hooks))
 
-  (add-to-list 'tramp-default-user-alist
-               '("ssh" "ssh\\.we-knowhow\\.dk" "we-knowhow.dk"))
+  (with-eval-after-load 'tramp
+    (add-to-list 'tramp-default-user-alist
+                 '("ssh" "ssh\\.we-knowhow\\.dk" "we-knowhow.dk")))
+
+
+  (defun run-app-ansi-color-filter (process output)
+    (require 'ansi-color)
+
+    (when (buffer-live-p (process-buffer process))
+      (with-current-buffer (process-buffer process)
+        (let ((moving (= (point) (process-mark process))))
+          (save-excursion
+            ;; Insert the text, advancing the process marker.
+            (goto-char (process-mark process))
+            (insert (replace-regexp-in-string "\r" "" output))
+            (ansi-color-apply-on-region (process-mark process) (point))
+            (set-marker (process-mark process) (point))
+            (comint-truncate-buffer))
+          (if moving (goto-char (process-mark process)))))))
+
+  (defun run-app (key)
+    (let* ((commands
+            '(
+              ("server" "~/Code/zendesk/knowledge_client/" ("yarn" "start"))
+              ("arrange" "~/Code/zendesk/knowledge_client/packages/knowledge-arrange/" ("yarn" "start"))
+              ("editor" "~/Code/zendesk/knowledge_client/packages/knowledge-editor/" ("yarn" "start"))
+              ("healthcheck" "~/Code/zendesk/knowledge_client/packages/knowledge-healthcheck/" ("yarn" "start"))
+              ("history" "~/Code/zendesk/knowledge_client/packages/knowledge-history/" ("yarn" "start"))
+              ("lists" "~/Code/zendesk/knowledge_client/packages/knowledge-lists/" ("yarn" "start"))
+              ("permissions" "~/Code/zendesk/knowledge_client/packages/knowledge-permissions/" ("yarn" "start"))
+              ("revisions" "~/Code/zendesk/knowledge_client/packages/knowledge-revisions/" ("yarn" "start"))
+              ("signals" "~/Code/zendesk/knowledge_client/packages/knowledge-signals/" ("yarn" "start"))
+              ("unsupported" "~/Code/zendesk/knowledge_client/packages/knowledge-unsupported/" ("yarn" "start"))
+              ("user-segments" "~/Code/zendesk/knowledge_client/packages/knowledge-user-segments/" ("yarn" "start"))
+              ("verification" "~/Code/zendesk/knowledge_client/packages/knowledge-verification/" ("yarn" "start"))))
+           (buffer-name (format "*run-%s*" key))
+           (default-directory (cadr (assoc key commands)))
+           (command (caddr (assoc key commands))))
+      (unless (get-buffer buffer-name)
+        (make-process
+         :name (format "run-%s" key)
+         :buffer buffer-name
+         :command command
+         :filter 'run-app-ansi-color-filter
+         ))
+      (switch-to-buffer buffer-name)))
+
+  (defun find-app ()
+    (interactive)
+    (helm :sources
+          (helm-build-sync-source "test"
+            :candidates
+            '(
+              server
+              arrange
+              editor
+              healthcheck
+              history
+              lists
+              permissions
+              revisions
+              signals
+              unsupported
+              user-segments
+              verification
+              )
+            :action 'run-app
+            :fuzzy-match t)
+          :buffer "*run*"))
+
+  (progn
+    (spacemacs/declare-prefix "aa" "applications")
+    (define-key evil-motion-state-map (kbd "SPC a a r") 'find-app))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
