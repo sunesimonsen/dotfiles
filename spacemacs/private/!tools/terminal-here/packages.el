@@ -39,13 +39,13 @@
     (progn
       (require 'terminal-here)
 
-      (defun open-iterm (dir)
-        (cond
-         ((eq system-type 'darwin)
-          (list "open" "-a" "iTerm.app" dir))
-         (t (terminal-here-default-terminal-command dir))))
+      ;; (defun open-iterm (dir)
+      ;;   (cond
+      ;;    ((eq system-type 'darwin)
+      ;;     (list "open" "-a" "iTerm.app" dir))
+      ;;    (t (terminal-here-default-terminal-command dir))))
 
-      (setq terminal-here-terminal-command 'open-iterm)
+      ;; (setq terminal-here-terminal-command 'open-iterm)
 
       (define-key evil-motion-state-map (kbd "SPC \"") 'terminal-here))))
 

@@ -13,22 +13,23 @@
 Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
   (interactive)
 
-  (let* ((prettier-bin "node_modules/.bin/prettier")
-         (project-dir
-          (locate-dominating-file
-           buffer-file-name
-           prettier-bin))
-         (local-prettier
-          (and project-dir
-               (expand-file-name (concat project-dir prettier-bin)))))
+  (when buffer-file-name
+    (let* ((prettier-bin "node_modules/.bin/prettier")
+           (project-dir
+            (locate-dominating-file
+             buffer-file-name
+             prettier-bin))
+           (local-prettier
+            (and project-dir
+                 (expand-file-name (concat project-dir prettier-bin)))))
 
-    (when local-prettier
-      (make-local-variable 'prettier-js-command)
+      (when local-prettier
+        (make-local-variable 'prettier-js-command)
 
-      (setq prettier-js-command local-prettier)
-      (spacemacs|diminish prettier-js-mode " Ⓟ" " P")
+        (setq prettier-js-command local-prettier)
+        (spacemacs|diminish prettier-js-mode " Ⓟ" " P")
 
-      (prettier-js-mode))))
+        (prettier-js-mode)))))
 
 (defun my-prettier-js/post-init-prettier-js ()
   (require 'prettier-js)

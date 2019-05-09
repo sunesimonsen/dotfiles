@@ -54,3 +54,7 @@ alias dev='make development'
 
 # NPM
 alias npmofficial='npm --userconfig ~/.npmrc-official'
+
+# docker -- set hyperkit priority to 10 so it doesn't eat the CPU
+alias dockerpri='echo -n "docker priority currently: "; ps alx | grep com.docker.hyperkit | grep -v grep | sed "s: *[0-9]*  *[0-9]*  *[0-9]*  *[0-9]*  *[0-9]*  *\([0-9]*\) .*:\1:"'
+alias dockernice='sudo renice 10 $(ps ax | grep com.docker.hyperkit | grep -v grep | sed "s: *\([0-9]*\) .*:\1:"); echo -n "dockerpri: "; dockerpri'

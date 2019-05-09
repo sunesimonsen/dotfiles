@@ -41,6 +41,8 @@ fi
 export DOCKER_IMAGES_DEBUG=true
 
 export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+nvm() {
+    source $(brew --prefix nvm)/nvm.sh;
+}
 
 eval "$(rbenv init -)"
