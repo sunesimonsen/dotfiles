@@ -39,10 +39,11 @@ elif [ -f /etc/bash_completion ]; then
 fi
 
 export DOCKER_IMAGES_DEBUG=true
-
-export NVM_DIR=~/.nvm
-nvm() {
-    source $(brew --prefix nvm)/nvm.sh;
-}
+export GUIDE_ELASTICSEARCH=true
 
 eval "$(rbenv init -)"
+
+if [ -z "$FNM_DIR" ]
+then
+    eval "$(fnm env --multi)"
+fi

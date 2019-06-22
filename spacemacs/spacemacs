@@ -721,18 +721,18 @@ before packages are loaded."
   (defun run-app (key)
     (let* ((commands
             '(
-              ("server" "~/Code/zendesk/knowledge_client/" ("yarn" "start"))
-              ("arrange" "~/Code/zendesk/knowledge_client/packages/knowledge-arrange/" ("yarn" "start"))
-              ("editor" "~/Code/zendesk/knowledge_client/packages/knowledge-editor/" ("yarn" "start"))
-              ("healthcheck" "~/Code/zendesk/knowledge_client/packages/knowledge-healthcheck/" ("yarn" "start"))
-              ("history" "~/Code/zendesk/knowledge_client/packages/knowledge-history/" ("yarn" "start"))
-              ("lists" "~/Code/zendesk/knowledge_client/packages/knowledge-lists/" ("yarn" "start"))
-              ("permissions" "~/Code/zendesk/knowledge_client/packages/knowledge-permissions/" ("yarn" "start"))
-              ("revisions" "~/Code/zendesk/knowledge_client/packages/knowledge-revisions/" ("yarn" "start"))
-              ("signals" "~/Code/zendesk/knowledge_client/packages/knowledge-signals/" ("yarn" "start"))
-              ("unsupported" "~/Code/zendesk/knowledge_client/packages/knowledge-unsupported/" ("yarn" "start"))
-              ("user-segments" "~/Code/zendesk/knowledge_client/packages/knowledge-user-segments/" ("yarn" "start"))
-              ("verification" "~/Code/zendesk/knowledge_client/packages/knowledge-verification/" ("yarn" "start"))))
+              ("server" "~/Code/zendesk/guide-client/" ("yarn" "start"))
+              ("arrange" "~/Code/zendesk/guide-client/packages/knowledge-arrange/" ("yarn" "start"))
+              ("editor" "~/Code/zendesk/guide-client/packages/knowledge-editor/" ("yarn" "start"))
+              ("healthcheck" "~/Code/zendesk/guide-client/packages/knowledge-healthcheck/" ("yarn" "start"))
+              ("history" "~/Code/zendesk/guide-client/packages/knowledge-history/" ("yarn" "start"))
+              ("lists" "~/Code/zendesk/guide-client/packages/knowledge-lists/" ("yarn" "start"))
+              ("permissions" "~/Code/zendesk/guide-client/packages/knowledge-permissions/" ("yarn" "start"))
+              ("revisions" "~/Code/zendesk/guide-client/packages/knowledge-revisions/" ("yarn" "start"))
+              ("signals" "~/Code/zendesk/guide-client/packages/knowledge-signals/" ("yarn" "start"))
+              ("unsupported" "~/Code/zendesk/guide-client/packages/knowledge-unsupported/" ("yarn" "start"))
+              ("user-segments" "~/Code/zendesk/guide-client/packages/knowledge-user-segments/" ("yarn" "start"))
+              ("verification" "~/Code/zendesk/guide-client/packages/knowledge-verification/" ("yarn" "start"))))
            (buffer-name (format "*run-%s*" key))
            (default-directory (cadr (assoc key commands)))
            (command (caddr (assoc key commands))))
@@ -771,6 +771,13 @@ before packages are loaded."
   (progn
     (spacemacs/declare-prefix "aa" "applications")
     (define-key evil-motion-state-map (kbd "SPC a a r") 'find-app))
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (eshell-cmpl-initialize)
+              (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+              ;; (define-key eshell-mode-map (kbd "M-s f") 'helm-eshell-prompts-all)
+              (define-key eshell-mode-map (kbd "M-r") 'helm-eshell-history)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -924,10 +931,11 @@ This function is called at the very end of Spacemacs initialization."
  '(dumb-jump-selector (quote helm) t)
  '(evil-escape-delay 0.2)
  '(evil-ex-substitute-case (quote sensitive))
- '(fci-rule-color "#073642" t)
+ '(fci-rule-color "#073642")
  '(flycheck-css-csslint-executable "csslintnext")
  '(flycheck-eslintrc ".eslintrc")
  '(helm-ag-use-agignore t)
+ '(helm-show-completion-display-function nil)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
