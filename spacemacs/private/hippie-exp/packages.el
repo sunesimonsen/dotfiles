@@ -13,9 +13,8 @@
       (if mark-active
           (indent-region (region-beginning)
                          (region-end))
-        (if (looking-at "\\_>")
-            (hippie-expand nil)
-          (indent-for-tab-command)))))
+        (hippie-expand nil)
+        )))
 
   (global-set-key (kbd "TAB") 'smart-tab)
 
