@@ -39,4 +39,4 @@ Intended for use in PROJECTILE-AFTER-SWITCH-PROJECT-HOOK."
            hook
            (lambda ()
              (my-prettier-js/setup-local-prettier))))
-        '(js-jsx-mode-hook js-mode-hook js2-mode-hook)))
+        '(js-jsx-mode-hook js-mode-hook js2-mode-hook typescript-mode-hook json-mode-hook graphql-mode-hook)))
