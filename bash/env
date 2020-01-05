@@ -14,21 +14,10 @@ fi
 
 export TERM='xterm-256color'
 
-export M2_HOME=/opt/maven
-export PATH="$HOME/.linuxbrew/bin:$PATH"
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=./node_modules/.bin:$PATH
 export PATH=$DOTFILES/bin:$PATH
 export PATH=~/.local/bin:$PATH
-export PATH=$M2_HOME/bin:$PATH
-export PATH=/usr/local/opt/scala@2.11/bin:$PATH
-
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-export PATH="$PATH:/Applications/sc-4.3.13-osx/bin"
 
 export HISTIGNORE="^rm:--force"
 
