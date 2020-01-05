@@ -3,4 +3,5 @@ vim/.netrwhist
 *.bak
 *.swp
 *.generated
+*.pyc
 .dir-locals.el
