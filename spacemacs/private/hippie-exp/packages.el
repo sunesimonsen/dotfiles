@@ -16,7 +16,7 @@
         (hippie-expand nil)
         )))
 
-  (global-set-key (kbd "TAB") 'smart-tab)
+  ;; (global-set-key (kbd "TAB") 'smart-tab)
 
   (setq hippie-expand-try-functions-list
         '(
@@ -27,7 +27,4 @@
           ;; Try to complete text as a file name.
           try-complete-file-name
           ))
-
-  (when (configuration-layer/package-usedp 'yasnippet)
-    ;; Try to expand yasnippet snippets based on prefix
-    (push 'yas-hippie-try-expand hippie-expand-try-functions-list)))
+  )

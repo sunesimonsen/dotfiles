@@ -35,12 +35,13 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(python
-     csv
+   '(csv
+                                        ;python
+     ;csv
      osx
-     graphviz
+     ;graphviz
      ;; clojure
-     sql
+     ;sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -80,15 +81,19 @@ This function should only modify configuration layer settings."
 
      ;; editorconfig
      yaml
-     css-comb
+     ;css-comb
      vinegar
      yasnippet
      hippie-exp
      ruby
      terminal-here
      restclient
-     bufshow
+     ;bufshow
      runtests
+     (plantuml
+      :variables
+      plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.12/libexec/plantuml.jar"
+      plantuml-default-exec-mode 'jar)
      (mu4e
       :variables
       mu4e-spacemacs-layout-name "@Mu4e"
