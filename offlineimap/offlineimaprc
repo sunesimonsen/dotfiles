@@ -1,6 +1,6 @@
 [general]
 accounts = Personal,Work
-pythonfile = ~/.offlineimap.py
+pythonfile = ~/.config/dotfiles/offlineimap/offlineimap.py
 usecompression = yes
 
 [Account Personal]
