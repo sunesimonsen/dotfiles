@@ -9,5 +9,5 @@
 (package! add-node-modules-path)
 (package! prettier-js)
 (package! typescript-mode)
-(package! mu4e-org :disable t)
+(package! mu4e-jump-to-list)
 (package! runtests)

@@ -49,6 +49,9 @@
    (lambda ()
      (setq imenu-create-index-function 'my-js-imenu-make-index))))
 
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+
 (use-package! add-node-modules-path
   :hook ((js-mode js-mode js-jsx-mode typescript-mode json-mode graphql-mode) . add-node-modules-path))
 
@@ -136,11 +139,24 @@
      ("u" "Todo (url)" entry (file+headline "" "Tasks")
       "* TODO %?\n  %u\n  %^C")
      ("m" "Todo (mail)" entry (file+headline "" "Tasks")
-      "* TODO %?%:subject\n  %u\n  %a"))
+      "* TODO %?%a\n  %u"))
 
+   org-cycle-separator-lines 0
    org-directory "~/Dropbox/org"
    org-agenda-files '("~/Dropbox/org/notes.org")
-   org-default-notes-file "~/Dropbox/org/notes.org"))
+   org-default-notes-file "~/Dropbox/org/notes.org"
+   org-agenda-custom-commands
+   '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+     ("i" "Inbox" tags-todo "+inbox")
+     ("z" "Zendesk" tags-todo "+zendesk")
+     ("u" "Unexpected" tags-todo "+unexpected"))))
+
+;; Disable smartparens
+(after! smartparens
+  (smartparens-global-mode -1))
+
+(after! company
+  (map! :i "C-x C-l" 'evil-complete-previous-line))
 
 ;; Email
 (add-to-list 'load-path "/usr/local/Cellar/mu/1.2.0_1/share/emacs/site-lisp/mu/mu4e")
@@ -149,23 +165,56 @@
 
 (add-hook! evil-collection-setup
   (map! :map (mu4e-headers-mode-map mu4e-view-mode-map)
-        :n "T" 'mu4e-headers-mark-thread))
+        :n "T" 'mu4e-headers-mark-thread
+        :n "L" 'mu4e-jump-to-list))
 
 (after! mu4e
+  (require 'org-mu4e)
+
+  (remove-hook!
+    mu4e-compose-mode
+    #'org-mu4e-compose-org-mode)
+
+  (require 'smtpmail)
 
   (setq
    +mu4e-backend 'offlineimap
    mu4e-maildir "~/Maildir"
-   mu4e-user-agent-string
    mu4e-update-interval 300
-   mu4e-html2text-command "w3m -dump -s -T text/html -o display_link_number=true | sed 's#^\\(\\[[[:digit:]]\\+\\]\\) -$#\\1 https://no.op#'"
+   mu4e-html2text-command "w3m -dump -s -I 'UTF-8' -O 'UTF-8' -T text/html -o display_link_number=true | sed 's#^\\(\\[[[:digit:]]\\+\\]\\) -$#\\1 https://no.op#'"
+   mu4e-view-prefer-html t
+   mu4e-use-fancy-chars t
+   mu4e-get-mail-command "true"
+   mu4e-headers-include-related nil
+   mu4e-compose-dont-reply-to-self t
 
+   mu4e-headers-fields
+   '((:from . 20)
+     (:tags . 20)
+     (:subject . 85)
+     (:flags . 4)
+     (:human-date . 8)
+     (:mailing-list . 14)
+     (:account . 8))
+
+   ;; This sets `mu4e-user-mail-address-list' to the concatenation of all
+   ;; `user-mail-address' values for all contexts. If you have other mail
+   ;; addresses as well, you'll need to add those manually.
+   mu4e-user-mail-address-list
+   (delq nil
+         (mapcar (lambda (context)
+                   (when (mu4e-context-vars context)
+                     (cdr (assq 'user-mail-address (mu4e-context-vars context)))))
+                 mu4e-contexts))
+
+   mu4e-user-agent-string (format "mu4e %s; Doom Emacs %s" mu4e-mu-version doom-version)
    message-send-mail-function 'smtpmail-send-it
-   (format "mu4e %s; Doom Emacs %s" mu4e-mu-version doom-version)
    starttls-use-gnutls t
    smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg")
    smtpmail-smtp-service 587
    smtpmail-debug-info t)
+
+  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 
   (set-email-account!
    "Personal"
@@ -175,12 +224,12 @@
      (mu4e-trash-folder      . "/Personal/INBOX.Trash")
      (mu4e-refile-folder     . "/Personal/INBOX.Archive")
 
-     (mu4e-bookmarks . (("maildir:/Personal/INBOX" "Inbox" ?i)
+     (mu4e-bookmarks . (("maildir:/Personal/INBOX AND NOT tag:\\Trash" "Inbox" ?i)
                         ("maildir:/Personal/INBOX.Todo" "Todo" ?t)
                         ("maildir:/Personal/INBOX.Archive" "Archive" ?a)
-                        ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
+                        ("flag:unread AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                          "Unread messages" ?u)
-                        ("flag:unread AND flag:list AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
+                        ("flag:unread AND flag:list AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                          "Unread list" ?l)
                         ("date:today..now" "Today's messages" ?d)
                         ("date:7d..now" "Last 7 days" ?w)
@@ -202,9 +251,9 @@
 
      (mu4e-bookmarks . (("maildir:/Work/INBOX" "Inbox" ?i)
                         ("maildir:\"/Work/[Gmail].All Mail\"" "All Mail" ?a)
-                        ("flag:unread AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
+                        ("flag:unread AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                          "Unread messages" ?u)
-                        ("flag:unread AND flag:list AND NOT flag:trashed AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
+                        ("flag:unread AND flag:list AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                          "Unread list" ?l)
                         ("date:today..now" "Today's messages" ?d)
                         ("date:7d..now" "Last 7 days" ?w)
@@ -215,3 +264,17 @@
      (smtpmail-smtp-server . "smtp.gmail.com"))
    t)
   )
+
+;; LSP
+
+(add-hook! typescript-mode
+  (defun +javascript-init-lsp-or-tide-maybe-h ()
+    "Start `lsp' in the current buffer."
+    (let ((buffer-file-name (buffer-file-name (buffer-base-buffer))))
+      (when (derived-mode-p 'typescript-mode)
+        (if (not buffer-file-name)
+            ;; necessary because `lsp' will error if not a
+            ;; file-visiting buffer
+            (add-hook 'after-save-hook #'+javascript-init-tide-or-lsp-maybe-h nil 'local)
+          (lsp!)
+          (remove-hook 'after-save-hook #'+javascript-init-tide-or-lsp-maybe-h 'local))))))

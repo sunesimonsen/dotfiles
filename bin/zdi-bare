@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+zdi vm restart
+
+zdi consul restart
+zdi dnsmasq restart
+zdi dnsmasq_localhost restart
+zdi nginx restart
+zdi registrator restart
+zdi guide-client restart
