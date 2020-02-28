@@ -28,7 +28,8 @@ linkConfig vimrc .vimrc
 linkConfig vim/snippets .vim/snippets
 linkConfig vifm/vifmrc .vifm/vifmrc
 linkConfig vifm/colors .vifm/colors
-linkConfig offlineimap/offlineimap .offlineimap
+linkConfig offlineimap/offlineimaprc .offlineimaprc
+linkConfig offlineimap/offlineimap.py .offlineimap.py
 linkConfig gitconfig .gitconfig
 linkConfig i3 .i3
 linkConfig Xresources .Xresources

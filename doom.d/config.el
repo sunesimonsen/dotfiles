@@ -2,7 +2,7 @@
 
 ;; UI
 (setq
- doom-font (font-spec :family "DejaVu Sans Mono" :size 16)
+ doom-font (font-spec :family "Menlo" :size 16)
  display-line-numbers-type nil
  ;; Manual auto completion with C-Space
  company-idle-delay nil
