@@ -268,13 +268,13 @@
 ;; LSP
 
 (add-hook! typescript-mode
-  (defun +javascript-init-lsp-or-tide-maybe-h ()
+  (defun +javascript-init-lsp-maybe-h ()
     "Start `lsp' in the current buffer."
     (let ((buffer-file-name (buffer-file-name (buffer-base-buffer))))
       (when (derived-mode-p 'typescript-mode)
         (if (not buffer-file-name)
             ;; necessary because `lsp' will error if not a
             ;; file-visiting buffer
-            (add-hook 'after-save-hook #'+javascript-init-tide-or-lsp-maybe-h nil 'local)
+            (add-hook 'after-save-hook #'+javascript-init-lsp-maybe-h nil 'local)
           (lsp!)
-          (remove-hook 'after-save-hook #'+javascript-init-tide-or-lsp-maybe-h 'local))))))
+          (remove-hook 'after-save-hook #'+javascript-init-lsp-maybe-h 'local))))))
