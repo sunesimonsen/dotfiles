@@ -32,24 +32,6 @@
    )
   )
 
-;; JavaScript
-
-(use-package! js
-  :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-jsx-mode))
-
-  (defun my-js-imenu-make-index ()
-    (save-excursion
-      (imenu--generic-function '(("Function" "const\\s-+\\([^ ]+\\)\\s-*=.+=>" 0)
-                                 ("Function" "function\\s-+\\([^ ]+\\)(" 0)
-                                 ("Function" "\\.\\([^\\. ]+\\)\\s-*=\\s-*function\\s-*(" 0)))))
-  (add-hook
-   'js-jsx-mode-hook
-   (lambda ()
-     (setq imenu-create-index-function 'my-js-imenu-make-index))))
-
-
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 
 (use-package! add-node-modules-path
@@ -119,6 +101,27 @@
   :init
   (map! :leader :nm "ct" #'runtests))
 
+
+;; bufshow
+(use-package! bufshow
+  :commands bufshow-slideshow
+  :init
+  (defun bufshow-slideshow ()
+    (interactive)
+    (require 'bufshow)
+    (setq bufshow--winconfig nil)
+    (bufshow-mode t)
+    (bufshow-load (buffer-file-name)))
+
+  (map! :leader
+        :prefix ("ap" . "Presentation")
+        "s" #'bufshow-slideshow
+        "q" #'bufshow-stop)
+
+  (map! :map bufshow-mode-map
+        "C->" #'bufshow-next
+        "C-<" #'bufshow-prev))
+
 ;; EShell
 
 ;; (eval-after-load 'eshell
@@ -143,6 +146,7 @@
 
    org-cycle-separator-lines 0
    org-directory "~/Dropbox/org"
+   org-roam-directory "~/Dropbox/org/roam"
    org-agenda-files '("~/Dropbox/org/notes.org")
    org-default-notes-file "~/Dropbox/org/notes.org"
    org-agenda-custom-commands
@@ -152,8 +156,11 @@
      ("u" "Unexpected" tags-todo "+unexpected"))))
 
 ;; Disable smartparens
-(after! smartparens
-  (smartparens-global-mode -1))
+(add-hook! smartparens-enabled
+  (turn-off-smartparens-mode))
+
+;; Company
+(add-to-list '+company-backend-alist '(js-mode company-capf company-dabbrev))
 
 (after! company
   (map! :i "C-x C-l" 'evil-complete-previous-line))
@@ -167,6 +174,64 @@
   (map! :map (mu4e-headers-mode-map mu4e-view-mode-map)
         :n "T" 'mu4e-headers-mark-thread
         :n "L" 'mu4e-jump-to-list))
+
+(after! notmuch
+  (require 'smtpmail)
+
+  (setq notmuch-message-headers-visible t
+        message-send-mail-function 'smtpmail-send-it
+        starttls-use-gnutls t
+        smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg")
+        smtpmail-smtp-service 587
+        smtpmail-debug-info t
+        notmuch-saved-searches
+        '((:name "inbox"   :query "tag:inbox not tag:deleted" :key "i")
+          (:name "flagged" :query "tag:flagged"             :key "f")
+          (:name "sent"    :query "tag:sent"                :key "s")
+          (:name "drafts"  :query "tag:draft"               :key "d"))
+
+        +notmuch-sync-backend 'offlineimap)
+
+  (defun notmuch/send-mail-with-one ()
+    (interactive)
+    (setq smtpmail-smtp-user "sune@we-knowhow.dk"
+          smtpmail-starttls-credentials '(("send.one.com" 587 nil nil))
+          smtpmail-default-smtp-server "send.one.com"
+          smtpmail-smtp-server "send.one.com"))
+
+  (defun notmuch/send-mail-with-zendesk ()
+    (interactive)
+    (setq smtpmail-smtp-user "ssimonsen@zendesk.com"
+          smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+          smtpmail-default-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"))
+
+  (defun notmuch/message-select-mail-dest ()
+    (cond ((string-match "ssimonsen@zendesk.com"
+                         (message-field-value "From"))
+           (notmuch/send-mail-with-zendesk))
+          (t
+           (notmuch/send-mail-with-one))))
+
+  (notmuch/send-mail-with-one)
+
+  (add-hook 'message-send-hook 'notmuch/message-select-mail-dest)
+
+  (setq notmuch-saved-searches
+        '((:name "inbox" :query "tag:inbox not tag:deleted" :key "i")
+          (:name "support" :query "tag:support" :key "u")
+          (:name "inbox" :query "tag:github and tag:inbox" :key "g")
+          (:name "flagged" :query "tag:flagged" :key "f")
+          (:name "sent" :query "tag:sent" :key "s")
+          (:name "drafts" :query "tag:draft" :key "d")))
+
+  (setq shr-color-visible-luminance-min 60)
+  (setq shr-color-visible-distance-min 5)
+  (setq shr-use-colors nil)
+  (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+
+  (setq notmuch-multipart/alternative-discouraged '("text/plain"))
+  )
 
 (after! mu4e
   (require 'org-mu4e)
@@ -244,13 +309,13 @@
   (set-email-account!
    "Work"
    '((user-mail-address . "ssimonsen@zendesk.com")
-     (mu4e-trash-folder . "/Work/[Gmail].Trash")
-     (mu4e-refile-folder . "/Work/[Gmail].All Mail")
-     (mu4e-sent-folder . "/Work/[Gmail].Sent Mail")
-     (mu4e-drafts-folder . "/Work/[Gmail].Drafts")
+     (mu4e-trash-folder . "/Work/gmail.Trash")
+     (mu4e-refile-folder . "/Work/gmail.All Mail")
+     (mu4e-sent-folder . "/Work/gmail.Sent Mail")
+     (mu4e-drafts-folder . "/Work/gmail.Drafts")
 
      (mu4e-bookmarks . (("maildir:/Work/INBOX" "Inbox" ?i)
-                        ("maildir:\"/Work/[Gmail].All Mail\"" "All Mail" ?a)
+                        ("maildir:\"/Work/gmail.All Mail\"" "All Mail" ?a)
                         ("flag:unread AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
                          "Unread messages" ?u)
                         ("flag:unread AND flag:list AND NOT flag:trashed AND NOT tag:\\Trash AND (maildir:/Personal/INBOX OR maildir:/Work/INBOX)"
@@ -259,22 +324,9 @@
                         ("date:7d..now" "Last 7 days" ?w)
                         ("mime:image/*" "Messages with images" ?p)))
 
+     (smtpmail-smtp-user     . "ssimonsen@zendesk.com")
      (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
      (smtpmail-default-smtp-server . "smtp.gmail.com")
      (smtpmail-smtp-server . "smtp.gmail.com"))
    t)
   )
-
-;; LSP
-
-(add-hook! typescript-mode
-  (defun +javascript-init-lsp-maybe-h ()
-    "Start `lsp' in the current buffer."
-    (let ((buffer-file-name (buffer-file-name (buffer-base-buffer))))
-      (when (derived-mode-p 'typescript-mode)
-        (if (not buffer-file-name)
-            ;; necessary because `lsp' will error if not a
-            ;; file-visiting buffer
-            (add-hook 'after-save-hook #'+javascript-init-lsp-maybe-h nil 'local)
-          (lsp!)
-          (remove-hook 'after-save-hook #'+javascript-init-lsp-maybe-h 'local))))))

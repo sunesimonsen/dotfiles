@@ -11,3 +11,6 @@
 (package! typescript-mode)
 (package! mu4e-jump-to-list)
 (package! runtests)
+(package! bufshow)
+(package! figlet)
+(package! graphviz-dot-mode)

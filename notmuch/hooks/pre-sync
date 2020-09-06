@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Make sure we have updated paths
+notmuch new --no-hooks
+
+maildir=`notmuch config get database.path`
+
+# Personal
+
+filter="tag:deleted and tag:personal and not folder:Personal/INBOX.Trash"
+echo "Trashing `notmuch count $filter` personal messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 mv -t "$maildir/Personal/INBOX.Trash/new/"
+
+filter="not tag:deleted and tag:personal and folder:Personal/INBOX.Trash"
+echo "Restoring `notmuch count $filter` personal messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 mv -t "$maildir/Personal/INBOX.Archive/new/"
+
+filter="not tag:inbox and tag:personal and folder:Personal/INBOX"
+echo "Archiving `notmuch count $filter` personal messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 mv -t "$maildir/Personal/INBOX.Archive/new/"
+
+# Work
+
+filter="tag:deleted and tag:work and not tag:inbox and not folder:Work/gmail.Trash"
+echo "Trashing `notmuch count $filter` work messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 mv -t "$maildir/Work/gmail.Trash/new/"
+
+filter="not tag:deleted and tag:work and folder:Work/gmail.Trash"
+echo "Restoring `notmuch count $filter` work messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 mv -t "$maildir/Work/gmail.All\ Mail/new/"
+
+filter="not tag:inbox and tag:work and folder:Work/INBOX"
+echo "Archiving `notmuch count $filter` work messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 rm
+
+filter="tag:deleted and tag:work and folder:Work/INBOX"
+echo "Archiving `notmuch count $filter` work messages"
+notmuch search --output=files --format=text0 $filter | xargs -0 rm
+
+# Make sure we have updated paths
+notmuch new --no-hooks

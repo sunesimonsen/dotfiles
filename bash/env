@@ -1,8 +1,3 @@
-export EDITOR='evil'
-export GIT_EDITOR='evil'
-export ALTERNATE_EDITOR=""
-export BROWSER=google-chrome
-
 # Colors on OS X
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -27,6 +22,8 @@ elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 export DOCKER_IMAGES_DEBUG=true
 export GUIDE_ELASTICSEARCH=true
 
@@ -36,3 +33,5 @@ if [ -z "$FNM_DIR" ]
 then
     eval "$(fnm env --multi)"
 fi
+
+export FIGLET_FONTDIR=/Users/ssimonsen/Code/figlet-fonts

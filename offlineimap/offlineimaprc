@@ -6,6 +6,8 @@ usecompression = yes
 [Account Personal]
 localrepository = Personal-Local
 remoterepository = Personal-Remote
+presynchook = /Users/ssimonsen/Maildir/.notmuch/hooks/pre-sync
+postsynchook = notmuch new
 
 [Repository Personal-Local]
 type = Maildir
@@ -25,15 +27,19 @@ localrepository = Work-Local
 remoterepository = Work-Remote
 synclabels = yes
 labelsheader = X-Keywords
+presynchook = /Users/ssimonsen/Maildir/.notmuch/hooks/pre-sync
+postsynchook = notmuch new
 
 [Repository Work-Local]
 type = GmailMaildir
 localfolders = ~/Maildir/Work
-trashfolder = [Gmail].Trash
+trashfolder = gmail.Trash
+nametrans = lambda foldername: re.sub('^gmail', '[Gmail]', foldername)
 
 [Repository Work-Remote]
 type = Gmail
 sslcacertfile = /usr/local/etc/openssl/cert.pem
 remoteuser = ssimonsen@zendesk.com
 remotepasseval = get_password_keychain("imap.google.com", "ssimonsen@zendesk.com")
+nametrans = lambda foldername: re.sub('^\[Gmail\]', 'gmail', foldername)
 realdelete = no

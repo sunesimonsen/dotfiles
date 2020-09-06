@@ -30,6 +30,9 @@ linkConfig vifm/vifmrc .vifm/vifmrc
 linkConfig vifm/colors .vifm/colors
 linkConfig offlineimap/offlineimaprc .offlineimaprc
 linkConfig offlineimap/offlineimap.py .offlineimap.py
+linkConfig notmuch/notmuch-config .notmuch-config
+linkConfig notmuch/hooks/pre-sync Maildir/.notmuch/hooks/pre-sync
+linkConfig notmuch/hooks/post-new Maildir/.notmuch/hooks/post-new
 linkConfig gitconfig .gitconfig
 linkConfig i3 .i3
 linkConfig Xresources .Xresources
@@ -38,5 +41,6 @@ linkConfig dunst .config/dunst
 linkConfig gtkrc-2.0 .gtkrc-2.0
 linkConfig gtk-3.0/settings.ini .config/gtk-3.0/settings.ini
 linkConfig gtk-3.0/gtk.css .config/gtk-3.0/gtk.css
+linkConfig offlineimap/homebrew.mxcl.offlineimap.plist Library/LaunchAgents/homebrew.mxcl.offlineimap.plist
 
 popd > /dev/null

@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+global_filter="tag:new and"
+
+if [ "$1" == "--all" ]
+then
+   global_filter=""
+fi
+
+function propagate_tags {
+    for tag in $1
+    do
+        threads=$(notmuch search --output=threads $global_filter tag:$tag)
+        if [ -n "$threads" ]
+        then
+           notmuch tag +$tag $threads
+        fi
+    done
+}
+
+notmuch tag +personal -- $global_filter folder:/Personal/
+notmuch tag +inbox -- not tag:inbox and 'folder:"Personal/INBOX"'
+notmuch tag -inbox -- tag:inbox and 'folder:"Personal/INBOX.Archive"'
+notmuch tag +deleted -- not tag:deleted and 'folder:"Personal/INBOX.Trash"'
+notmuch tag +spam -- not tag:spam and 'folder:"Personal/INBOX.Spam"'
+notmuch tag +sent -- $global_filter from:sune@we-knowhow.dk
+
+notmuch tag +work -- $global_filter folder:/Work/ and not tag:personal
+notmuch tag -inbox -- tag:inbox and 'folder:"Work/gmail.All Mail"' and not folder:Work/INBOX
+notmuch tag +inbox -- not tag:inbox and folder:Work/INBOX
+notmuch tag +deleted -- not tag:deleted and 'folder:"Work/gmail.Trash"'
+notmuch tag +spam -- not tag:spam and 'folder:"Work/gmail.Spam"'
+notmuch tag +sent -- $global_filter from:ssimonsen@zendesk.com
+
+notmuch tag +github -- $global_filter from:github.com
+notmuch tag +npm -inbox -- $global_filter from:npmjs.com
+notmuch tag +dependabot -inbox -- $global_filter tag:github and from:dependabot
+notmuch tag +depfu -inbox -- $global_filter tag:github and from:depfu
+notmuch tag +garden -- $global_filter tag:github and subject:zendeskgarden/react-components and subject:feat
+notmuch tag +merged -- $global_filter tag:github and body:'Merged \#'
+propagate_tags merged
+notmuch tag -inbox -- tag:inbox and tag:merged
+notmuch tag -inbox -- $global_filter tag:github and not tag:garden and subject:zendeskgarden
+
+
+notmuch tag +support -- $global_filter from:support@zendesk.com and from:/Zendesk/ and from:/Support/
+
+notmuch tag +calendar -- $global_filter from:calendar-notification@google.com
+
+notmuch tag -inbox -- tag:inbox and subject:"It's time to verify your articles"
+notmuch tag -inbox -- tag:inbox and not date:2days..now and from:foraeldreintra@skoleintra.dk
+
+propagate_tags muted
+notmuch tag -inbox -- tag:inbox and tag:muted
+
+notmuch tag -inbox -- $global_filter tag:inbox and tag:deleted
+notmuch tag -inbox -- $global_filter tag:inbox and tag:spam
+
+notmuch tag +unread -new -- tag:new
