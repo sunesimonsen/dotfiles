@@ -19,7 +19,7 @@ function propagate_tags {
 }
 
 notmuch tag +personal -- $global_filter folder:/Personal/
-notmuch tag +inbox -- not tag:inbox and 'folder:"Personal/INBOX"'
+notmuch tag +inbox -- $global_filter not tag:inbox and 'folder:"Personal/INBOX"'
 notmuch tag -inbox -- tag:inbox and 'folder:"Personal/INBOX.Archive"'
 notmuch tag +deleted -- not tag:deleted and 'folder:"Personal/INBOX.Trash"'
 notmuch tag +spam -- not tag:spam and 'folder:"Personal/INBOX.Spam"'
@@ -27,7 +27,7 @@ notmuch tag +sent -- $global_filter from:sune@we-knowhow.dk
 
 notmuch tag +work -- $global_filter folder:/Work/ and not tag:personal
 notmuch tag -inbox -- tag:inbox and 'folder:"Work/gmail.All Mail"' and not folder:Work/INBOX
-notmuch tag +inbox -- not tag:inbox and folder:Work/INBOX
+notmuch tag +inbox -- $global_filter not tag:inbox and folder:Work/INBOX and tag:work
 notmuch tag +deleted -- not tag:deleted and 'folder:"Work/gmail.Trash"'
 notmuch tag +spam -- not tag:spam and 'folder:"Work/gmail.Spam"'
 notmuch tag +sent -- $global_filter from:ssimonsen@zendesk.com

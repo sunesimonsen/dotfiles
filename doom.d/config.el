@@ -185,11 +185,15 @@
         smtpmail-smtp-service 587
         smtpmail-debug-info t
         notmuch-saved-searches
-        '((:name "inbox"   :query "tag:inbox not tag:deleted" :key "i")
-          (:name "flagged" :query "tag:flagged"             :key "f")
-          (:name "sent"    :query "tag:sent"                :key "s")
-          (:name "drafts"  :query "tag:draft"               :key "d"))
-
+        '((:name "inbox" :query "tag:inbox not tag:deleted" :key "i")
+          (:name "work" :query "tag:work and tag:inbox" :key "w")
+          (:name "waiting" :query "tag:waiting" :key "h")
+          (:name "personal" :query "tag:personal and tag:inbox" :key "p")
+          (:name "support" :query "tag:support" :key "u")
+          (:name "github" :query "tag:github and tag:inbox" :key "g")
+          (:name "flagged" :query "tag:flagged" :key "f")
+          (:name "sent" :query "tag:sent" :key "s")
+          (:name "drafts" :query "tag:draft" :key "d"))
         +notmuch-sync-backend 'offlineimap)
 
   (defun notmuch/send-mail-with-one ()
@@ -216,14 +220,6 @@
   (notmuch/send-mail-with-one)
 
   (add-hook 'message-send-hook 'notmuch/message-select-mail-dest)
-
-  (setq notmuch-saved-searches
-        '((:name "inbox" :query "tag:inbox not tag:deleted" :key "i")
-          (:name "support" :query "tag:support" :key "u")
-          (:name "inbox" :query "tag:github and tag:inbox" :key "g")
-          (:name "flagged" :query "tag:flagged" :key "f")
-          (:name "sent" :query "tag:sent" :key "s")
-          (:name "drafts" :query "tag:draft" :key "d")))
 
   (setq shr-color-visible-luminance-min 60)
   (setq shr-color-visible-distance-min 5)
