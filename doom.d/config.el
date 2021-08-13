@@ -4,12 +4,28 @@
 (setq
  doom-font (font-spec :family "Menlo" :size 16)
  display-line-numbers-type nil
- ;; Manual auto completion with C-Space
- company-idle-delay nil
  ;; Disable help mouse-overs for mode-line segments (i.e. :help-echo text).
  ;; They're generally unhelpful and only add confusing visual clutter.
  mode-line-default-help-echo nil
- show-help-function nil)
+ show-help-function nil
+ mac-right-option-modifier 'meta
+ ns-right-option-modifier  'meta)
+
+;; Company
+(add-to-list '+company-backend-alist '(js-mode company-capf company-dabbrev))
+
+(after! company
+  (map! :i "C-x C-l" 'evil-complete-previous-line)
+
+  (setq
+   ;; allow code completion inside comments and string
+   company-dabbrev-code-everywhere t
+   ;; Manual auto completion with C-Space
+   company-idle-delay nil
+   ;; allow code completion matching all buffer
+   company-dabbrev-code-other-buffers 'all
+   company-dabbrev-other-buffers 'all
+   ))
 
 ;; Evil
 (setq
@@ -32,7 +48,13 @@
    )
   )
 
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+(after! link-hint
+  (map! :leader
+        :n "s c" 'link-hint-copy-link))
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode ))
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-jsx-mode))
+
 
 (use-package! add-node-modules-path
   :hook ((js-mode js-mode js-jsx-mode typescript-mode json-mode graphql-mode) . add-node-modules-path))
@@ -147,23 +169,33 @@
    org-cycle-separator-lines 0
    org-directory "~/Dropbox/org"
    org-roam-directory "~/Dropbox/org/roam"
+   org-roam-index-file "~/Dropbox/org/roam/index.org"
    org-agenda-files '("~/Dropbox/org/notes.org")
    org-default-notes-file "~/Dropbox/org/notes.org"
+   org-refile-targets '((org-agenda-files :level . 1))
+   org-refile-use-outline-path nil
    org-agenda-custom-commands
-   '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
-     ("i" "Inbox" tags-todo "+inbox")
-     ("z" "Zendesk" tags-todo "+zendesk")
-     ("u" "Unexpected" tags-todo "+unexpected"))))
+   '(("i" "Inbox" tags-todo "+inbox")
+     ("j" "Agenda and all TODOs"
+      ((agenda "")
+       (tags-todo "+inbox")
+       (tags-todo "+zendesk")
+       (tags-todo "+home")
+       (tags-todo "+unexpected")
+       (tags-todo "+buy")))))
+
+  (defun org-agenda-show-agenda-and-todo (&optional arg)
+    "Agenda overview"
+    (interactive "P")
+    (org-agenda arg "j"))
+
+  (map! :leader
+        :desc "Agenda overview"
+        "oo" 'org-agenda-show-agenda-and-todo))
 
 ;; Disable smartparens
 (add-hook! smartparens-enabled
   (turn-off-smartparens-mode))
-
-;; Company
-(add-to-list '+company-backend-alist '(js-mode company-capf company-dabbrev))
-
-(after! company
-  (map! :i "C-x C-l" 'evil-complete-previous-line))
 
 ;; Email
 (add-to-list 'load-path "/usr/local/Cellar/mu/1.2.0_1/share/emacs/site-lisp/mu/mu4e")
@@ -186,15 +218,20 @@
         smtpmail-debug-info t
         notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox not tag:deleted" :key "i")
+          (:name "todo" :query "tag:inbox and tag:todo" :key "t")
           (:name "work" :query "tag:work and tag:inbox" :key "w")
           (:name "waiting" :query "tag:waiting" :key "h")
           (:name "personal" :query "tag:personal and tag:inbox" :key "p")
-          (:name "support" :query "tag:support" :key "u")
+          (:name "support" :query "tag:support and tag:inbox" :key "u")
           (:name "github" :query "tag:github and tag:inbox" :key "g")
           (:name "flagged" :query "tag:flagged" :key "f")
           (:name "sent" :query "tag:sent" :key "s")
           (:name "drafts" :query "tag:draft" :key "d"))
-        +notmuch-sync-backend 'offlineimap)
+        +notmuch-sync-backend 'offlineimap
+        notmuch-fcc-dirs
+        '(("ssimonsen@zendesk" . "\"Work/gmail.Sent Mail\" +sent")
+          (".*" . "Personal/INBOX.Sent +sent"))
+        )
 
   (defun notmuch/send-mail-with-one ()
     (interactive)
@@ -226,7 +263,7 @@
   (setq shr-use-colors nil)
   (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
 
-  (setq notmuch-multipart/alternative-discouraged '("text/plain"))
+  (setq notmuch-multipart/alternative-discouraged '("text/plain" "text/x-amp-html"))
   )
 
 (after! mu4e

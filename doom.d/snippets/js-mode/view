@@ -1,0 +1,18 @@
+# key: view
+# name: view# key: view
+# name: view
+# --
+import { html } from "@depository/view";
+import { css } from "stylewars";
+
+const styles = css\`
+  & {}
+\`
+
+export class ${2:`(f-base buffer-file-name)`} {
+  render() {
+    return html\`
+      <div class=\${styles}>$0</div>
+    \`
+  }
+}
