@@ -18,6 +18,8 @@ function propagate_tags {
     done
 }
 
+notmuch tag +todo -- $global_filter to:todo@we-knowhow.dk
+
 notmuch tag +personal -- $global_filter folder:/Personal/
 notmuch tag +inbox -- $global_filter not tag:inbox and 'folder:"Personal/INBOX"'
 notmuch tag -inbox -- tag:inbox and 'folder:"Personal/INBOX.Archive"'
@@ -53,6 +55,8 @@ notmuch tag -inbox -- tag:inbox and not date:2days..now and from:foraeldreintra@
 propagate_tags muted
 notmuch tag -inbox -- tag:inbox and tag:muted
 
+propagate_tags inbox
+propagate_tags deleted
 notmuch tag -inbox -- $global_filter tag:inbox and tag:deleted
 notmuch tag -inbox -- $global_filter tag:inbox and tag:spam
 
