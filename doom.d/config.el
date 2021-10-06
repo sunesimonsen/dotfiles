@@ -69,9 +69,10 @@
 ;; Avy
 (setq avy-all-windows t)
 
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+
 (after! evil-snipe
-  (map! :map evil-snipe-local-mode-map
-        :nm "s" #'evil-avy-goto-word-1
+  (map! :nm "s" #'evil-avy-goto-word-1
         :nm "S" #'evil-avy-goto-char-timer))
 
 ;; window management
@@ -210,6 +211,8 @@
 (after! notmuch
   (require 'smtpmail)
 
+  (set-popup-rule! "^\\*notmuch-hello" :ignore t)
+
   (setq notmuch-message-headers-visible t
         message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
@@ -231,6 +234,7 @@
         notmuch-fcc-dirs
         '(("ssimonsen@zendesk" . "\"Work/gmail.Sent Mail\" +sent")
           (".*" . "Personal/INBOX.Sent +sent"))
+        +notmuch-home-function (lambda () (notmuch-search "tag:inbox not tag:deleted"))
         )
 
   (defun notmuch/send-mail-with-one ()
