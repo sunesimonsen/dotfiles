@@ -24,7 +24,7 @@ then
 elif [ -n "$mochaRootDir" ]
 then
     pushd $mochaRootDir > /dev/null
-    UNEXPECTED_DEPTH=10 BLUEBIRD_DEBUG=yes $mochaRootDir/node_modules/.bin/mocha -b -R dot --colors $*
+    UNEXPECTED_DEPTH=10 BLUEBIRD_DEBUG=yes $mochaRootDir/node_modules/.bin/mocha -b -R dot --colors $* | sed 's#at file://#at #g' | sed 's#(file://#(#' | sed -E 's/:([0-9]+):[0-9]+/:\1/'
     exitStatus=${PIPESTATUS[0]}
 fi
 
