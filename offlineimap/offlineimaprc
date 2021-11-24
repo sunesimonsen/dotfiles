@@ -2,6 +2,8 @@
 accounts = Personal,Work
 pythonfile = ~/.config/dotfiles/offlineimap/offlineimap.py
 usecompression = yes
+maxconnections = 1
+singlethreadperfolder = yes
 
 [Account Personal]
 localrepository = Personal-Local

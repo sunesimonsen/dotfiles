@@ -44,10 +44,13 @@ propagate_tags merged
 notmuch tag -inbox -- tag:inbox and tag:merged
 notmuch tag -inbox -- $global_filter tag:github and not tag:garden and subject:zendeskgarden
 
+notmuch tag +jira -- $global_filter from:jira@zendesk.atlassian.net
 
 notmuch tag +support -- $global_filter from:support@zendesk.com and from:/Zendesk/ and from:/Support/
 
 notmuch tag +calendar -- $global_filter from:calendar-notification@google.com
+notmuch tag +calendar -- $global_filter from:hello@getclockwise.com
+notmuch tag +calendar -- $global_filter from:@zendesk.com and subject:Invitation
 
 notmuch tag -inbox -- tag:inbox and subject:"It's time to verify your articles"
 notmuch tag -inbox -- tag:inbox and not date:2days..now and from:foraeldreintra@skoleintra.dk

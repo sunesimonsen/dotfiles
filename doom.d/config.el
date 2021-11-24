@@ -226,6 +226,8 @@
           (:name "waiting" :query "tag:waiting" :key "h")
           (:name "personal" :query "tag:personal and tag:inbox" :key "p")
           (:name "support" :query "tag:support and tag:inbox" :key "u")
+          (:name "jira" :query "tag:jira and tag:inbox" :key "j")
+          (:name "calendar" :query "tag:calendar and tag:inbox" :key "c")
           (:name "github" :query "tag:github and tag:inbox" :key "g")
           (:name "flagged" :query "tag:flagged" :key "f")
           (:name "sent" :query "tag:sent" :key "s")
