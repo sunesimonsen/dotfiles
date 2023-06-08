@@ -29,7 +29,6 @@
 
 ;; Evil
 (setq
- evil-escape-key-sequence "fd"
  evil-snipe-scope 'whole-visible
  evil-ex-search-persistent-highlight nil)
 
@@ -52,19 +51,37 @@
   (map! :leader
         :n "s c" 'link-hint-copy-link))
 
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode ))
-(add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-jsx-mode))
+;; (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+;; (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-jsx-mode))
 
 
 (use-package! add-node-modules-path
   :hook ((js-mode js-mode js-jsx-mode typescript-mode json-mode graphql-mode) . add-node-modules-path))
 
-(use-package! prettier-js
-  :hook ((js-mode js-mode js-jsx-mode typescript-mode json-mode graphql-mode) . prettier-js-mode))
+;; Disable format all for specific modes
+(setq +format-on-save-enabled-modes
+      (append +format-on-save-enabled-modes '(ruby-mode mhtml-mode)))
+
+;; Ruby
+(setq
+ ruby-use-smie nil
+ ruby-deep-indent-paren nil
+ ruby-deep-arglist nil)
+
+(add-hook! ruby-mode
+  (setq-local flycheck-command-wrapper-function
+              (lambda (command) (append '("bundle" "exec") command))))
 
 ;; Projectile
 (after! projectile
-  (appendq! projectile-other-file-alist '(("js" "spec.js") ("spec.js" "js"))))
+  (appendq! projectile-other-file-alist
+            '(("js" "spec.js")
+              ("spec.js" "js")
+              ("spec.rb" "rb")
+              ("rb" "spec.rb")))
+
+  ; re-index with projectile-discover-projects-in-search-path
+  (setq projectile-project-search-path '(("~/Code" . 2))))
 
 ;; Avy
 (setq avy-all-windows t)

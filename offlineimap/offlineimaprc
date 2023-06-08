@@ -24,24 +24,24 @@ remoteuser = sune@we-knowhow.dk
 remotepasseval = get_password_keychain("imap.one.com", "sune@we-knowhow.dk")
 realdelete = no
 
-[Account Work]
-localrepository = Work-Local
-remoterepository = Work-Remote
-synclabels = yes
-labelsheader = X-Keywords
-presynchook = /Users/ssimonsen/Maildir/.notmuch/hooks/pre-sync
-postsynchook = notmuch new
+# [Account Work]
+# localrepository = Work-Local
+# remoterepository = Work-Remote
+# synclabels = yes
+# labelsheader = X-Keywords
+# presynchook = /Users/ssimonsen/Maildir/.notmuch/hooks/pre-sync
+# postsynchook = notmuch new
 
-[Repository Work-Local]
-type = GmailMaildir
-localfolders = ~/Maildir/Work
-trashfolder = gmail.Trash
-nametrans = lambda foldername: re.sub('^gmail', '[Gmail]', foldername)
+# [Repository Work-Local]
+# type = GmailMaildir
+# localfolders = ~/Maildir/Work
+# trashfolder = gmail.Trash
+# nametrans = lambda foldername: re.sub('^gmail', '[Gmail]', foldername)
 
-[Repository Work-Remote]
-type = Gmail
-sslcacertfile = /usr/local/etc/openssl/cert.pem
-remoteuser = ssimonsen@zendesk.com
-remotepasseval = get_password_keychain("imap.google.com", "ssimonsen@zendesk.com")
-nametrans = lambda foldername: re.sub('^\[Gmail\]', 'gmail', foldername)
-realdelete = no
+# [Repository Work-Remote]
+# type = Gmail
+# sslcacertfile = /usr/local/etc/openssl/cert.pem
+# remoteuser = ssimonsen@zendesk.com
+# remotepasseval = get_password_keychain("imap.google.com", "ssimonsen@zendesk.com")
+# nametrans = lambda foldername: re.sub('^\[Gmail\]', 'gmail', foldername)
+# realdelete = no

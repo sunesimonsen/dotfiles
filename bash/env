@@ -9,7 +9,7 @@ fi
 
 export TERM='xterm-256color'
 
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+# export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=./node_modules/.bin:$PATH
 export PATH=$DOTFILES/bin:$PATH
 export PATH=~/.local/bin:$PATH
@@ -35,3 +35,8 @@ then
 fi
 
 export FIGLET_FONTDIR=/Users/ssimonsen/Code/figlet-fonts
+
+export GOPATH=~/Code/go-tools
+export PATH=$GOPATH/bin:$PATH
+
+#export APOLLO_GRAPH_VARIANT_DEV=ssimonsen

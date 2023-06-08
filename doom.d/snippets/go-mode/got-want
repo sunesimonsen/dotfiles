@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Print expectation
+# key: gotwant
+# --
+if got != want {
+  t.Errorf("got %#+v want %#+v given, %#+v", ${1:got}, ${2:want}, ${3:given})
+}

@@ -7,10 +7,9 @@
 ;; (package! builtin-package :disable t)
 
 (package! add-node-modules-path)
-(package! prettier-js)
 (package! typescript-mode)
-(package! mu4e-jump-to-list)
 (package! runtests)
 (package! bufshow)
 (package! figlet)
 (package! graphviz-dot-mode)
+(package! jsonnet-mode)
